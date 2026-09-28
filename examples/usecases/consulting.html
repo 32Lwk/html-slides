@@ -1,10 +1,10 @@
 <!doctype html>
-<html lang="ja" data-theme="navy" data-mode="doc">
+<html lang="ja" data-theme="mono" data-mode="doc">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
-<title>html-slides README figures</title>
+<title>コンサルティングの見本</title>
 <style id="html-slides-lib">/*LIB:CSS*/
 /* 配色テーマ。<html data-theme="…"> で切り替える。どのテーマも「強調（accent）」と「お金・注意・未定（warn）」の2色＋灰色で組む。
    c1〜c6 はグラフの系列、seq1〜seq5 は塗り分け地図・濃淡の段階（薄い → 濃い）。 */
@@ -427,220 +427,86 @@ body.presenter .np .next { font-size: 22px; margin-top: 26px; }
 .f-missing { background: #ffe4e6; color: #be123c; }
 
 /*END LIB:CSS*/</style>
-<style>
-  /* README の図（GitHub では約 880px 幅に縮むので、文字は 36px 以上） */
-  section { padding: 64px 72px; }
-  .fig-h { font-size: 64px; font-weight: 900; line-height: 1.2; letter-spacing: -0.01em; }
-  .fig-h em { font-style: normal; color: var(--accent); }
-  .fig-s { font-size: 34px; font-weight: 600; color: var(--sub); margin-top: 10px; }
-  .crop { position: relative; overflow: hidden; border-radius: 14px; background: #fff; box-shadow: 0 6px 24px rgba(15, 23, 42, .18); }
-  .crop img { position: absolute; max-width: none; }
-  .lbl { font-size: 44px; font-weight: 900; line-height: 1.15; margin-top: 18px; }
-  .lbl small { display: block; font-size: 28px; font-weight: 600; color: var(--sub); margin-top: 4px; }
-  .mono { font-family: ui-monospace, Consolas, "SF Mono", Menlo, monospace; }
-
-  /* hero */
-  #hero { background: var(--accent); color: #fff; }
-  #hero.on { display: grid; grid-template-columns: 820px 1fr; gap: 40px; align-items: center; }
-  #hero .name { font-size: 132px; font-weight: 900; letter-spacing: -0.03em; line-height: 1; }
-  #hero .slogan { font-size: 50px; font-weight: 800; line-height: 1.35; margin-top: 36px; }
-  #hero .en { font-size: 34px; font-weight: 600; opacity: .8; margin-top: 16px; }
-  #hero .chips { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 48px; }
-  #hero .chips span { font-size: 34px; font-weight: 800; padding: 10px 26px; border-radius: 999px; background: rgba(255, 255, 255, .16); }
-  #hero .stack { position: relative; height: 900px; }
-  #hero .stack img { position: absolute; width: 860px; border-radius: 12px; box-shadow: 0 20px 50px rgba(0, 0, 0, .35); }
-
-  /* features */
-  #features, #usecases { padding: 36px 60px; }
-  #features .fig-h, #usecases .fig-h { font-size: 58px; }
-  #features .fig-s, #usecases .fig-s { font-size: 30px; margin-top: 4px; }
-  .tiles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px 24px; margin-top: 16px; }
-  .tiles .crop { aspect-ratio: 16 / 9; }
-  .tiles .lbl { display: flex; align-items: baseline; gap: 12px; font-size: 28px; margin-top: 6px; white-space: nowrap; }
-  .tiles .lbl small { display: inline; margin: 0; font-size: 22px; }
-
-  /* usecases */
-  .uc-row { display: flex; align-items: baseline; gap: 18px; margin-top: 56px; font-size: 38px; font-weight: 900; }
-  .uc-row small { font-size: 26px; font-weight: 600; color: var(--sub); }
-  #usecases .tiles { margin-top: 10px; }
-
-  /* workflow */
-  .wf { display: grid; grid-template-columns: repeat(3, 1fr); gap: 48px 64px; margin-top: 44px; }
-  .wf .st { position: relative; border: 4px solid var(--line); border-radius: 22px; padding: 36px 38px; background: var(--bg); min-height: 300px; }
-  .wf .st.key { border-color: var(--accent); background: var(--accent-bg); }
-  .wf .n { display: inline-grid; place-items: center; width: 64px; height: 64px; border-radius: 50%; background: var(--ink); color: var(--bg); font-size: 36px; font-weight: 900; }
-  .wf .st.key .n { background: var(--accent); }
-  .wf h3 { display: inline; font-size: 52px; font-weight: 900; margin-left: 16px; vertical-align: middle; }
-  .wf p { font-size: 38px; font-weight: 600; line-height: 1.4; margin-top: 16px; }
-  .wf code { display: inline-block; font-size: 34px; font-weight: 700; margin-top: 16px; padding: 6px 16px; border-radius: 10px; background: var(--lane); color: var(--ink); }
-  .wf .st:not(:nth-child(3n))::after { content: "→"; position: absolute; right: -56px; top: 50%; transform: translateY(-50%); font-size: 52px; font-weight: 900; color: var(--sub); }
-  .wf .loop { grid-column: 1 / -1; text-align: center; font-size: 42px; font-weight: 800; color: var(--accent); margin-top: -8px; }
-
-  /* check */
-  .ba { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; margin-top: 40px; }
-  .ba .crop { height: 520px; }
-  .ba .lbl.bad { color: var(--warn); }
-  .why { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 34px; }
-  .why span { font-size: 36px; font-weight: 800; padding: 8px 22px; border-radius: 12px; border: 3px solid var(--warn); color: var(--warn); background: var(--warn-bg); }
-
-  /* themes */
-  #themes { padding: 40px 64px; }
-  .th { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px 36px; margin-top: 24px; }
-  .th .crop { aspect-ratio: 16 / 9; }
-  .th .lbl { display: flex; align-items: center; gap: 14px; margin-top: 10px; font-size: 36px; }
-  .th .lbl i { width: 40px; height: 40px; border-radius: 10px; display: inline-block; }
-
-  /* modes */
-  .md { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; margin-top: 44px; }
-  .md .crop { aspect-ratio: 16 / 9; }
-  .md ul { margin-top: 18px; padding-left: 1.1em; font-size: 34px; font-weight: 600; line-height: 1.5; }
-
-  /* 検査の見本（README には出さない。check の図の元） */
-  .sample h1 { font-size: 40px; max-width: 1180px; } .sample .rule { width: 1180px; } .sample .grid { width: 1180px; }
-</style>
+<style></style>
 </head>
 <body>
 
-<section id="hero" data-nopno>
-  <div>
-    <div class="name">html-slides</div>
-    <div class="slogan">きれいな HTML スライドを、<br>毎回同じ品質で。</div>
-    <div class="en">Polished HTML slides, same quality every time.</div>
-    <div class="chips"><span>グラフ</span><span>図</span><span>地図</span><span>計算</span><span>イラスト</span><span>PNG と検査</span></div>
-  </div>
-  <div class="stack">
-    <img src="../../examples/demo/png/14-mix.png" alt="" style="left:120px; top:20px; transform:rotate(3deg)">
-    <img src="../../examples/demo/png/12-growth.png" alt="" style="left:40px; top:230px; transform:rotate(-2deg)">
-    <img src="../../examples/demo/png/01-cover.png" alt="" style="left:0; top:440px">
-  </div>
-</section>
-
-<section id="features" data-nopno>
-  <div class="fig-h">グラフ・図・地図・表から発表まで、<em>1 つのスキルで</em></div>
-  <div class="fig-s">Charts, diagrams, maps, tables, computed numbers, illustrations, pitch mode — and more</div>
-  <div class="tiles">
-    <div><div class="crop" data-src="../../examples/demo/png/01-cover.png" data-x="0" data-y="0" data-w="1920"></div><div class="lbl">表紙<small>Cover</small></div></div>
-    <div><div class="crop" data-src="../../examples/demo/png/12-growth.png" data-x="0" data-y="0" data-w="1920"></div><div class="lbl">積み上げ棒＋線<small>Stacked bar</small></div></div>
-    <div><div class="crop" data-src="../../examples/demo/png/13-unit.png" data-x="0" data-y="0" data-w="1920"></div><div class="lbl">滝グラフ<small>Waterfall</small></div></div>
-    <div><div class="crop" data-src="../../examples/demo/png/14-mix.png" data-x="0" data-y="0" data-w="1920"></div><div class="lbl">サンキー・円<small>Sankey, donut</small></div></div>
-    <div><div class="crop" data-src="../../examples/demo/png/16-roadmap.png" data-x="0" data-y="0" data-w="1920"></div><div class="lbl">ガント<small>Gantt</small></div></div>
-    <div><div class="crop" data-src="../../examples/demo/png/06-rivals.png" data-x="0" data-y="0" data-w="1920"></div><div class="lbl">散布図<small>Positioning</small></div></div>
-    <div><div class="crop" data-src="../../examples/demo/png/08-lanes.png" data-x="0" data-y="0" data-w="1920"></div><div class="lbl">担当者ごとの流れ<small>Swimlanes</small></div></div>
-    <div><div class="crop" data-src="../../examples/demo/png/09-loop.png" data-x="0" data-y="0" data-w="1920"></div><div class="lbl">関係図・循環図<small>Diagrams</small></div></div>
-    <div><div class="crop" data-src="../../examples/demo/png/04-markets.png" data-x="0" data-y="0" data-w="1920"></div><div class="lbl">世界地図<small>World map</small></div></div>
-    <div><div class="crop" data-src="../../examples/demo/png/05-farms.png" data-x="0" data-y="0" data-w="1920"></div><div class="lbl">日本地図<small>Japan map</small></div></div>
-    <div><div class="crop" data-src="../../examples/demo/png/11-kpi.png" data-x="0" data-y="0" data-w="1920"></div><div class="lbl">計算した数字<small>Numbers</small></div></div>
-    <div><div class="crop" data-src="../../examples/demo/png-pitch/03-three.png" data-x="0" data-y="0" data-w="1920"></div><div class="lbl">発表用の型<small>Pitch mode</small></div></div>
-  </div>
-</section>
-
-<section id="usecases" data-nopno>
-  <div class="fig-h">事業計画だけでなく、<em>マーケティングやコンサルの資料</em>にも</div>
-  <div class="fig-s">Also for marketing plans and consulting reports</div>
-  <div class="uc-row">マーケティング<small>ファネル・ポジショニング・チャネルの獲得単価・施策の計画（テーマ blue）</small></div>
-  <div class="tiles">
-    <div><div class="crop" data-src="../../examples/usecases/png-marketing/01-funnel.png" data-x="0" data-y="0" data-w="1920"></div></div>
-    <div><div class="crop" data-src="../../examples/usecases/png-marketing/02-position.png" data-x="0" data-y="0" data-w="1920"></div></div>
-    <div><div class="crop" data-src="../../examples/usecases/png-marketing/03-channels.png" data-x="0" data-y="0" data-w="1920"></div></div>
-    <div><div class="crop" data-src="../../examples/usecases/png-marketing/04-plan.png" data-x="0" data-y="0" data-w="1920"></div></div>
-  </div>
-  <div class="uc-row">コンサルティング<small>要旨・イシューツリー・優先度の 2×2・利益のブリッジ（テーマ mono）</small></div>
-  <div class="tiles">
-    <div><div class="crop" data-src="../../examples/usecases/png-consulting/01-summary.png" data-x="0" data-y="0" data-w="1920"></div></div>
-    <div><div class="crop" data-src="../../examples/usecases/png-consulting/02-issues.png" data-x="0" data-y="0" data-w="1920"></div></div>
-    <div><div class="crop" data-src="../../examples/usecases/png-consulting/03-priority.png" data-x="0" data-y="0" data-w="1920"></div></div>
-    <div><div class="crop" data-src="../../examples/usecases/png-consulting/04-bridge.png" data-x="0" data-y="0" data-w="1920"></div></div>
-  </div>
-</section>
-
-<section id="workflow" data-nopno>
-  <div class="fig-h">頼むと、AI エージェントが<em>6 つの手順</em>で仕上げる</div>
-  <div class="fig-s">Ask your AI agent — it builds, checks and exports in six steps</div>
-  <div class="wf">
-    <div class="st"><span class="n">1</span><h3>作る</h3><p>型・テーマ・言語を選ぶ</p><code class="mono">deck.mjs new</code></div>
-    <div class="st"><span class="n">2</span><h3>書く</h3><p>1 ページ 1 メッセージ、<br>決まった部品で組む</p></div>
-    <div class="st"><span class="n">3</span><h3>数字</h3><p>計算して埋め込む</p><code class="mono">inject-data.mjs</code></div>
-    <div class="st"><span class="n">4</span><h3>地図・絵</h3><p>地図と挿絵を入れる</p><code class="mono">make-map.mjs</code></div>
-    <div class="st key"><span class="n">5</span><h3>検査</h3><p>崩れを赤枠で見つけて直す</p><code class="mono">export.mjs --check</code></div>
-    <div class="st"><span class="n">6</span><h3>書き出す</h3><p>全ページの PNG と一覧</p><code class="mono">export.mjs --sheet</code></div>
-    <div class="loop">5 は「問題: なし」になるまでくり返す</div>
-  </div>
-</section>
-
-<section id="check" data-nopno>
-  <div class="fig-h">崩れは<em>自動で見つかる</em>。直すまで仕上がりにしない</div>
-  <div class="fig-s">Layout problems are detected automatically and fixed before export</div>
-  <div class="ba">
-    <div><div class="crop" data-src="png/check/07-bad.png" data-x="0" data-y="0" data-w="1290"></div><div class="lbl bad">直す前<small>赤枠と、左上に理由の一覧</small></div></div>
-    <div><div class="crop" data-src="png/08-good.png" data-x="0" data-y="0" data-w="1290"></div><div class="lbl">直した後<small>「問題: なし」</small></div></div>
-  </div>
-  <div class="why"><span>文字のはみ出し</span><span>画面の外</span><span>小さすぎる文字</span><span>数字の抜け</span><span>空の地図</span><span>画像の抜け</span><span>id の重複</span></div>
-</section>
-
-<section id="themes" data-nopno>
-  <div class="fig-h">同じ中身を、<em>6 つのテーマ</em>で</div>
-  <div class="fig-s">The same deck in six built-in themes (brand colors via CSS variables)</div>
-  <div class="th">
-    <div><div class="crop" data-src="../themes/green.png" data-x="0" data-y="0" data-w="1920"></div><div class="lbl"><i style="background:#1f9d55"></i><i style="background:#c2410c"></i>green</div></div>
-    <div><div class="crop" data-src="../themes/navy.png" data-x="0" data-y="0" data-w="1920"></div><div class="lbl" data-sw="navy">navy</div></div>
-    <div><div class="crop" data-src="../themes/mono.png" data-x="0" data-y="0" data-w="1920"></div><div class="lbl" data-sw="mono">mono</div></div>
-    <div><div class="crop" data-src="../themes/blue.png" data-x="0" data-y="0" data-w="1920"></div><div class="lbl" data-sw="blue">blue</div></div>
-    <div><div class="crop" data-src="../themes/wa.png" data-x="0" data-y="0" data-w="1920"></div><div class="lbl" data-sw="wa">wa（和風）</div></div>
-    <div><div class="crop" data-src="../themes/dark.png" data-x="0" data-y="0" data-w="1920"></div><div class="lbl" data-sw="dark">dark</div></div>
-  </div>
-</section>
-
-<section id="modes" data-nopno>
-  <div class="fig-h">読む資料と、映す発表。<em>2 つの型</em>を選べる</div>
-  <div class="fig-s">doc for reading, pitch for presenting</div>
-  <div class="md">
-    <div><div class="crop" data-src="../../examples/demo/png/12-growth.png" data-x="0" data-y="0" data-w="1920"></div><div class="lbl">doc：配って読む資料<small>本文 22px 以上</small></div><ul><li>根拠と注記まで 1 ページで完結</li><li>カード・表・グラフ・図・地図</li></ul></div>
-    <div><div class="crop" data-src="../../examples/demo/png-pitch/06-bars.png" data-x="0" data-y="0" data-w="1920"></div><div class="lbl">pitch：話しながら映す<small>文字 54px 以上</small></div><ul><li>1 ページに 1 つのこと</li><li>台本メモ・発表者の窓・経過時間</li></ul></div>
-  </div>
-</section>
-
-<!-- ここから下は check の図の元（build.mjs が --check で撮る） -->
-<section id="bad" class="sample" data-nopno>
-  <div class="kicker">MARKET</div>
-  <h1>市場は3年で2倍に伸び、アジアから先に開く</h1>
+<section id="summary">
+  <div class="kicker"><span class="sec">00</span>EXECUTIVE SUMMARY</div>
+  <h1>営業利益は2年で8億円増やせる。鍵は価格と在庫の2つ</h1>
   <div class="rule"></div>
-  <div class="grid g3">
-    <div class="card" style="height:260px"><h2>アジア</h2><p>台湾・香港・シンガポールの3つの国・地域で、日本の食品の越境ECは毎年2割ずつ伸びている。定期便の利用者も多く、配送の日数も短いので、最初に売る市場にする。現地の決済と言葉にも対応する。</p></div>
-    <div class="card"><h2>北米</h2><p>市場は最も大きいが、送料と関税が重い。</p><p style="font-size:12px">※ 送料は2025年の見積もり。関税の率は品目で変わる。</p></div>
-    <div class="card"><h2>3年目の売上</h2><div class="kpi"><div class="v"><span data-f="rev.y9"></span><small>億円</small></div></div></div>
+  <div class="kpis k3">
+    <div class="kpi key"><div class="v">+8<small>億円</small></div><div class="k">営業利益の増加（2年後）</div><div class="d">12億円 → 20億円</div></div>
+    <div class="kpi"><div class="v">+3<small>%</small></div><div class="k">平均の値上げ幅</div><div class="d">上位20品目だけ</div></div>
+    <div class="kpi"><div class="v">−20<small>%</small></div><div class="k">在庫の日数</div><div class="d">48日 → 38日</div></div>
   </div>
-  <div class="foot"><span>見本</span></div>
+  <div class="grid" style="margin-top:40px">
+    <div class="card key"><div class="when">提言 1</div><h2>上位20品目の価格を見直す</h2><p>値上げしても客数が減りにくい品目に絞る。利益 +3.5億円</p></div>
+    <div class="card"><div class="when">提言 2</div><h2>在庫を需要の予測で持つ</h2><p>店ごとの発注を週次の予測に置き換える。利益 +2.5億円</p></div>
+    <div class="card"><div class="when">提言 3</div><h2>調達先を3社に集約する</h2><p>量をまとめて単価を下げる。利益 +2.5億円</p></div>
+  </div>
+  <div class="strip">最初の90日で<b>価格の試験</b>を10店で行い、客数が2%以上減らないことを確かめてから全店へ広げる。</div>
+  <div class="foot"><span>見本用の架空の数字</span></div>
 </section>
 
-<section id="good" class="sample" data-nopno>
-  <div class="kicker">MARKET</div>
-  <h1>市場は3年で2倍に伸び、アジアから先に開く</h1>
+<section id="issues">
+  <div class="kicker"><span class="sec">01</span>ISSUE TREE</div>
+  <h1>利益が伸びない原因は、客数ではなく単価と在庫にある</h1>
   <div class="rule"></div>
-  <div class="grid g3">
-    <div class="card key" style="height:260px"><h2>アジア</h2><p>越境ECが毎年2割伸びる。配送も短く、最初に売る。</p></div>
-    <div class="card"><h2>北米</h2><p>市場は最も大きいが、送料と関税が重い。</p><div class="note">送料は2025年の見積もり</div></div>
-    <div class="card"><h2>3年目の売上</h2><div class="kpi"><div class="v"><span data-f="rev.2" data-d="1"></span><small>億円</small></div></div></div>
+  <div class="tree dgm" style="height:560px; margin-top:20px" data-links='[["it-op","it-rev"],["it-op","it-cost"],["it-rev","it-cust"],["it-rev","it-price"],["it-cost","it-cogs"],["it-cost","it-stock"]]'>
+    <div class="row"><div class="node solid" id="it-op">営業利益が3年横ばい<small>12億円前後</small></div></div>
+    <div class="row" style="gap:420px"><div class="node" id="it-rev">売上高<small>前年比 +1%</small></div><div class="node" id="it-cost">費用<small>前年比 +3%</small></div></div>
+    <div class="row" style="gap:60px"><div class="node ghost" id="it-cust">客数<small>+2%（問題なし）</small></div><div class="node key" id="it-price">客単価<small>−1%（値引きの常態化）</small></div><div class="node key" id="it-cogs">原価<small>+4%（調達先が分散）</small></div><div class="node key" id="it-stock">在庫の廃棄<small>売上の2.1%</small></div></div>
   </div>
-  <div class="foot"><span>見本</span></div>
+  <div class="strip">打つべきは<b>客単価・原価・在庫</b>の3つ。客数は伸びているので、集客の投資は増やさない。</div>
+  <div class="foot"><span>見本用の架空の数字</span></div>
 </section>
 
-<script>
-  /* .crop：元の PNG（1920 幅）の (x, y) から幅 w の範囲を、枠いっぱいに拡大して見せる */
-  document.querySelectorAll(".crop").forEach(c => {
-    const img = document.createElement("img");
-    img.src = c.dataset.src; img.alt = "";
-    c.appendChild(img);
-  });
-  const fitCrops = sec => sec.querySelectorAll(".crop").forEach(c => {
-    const k = c.offsetWidth / +c.dataset.w;
-    Object.assign(c.firstElementChild.style, { width: 1920 * k + "px", left: -c.dataset.x * k + "px", top: -c.dataset.y * k + "px" });
-  });
-  document.addEventListener("DOMContentLoaded", () => Slides.onShow(fitCrops));
-  /* テーマの色見本（強調色・お金の色。assets/themes.css の --accent・--warn） */
-  const SW = { navy: ["#1f3a68", "#e4572e"], mono: ["#111111", "#d62828"], blue: ["#2563eb", "#b7791f"], wa: ["#264e86", "#d9480f"], dark: ["#34d399", "#fb923c"] };
-  document.querySelectorAll("[data-sw]").forEach(l => l.insertAdjacentHTML("afterbegin", SW[l.dataset.sw].map(c => `<i style="background:${c}"></i>`).join("")));
-</script>
-<script>/*DATA*/window.DATA = {"rev": [0.6, 7.4, 20.9]};/*END DATA*/</script>
+<section id="priority">
+  <div class="kicker"><span class="sec">02</span>PRIORITY</div>
+  <h1>効果が大きく、すぐ始められる2つから着手する</h1>
+  <div class="rule"></div>
+  <div class="cols c64">
+    <div class="matrix" style="height:640px">
+      <div class="q key"><h4>すぐやる</h4>上位20品目の価格の見直し<br>在庫を予測で持つ</div>
+      <div class="q"><h4>計画してやる</h4>調達先を3社に集約<br>物流センターの統合</div>
+      <div class="q"><h4>ついでにやる</h4>チラシの電子化</div>
+      <div class="q"><h4>やらない</h4>新しい業態の出店</div>
+      <div class="ax-x"><span>始めやすい</span><span>難しい</span></div>
+      <div class="ax-y"><span>効果 小</span><span>効果 大</span></div>
+    </div>
+    <div class="stack">
+      <h3>判断の基準</h3>
+      <ul class="pts">
+        <li>効果：2年後の営業利益への寄与</li>
+        <li>難しさ：投資・期間・関わる部署の数</li>
+        <li>「すぐやる」は90日で結果が見えるもの</li>
+      </ul>
+      <div class="strip">新しい業態は効果が読めず投資も大きいので、<b>今回の計画から外す</b>。</div>
+    </div>
+  </div>
+  <div class="foot"><span>見本用の架空の評価</span></div>
+</section>
+
+<section id="bridge">
+  <div class="kicker"><span class="sec">03</span>PROFIT BRIDGE</div>
+  <h1>3つの施策で営業利益は12億円から20億円になる</h1>
+  <div class="rule"></div>
+  <div class="chart" style="height:640px" data-chart='{"type":"waterfall","unit":"億円","fmt":{"d":1},"items":[{"label":"今の営業利益","v":12,"total":true},{"label":"価格の見直し","v":3.5},{"label":"在庫を予測で","v":2.5},{"label":"調達の集約","v":2.5},{"label":"システムの費用","v":-0.5},{"label":"2年後","total":true,"color":"accent"}]}'></div>
+  <div class="strip">増える分の<b>4割強が価格</b>。価格の試験の結果で、計画の大きさが決まる。</div>
+  <div class="foot"><span>見本用の架空の数字</span></div>
+</section>
+
+<section id="roadmap">
+  <div class="kicker"><span class="sec">04</span>ROADMAP</div>
+  <h1>90日で試し、半年で全店へ、2年で仕組みにする</h1>
+  <div class="rule"></div>
+  <div class="chart" style="height:640px" data-chart='{"type":"gantt","min":0,"max":24,"ticks":[{"v":0,"label":"1年目"},{"v":12,"label":"2年目"}],"marks":[{"v":3,"label":"90日の判断"},{"v":24,"label":"+8億円","anchor":"end","color":"accent"}],"rows":[{"group":"価格","label":"10店で試験","a":0,"b":3,"color":"accent","text":"客数を見る"},{"label":"全店へ","a":3,"b":24,"text":"半年で全店へ・四半期ごとに見直し"},{"group":"在庫","label":"予測の仕組み","a":1,"b":6,"text":"週次の発注"},{"label":"全店で運用","a":6,"b":24},{"group":"調達","label":"3社と交渉","a":4,"b":10},{"label":"切り替え","a":10,"b":18,"color":"c6","dash":true,"text":"契約しだい"}]}'></div>
+  <div class="strip">最初の判断は<b>90日</b>。客数が2%以上減ったら、値上げの品目を半分に絞る。</div>
+  <div class="foot"><span>見本用の架空の計画</span></div>
+</section>
+
+<script>/*DATA*/window.DATA = {};/*END DATA*/</script>
 <script id="html-slides-lib-js">/*LIB:JS*/
 /* html-slides runtime：画面合わせ・ページ送り・番号・章の並び・data-f の数字・?check・発表者メモ。
    デッキ側の <script> は window.DATA と Slides.onShow(fn) を使える（DOMContentLoaded で初期化するので、デッキ側の定義が先に済む）。 */

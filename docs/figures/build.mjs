@@ -16,7 +16,7 @@ const exp = (...a) => {
 };
 if (!existsSync(join(HERE, "fonts"))) spawnSync(process.execPath, [join(ROOT, "scripts/deck.mjs"), "update", deck], { stdio: "inherit" });
 
-const FIGS = ["hero", "features", "workflow", "check", "themes", "modes"];
+const FIGS = ["hero", "features", "usecases", "workflow", "check", "themes", "modes"];
 exp("--check", "--only", "bad");
 exp("--only", "good");
 exp("--only", FIGS.join(","));

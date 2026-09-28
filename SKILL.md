@@ -4,7 +4,7 @@ description: >-
   1920×1080 固定の 1 ファイル HTML スライドを、決まったデザイン（結論を言い切る見出し・強調色とお金の色の 2 色・
   6 つのテーマ）で安定して作り、Chrome headless で PNG に書き出してはみ出し・小さすぎる文字・数字の抜けを自動で確かめる。
   自前の SVG グラフ（棒・線・面・円・散布・滝・ガント・サンキーほか）、関係図・担当者ごとのフロー図・循環図、
-  世界・国・日本の都道府県の地図、Python の計算結果の埋め込み、テーマに合わせたイラスト（GenerateImage）まで扱う。
+  世界・国・日本の都道府県の地図、Python の計算結果の埋め込み、テーマに合わせたイラスト（エージェントの画像生成ツール）まで扱う。
   資料（doc）と発表（pitch、文字 54px 以上）の 2 つの型、日本語と英語。オフラインで開ける。
   「スライドを作って」「発表資料」「プレゼン」「ピッチ」「slides.html」「HTML でスライド」「PNG に書き出して」
   「グラフを入れて」「地図を入れて」「図にして」「イラストを入れて」と頼まれたとき、既存のデッキにページを足す・直すときに使う。
@@ -14,7 +14,7 @@ description: >-
 
 1 つの HTML ファイル（デッキ）で 1 ページ＝1 つの `<section id>`（1920×1080 固定）。CSS・JS・データ・地図はファイルに埋め込み、フォントは隣の `fonts/` に置くので、ネットなしで開ける。`deck.html#id` でそのページを開く。
 
-- スキルの場所：`~/.cursor/skills/html-slides/`（Windows は `%USERPROFILE%\.cursor\skills\html-slides\`）。以下 `$HS` と書く
+- スキルの場所：この SKILL.md のあるフォルダ（例：Cursor は `~/.cursor/skills/html-slides/`、Claude Code は `~/.claude/skills/html-slides/`。Windows は `~` を `%USERPROFILE%` に）。以下 `$HS` と書く。スクリプトは自分の場所から `assets/` を探すので、どこに置いても動く
 - 見本：`$HS/examples/demo/slides.html`（資料・和風・日本語 18 枚）と `pitch.html`（発表・紺・英語 7 枚）。PNG は同じフォルダの `png/`・`png-pitch/`（`sheet.png` が一覧）。**迷ったら見本の同じ種類のページを開いて、そのまま写す**
 - Windows・Mac とも Node 18 以上と Chrome（か Edge）で動く。計算は Python 3（numpy）
 
@@ -26,12 +26,12 @@ cd "$HS/scripts" && npm install      # 地図に使う d3-geo・topojson-client
 
 Windows で Python の日本語が化ける・`UnicodeEncodeError` が出るときは、ユーザーの環境変数 `PYTHONUTF8=1` を設定する（このスキルの `.py` は UTF-8 で読み書きする）。
 
-## 最初に決めること（分からなければ AskQuestion で聞く）
+## 最初に決めること（分からなければユーザーに聞く。選択肢を出せるツールがあれば使う。Cursor なら AskQuestion）
 
 | 項目 | 選択肢 | 決め方 |
 |---|---|---|
 | 型 `--mode` | `doc`（資料。読んで分かる、本文 22px 以上）／`pitch`（発表で映す。文字 54px 以上、1 ページ 1 つのこと、メモ付き） | 配って読むなら doc、話しながら映すなら pitch。両方要るなら 2 ファイルに分け、データは共通にする |
-| テーマ `--theme` | `green`（緑・既定）／`navy`（紺・堅め）／`mono`（黒と赤）／`blue`（青・技術）／`wa`（和風・生成り）／`dark`（暗い背景） | 相手と内容に合わせる。後から `deck.mjs set` で変えられる |
+| テーマ `--theme` | `green`（緑・既定）／`navy`（紺・堅め）／`mono`（黒と赤）／`blue`（青・技術）／`wa`（和風・生成り）／`dark`（暗い背景） | 相手と内容に合わせる。後から `deck.mjs set` で変えられる。ブランドの色はデッキの `<style>` に `html[data-theme] { --accent: …; --accent-bg: …; --accent-mid: …; --c1: …; }` と書いて上書きする |
 | 言語 `--lang` | `ja`／`en` | ボタン・メモ・数字の書式が切り替わる |
 
 ## 手順
@@ -42,7 +42,7 @@ Windows で Python の日本語が化ける・`UnicodeEncodeError` が出ると�
 - [ ] 3. ページを書く（部品は reference/components.md、グラフ charts.md、図 diagrams.md）
 - [ ] 4. 数字があれば calc.py で計算して inject-data.mjs で埋め込む（reference/data.md）
 - [ ] 5. 地図があれば make-map.mjs --into で書き込む（reference/maps.md）
-- [ ] 6. イラストがあれば GenerateImage → to_webp.py（reference/illustrations.md）
+- [ ] 6. イラストがあれば画像生成ツール → to_webp.py（reference/illustrations.md。ツールがなければ絵なしのページにする）
 - [ ] 7. export.mjs --check を「問題: なし」になるまで繰り返す
 - [ ] 8. export.mjs --sheet で PNG を書き出し、sheet.png と数枚を開いて目で確かめる
 ```
@@ -144,4 +144,4 @@ Chrome が見つからないときは環境変数 `CHROME` に場所を入れる
 - 決まっていないことは決まったものとして書かない（`.card.open`・`.tag` で分けて選択肢を並べる）
 - 生成したイラストを使ったら foot に「イラストは生成AIで作成したイメージ」と書く。地図は foot に「地図：Natural Earth」
 - 仕上げの前に必ず `export.mjs --check` と PNG の目視。直したら撮り直す
-- 案件ごとの約束（表記・出典・公開の手順）は、そのリポジトリのプロジェクトスキルに従う。まだなければ `examples/project-skill/SKILL.template.md` を `.cursor/skills/<名前>/SKILL.md` にコピーして埋める
+- 案件ごとの約束（表記・出典・公開の手順）は、そのリポジトリのプロジェクトスキルに従う。まだなければ `examples/project-skill/SKILL.template.md` をそのリポジトリのスキルのフォルダ（Cursor は `.cursor/skills/<名前>/SKILL.md`、Claude Code は `.claude/skills/<名前>/SKILL.md`）にコピーして埋める

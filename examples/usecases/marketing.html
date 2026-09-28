@@ -1,10 +1,10 @@
 <!doctype html>
-<html lang="ja" data-theme="navy" data-mode="doc">
+<html lang="ja" data-theme="blue" data-mode="doc">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
-<title>html-slides README figures</title>
+<title>マーケティングの見本</title>
 <style id="html-slides-lib">/*LIB:CSS*/
 /* 配色テーマ。<html data-theme="…"> で切り替える。どのテーマも「強調（accent）」と「お金・注意・未定（warn）」の2色＋灰色で組む。
    c1〜c6 はグラフの系列、seq1〜seq5 は塗り分け地図・濃淡の段階（薄い → 濃い）。 */
@@ -427,220 +427,81 @@ body.presenter .np .next { font-size: 22px; margin-top: 26px; }
 .f-missing { background: #ffe4e6; color: #be123c; }
 
 /*END LIB:CSS*/</style>
-<style>
-  /* README の図（GitHub では約 880px 幅に縮むので、文字は 36px 以上） */
-  section { padding: 64px 72px; }
-  .fig-h { font-size: 64px; font-weight: 900; line-height: 1.2; letter-spacing: -0.01em; }
-  .fig-h em { font-style: normal; color: var(--accent); }
-  .fig-s { font-size: 34px; font-weight: 600; color: var(--sub); margin-top: 10px; }
-  .crop { position: relative; overflow: hidden; border-radius: 14px; background: #fff; box-shadow: 0 6px 24px rgba(15, 23, 42, .18); }
-  .crop img { position: absolute; max-width: none; }
-  .lbl { font-size: 44px; font-weight: 900; line-height: 1.15; margin-top: 18px; }
-  .lbl small { display: block; font-size: 28px; font-weight: 600; color: var(--sub); margin-top: 4px; }
-  .mono { font-family: ui-monospace, Consolas, "SF Mono", Menlo, monospace; }
-
-  /* hero */
-  #hero { background: var(--accent); color: #fff; }
-  #hero.on { display: grid; grid-template-columns: 820px 1fr; gap: 40px; align-items: center; }
-  #hero .name { font-size: 132px; font-weight: 900; letter-spacing: -0.03em; line-height: 1; }
-  #hero .slogan { font-size: 50px; font-weight: 800; line-height: 1.35; margin-top: 36px; }
-  #hero .en { font-size: 34px; font-weight: 600; opacity: .8; margin-top: 16px; }
-  #hero .chips { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 48px; }
-  #hero .chips span { font-size: 34px; font-weight: 800; padding: 10px 26px; border-radius: 999px; background: rgba(255, 255, 255, .16); }
-  #hero .stack { position: relative; height: 900px; }
-  #hero .stack img { position: absolute; width: 860px; border-radius: 12px; box-shadow: 0 20px 50px rgba(0, 0, 0, .35); }
-
-  /* features */
-  #features, #usecases { padding: 36px 60px; }
-  #features .fig-h, #usecases .fig-h { font-size: 58px; }
-  #features .fig-s, #usecases .fig-s { font-size: 30px; margin-top: 4px; }
-  .tiles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px 24px; margin-top: 16px; }
-  .tiles .crop { aspect-ratio: 16 / 9; }
-  .tiles .lbl { display: flex; align-items: baseline; gap: 12px; font-size: 28px; margin-top: 6px; white-space: nowrap; }
-  .tiles .lbl small { display: inline; margin: 0; font-size: 22px; }
-
-  /* usecases */
-  .uc-row { display: flex; align-items: baseline; gap: 18px; margin-top: 56px; font-size: 38px; font-weight: 900; }
-  .uc-row small { font-size: 26px; font-weight: 600; color: var(--sub); }
-  #usecases .tiles { margin-top: 10px; }
-
-  /* workflow */
-  .wf { display: grid; grid-template-columns: repeat(3, 1fr); gap: 48px 64px; margin-top: 44px; }
-  .wf .st { position: relative; border: 4px solid var(--line); border-radius: 22px; padding: 36px 38px; background: var(--bg); min-height: 300px; }
-  .wf .st.key { border-color: var(--accent); background: var(--accent-bg); }
-  .wf .n { display: inline-grid; place-items: center; width: 64px; height: 64px; border-radius: 50%; background: var(--ink); color: var(--bg); font-size: 36px; font-weight: 900; }
-  .wf .st.key .n { background: var(--accent); }
-  .wf h3 { display: inline; font-size: 52px; font-weight: 900; margin-left: 16px; vertical-align: middle; }
-  .wf p { font-size: 38px; font-weight: 600; line-height: 1.4; margin-top: 16px; }
-  .wf code { display: inline-block; font-size: 34px; font-weight: 700; margin-top: 16px; padding: 6px 16px; border-radius: 10px; background: var(--lane); color: var(--ink); }
-  .wf .st:not(:nth-child(3n))::after { content: "→"; position: absolute; right: -56px; top: 50%; transform: translateY(-50%); font-size: 52px; font-weight: 900; color: var(--sub); }
-  .wf .loop { grid-column: 1 / -1; text-align: center; font-size: 42px; font-weight: 800; color: var(--accent); margin-top: -8px; }
-
-  /* check */
-  .ba { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; margin-top: 40px; }
-  .ba .crop { height: 520px; }
-  .ba .lbl.bad { color: var(--warn); }
-  .why { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 34px; }
-  .why span { font-size: 36px; font-weight: 800; padding: 8px 22px; border-radius: 12px; border: 3px solid var(--warn); color: var(--warn); background: var(--warn-bg); }
-
-  /* themes */
-  #themes { padding: 40px 64px; }
-  .th { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px 36px; margin-top: 24px; }
-  .th .crop { aspect-ratio: 16 / 9; }
-  .th .lbl { display: flex; align-items: center; gap: 14px; margin-top: 10px; font-size: 36px; }
-  .th .lbl i { width: 40px; height: 40px; border-radius: 10px; display: inline-block; }
-
-  /* modes */
-  .md { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; margin-top: 44px; }
-  .md .crop { aspect-ratio: 16 / 9; }
-  .md ul { margin-top: 18px; padding-left: 1.1em; font-size: 34px; font-weight: 600; line-height: 1.5; }
-
-  /* 検査の見本（README には出さない。check の図の元） */
-  .sample h1 { font-size: 40px; max-width: 1180px; } .sample .rule { width: 1180px; } .sample .grid { width: 1180px; }
-</style>
+<style></style>
 </head>
 <body>
 
-<section id="hero" data-nopno>
-  <div>
-    <div class="name">html-slides</div>
-    <div class="slogan">きれいな HTML スライドを、<br>毎回同じ品質で。</div>
-    <div class="en">Polished HTML slides, same quality every time.</div>
-    <div class="chips"><span>グラフ</span><span>図</span><span>地図</span><span>計算</span><span>イラスト</span><span>PNG と検査</span></div>
-  </div>
-  <div class="stack">
-    <img src="../../examples/demo/png/14-mix.png" alt="" style="left:120px; top:20px; transform:rotate(3deg)">
-    <img src="../../examples/demo/png/12-growth.png" alt="" style="left:40px; top:230px; transform:rotate(-2deg)">
-    <img src="../../examples/demo/png/01-cover.png" alt="" style="left:0; top:440px">
-  </div>
-</section>
-
-<section id="features" data-nopno>
-  <div class="fig-h">グラフ・図・地図・表から発表まで、<em>1 つのスキルで</em></div>
-  <div class="fig-s">Charts, diagrams, maps, tables, computed numbers, illustrations, pitch mode — and more</div>
-  <div class="tiles">
-    <div><div class="crop" data-src="../../examples/demo/png/01-cover.png" data-x="0" data-y="0" data-w="1920"></div><div class="lbl">表紙<small>Cover</small></div></div>
-    <div><div class="crop" data-src="../../examples/demo/png/12-growth.png" data-x="0" data-y="0" data-w="1920"></div><div class="lbl">積み上げ棒＋線<small>Stacked bar</small></div></div>
-    <div><div class="crop" data-src="../../examples/demo/png/13-unit.png" data-x="0" data-y="0" data-w="1920"></div><div class="lbl">滝グラフ<small>Waterfall</small></div></div>
-    <div><div class="crop" data-src="../../examples/demo/png/14-mix.png" data-x="0" data-y="0" data-w="1920"></div><div class="lbl">サンキー・円<small>Sankey, donut</small></div></div>
-    <div><div class="crop" data-src="../../examples/demo/png/16-roadmap.png" data-x="0" data-y="0" data-w="1920"></div><div class="lbl">ガント<small>Gantt</small></div></div>
-    <div><div class="crop" data-src="../../examples/demo/png/06-rivals.png" data-x="0" data-y="0" data-w="1920"></div><div class="lbl">散布図<small>Positioning</small></div></div>
-    <div><div class="crop" data-src="../../examples/demo/png/08-lanes.png" data-x="0" data-y="0" data-w="1920"></div><div class="lbl">担当者ごとの流れ<small>Swimlanes</small></div></div>
-    <div><div class="crop" data-src="../../examples/demo/png/09-loop.png" data-x="0" data-y="0" data-w="1920"></div><div class="lbl">関係図・循環図<small>Diagrams</small></div></div>
-    <div><div class="crop" data-src="../../examples/demo/png/04-markets.png" data-x="0" data-y="0" data-w="1920"></div><div class="lbl">世界地図<small>World map</small></div></div>
-    <div><div class="crop" data-src="../../examples/demo/png/05-farms.png" data-x="0" data-y="0" data-w="1920"></div><div class="lbl">日本地図<small>Japan map</small></div></div>
-    <div><div class="crop" data-src="../../examples/demo/png/11-kpi.png" data-x="0" data-y="0" data-w="1920"></div><div class="lbl">計算した数字<small>Numbers</small></div></div>
-    <div><div class="crop" data-src="../../examples/demo/png-pitch/03-three.png" data-x="0" data-y="0" data-w="1920"></div><div class="lbl">発表用の型<small>Pitch mode</small></div></div>
-  </div>
-</section>
-
-<section id="usecases" data-nopno>
-  <div class="fig-h">事業計画だけでなく、<em>マーケティングやコンサルの資料</em>にも</div>
-  <div class="fig-s">Also for marketing plans and consulting reports</div>
-  <div class="uc-row">マーケティング<small>ファネル・ポジショニング・チャネルの獲得単価・施策の計画（テーマ blue）</small></div>
-  <div class="tiles">
-    <div><div class="crop" data-src="../../examples/usecases/png-marketing/01-funnel.png" data-x="0" data-y="0" data-w="1920"></div></div>
-    <div><div class="crop" data-src="../../examples/usecases/png-marketing/02-position.png" data-x="0" data-y="0" data-w="1920"></div></div>
-    <div><div class="crop" data-src="../../examples/usecases/png-marketing/03-channels.png" data-x="0" data-y="0" data-w="1920"></div></div>
-    <div><div class="crop" data-src="../../examples/usecases/png-marketing/04-plan.png" data-x="0" data-y="0" data-w="1920"></div></div>
-  </div>
-  <div class="uc-row">コンサルティング<small>要旨・イシューツリー・優先度の 2×2・利益のブリッジ（テーマ mono）</small></div>
-  <div class="tiles">
-    <div><div class="crop" data-src="../../examples/usecases/png-consulting/01-summary.png" data-x="0" data-y="0" data-w="1920"></div></div>
-    <div><div class="crop" data-src="../../examples/usecases/png-consulting/02-issues.png" data-x="0" data-y="0" data-w="1920"></div></div>
-    <div><div class="crop" data-src="../../examples/usecases/png-consulting/03-priority.png" data-x="0" data-y="0" data-w="1920"></div></div>
-    <div><div class="crop" data-src="../../examples/usecases/png-consulting/04-bridge.png" data-x="0" data-y="0" data-w="1920"></div></div>
-  </div>
-</section>
-
-<section id="workflow" data-nopno>
-  <div class="fig-h">頼むと、AI エージェントが<em>6 つの手順</em>で仕上げる</div>
-  <div class="fig-s">Ask your AI agent — it builds, checks and exports in six steps</div>
-  <div class="wf">
-    <div class="st"><span class="n">1</span><h3>作る</h3><p>型・テーマ・言語を選ぶ</p><code class="mono">deck.mjs new</code></div>
-    <div class="st"><span class="n">2</span><h3>書く</h3><p>1 ページ 1 メッセージ、<br>決まった部品で組む</p></div>
-    <div class="st"><span class="n">3</span><h3>数字</h3><p>計算して埋め込む</p><code class="mono">inject-data.mjs</code></div>
-    <div class="st"><span class="n">4</span><h3>地図・絵</h3><p>地図と挿絵を入れる</p><code class="mono">make-map.mjs</code></div>
-    <div class="st key"><span class="n">5</span><h3>検査</h3><p>崩れを赤枠で見つけて直す</p><code class="mono">export.mjs --check</code></div>
-    <div class="st"><span class="n">6</span><h3>書き出す</h3><p>全ページの PNG と一覧</p><code class="mono">export.mjs --sheet</code></div>
-    <div class="loop">5 は「問題: なし」になるまでくり返す</div>
-  </div>
-</section>
-
-<section id="check" data-nopno>
-  <div class="fig-h">崩れは<em>自動で見つかる</em>。直すまで仕上がりにしない</div>
-  <div class="fig-s">Layout problems are detected automatically and fixed before export</div>
-  <div class="ba">
-    <div><div class="crop" data-src="png/check/07-bad.png" data-x="0" data-y="0" data-w="1290"></div><div class="lbl bad">直す前<small>赤枠と、左上に理由の一覧</small></div></div>
-    <div><div class="crop" data-src="png/08-good.png" data-x="0" data-y="0" data-w="1290"></div><div class="lbl">直した後<small>「問題: なし」</small></div></div>
-  </div>
-  <div class="why"><span>文字のはみ出し</span><span>画面の外</span><span>小さすぎる文字</span><span>数字の抜け</span><span>空の地図</span><span>画像の抜け</span><span>id の重複</span></div>
-</section>
-
-<section id="themes" data-nopno>
-  <div class="fig-h">同じ中身を、<em>6 つのテーマ</em>で</div>
-  <div class="fig-s">The same deck in six built-in themes (brand colors via CSS variables)</div>
-  <div class="th">
-    <div><div class="crop" data-src="../themes/green.png" data-x="0" data-y="0" data-w="1920"></div><div class="lbl"><i style="background:#1f9d55"></i><i style="background:#c2410c"></i>green</div></div>
-    <div><div class="crop" data-src="../themes/navy.png" data-x="0" data-y="0" data-w="1920"></div><div class="lbl" data-sw="navy">navy</div></div>
-    <div><div class="crop" data-src="../themes/mono.png" data-x="0" data-y="0" data-w="1920"></div><div class="lbl" data-sw="mono">mono</div></div>
-    <div><div class="crop" data-src="../themes/blue.png" data-x="0" data-y="0" data-w="1920"></div><div class="lbl" data-sw="blue">blue</div></div>
-    <div><div class="crop" data-src="../themes/wa.png" data-x="0" data-y="0" data-w="1920"></div><div class="lbl" data-sw="wa">wa（和風）</div></div>
-    <div><div class="crop" data-src="../themes/dark.png" data-x="0" data-y="0" data-w="1920"></div><div class="lbl" data-sw="dark">dark</div></div>
-  </div>
-</section>
-
-<section id="modes" data-nopno>
-  <div class="fig-h">読む資料と、映す発表。<em>2 つの型</em>を選べる</div>
-  <div class="fig-s">doc for reading, pitch for presenting</div>
-  <div class="md">
-    <div><div class="crop" data-src="../../examples/demo/png/12-growth.png" data-x="0" data-y="0" data-w="1920"></div><div class="lbl">doc：配って読む資料<small>本文 22px 以上</small></div><ul><li>根拠と注記まで 1 ページで完結</li><li>カード・表・グラフ・図・地図</li></ul></div>
-    <div><div class="crop" data-src="../../examples/demo/png-pitch/06-bars.png" data-x="0" data-y="0" data-w="1920"></div><div class="lbl">pitch：話しながら映す<small>文字 54px 以上</small></div><ul><li>1 ページに 1 つのこと</li><li>台本メモ・発表者の窓・経過時間</li></ul></div>
-  </div>
-</section>
-
-<!-- ここから下は check の図の元（build.mjs が --check で撮る） -->
-<section id="bad" class="sample" data-nopno>
-  <div class="kicker">MARKET</div>
-  <h1>市場は3年で2倍に伸び、アジアから先に開く</h1>
+<section id="funnel">
+  <div class="kicker"><span class="sec">01</span>FUNNEL</div>
+  <h1>「検討→購入」が25%と最も低く、ここを直すのが最も効く</h1>
   <div class="rule"></div>
-  <div class="grid g3">
-    <div class="card" style="height:260px"><h2>アジア</h2><p>台湾・香港・シンガポールの3つの国・地域で、日本の食品の越境ECは毎年2割ずつ伸びている。定期便の利用者も多く、配送の日数も短いので、最初に売る市場にする。現地の決済と言葉にも対応する。</p></div>
-    <div class="card"><h2>北米</h2><p>市場は最も大きいが、送料と関税が重い。</p><p style="font-size:12px">※ 送料は2025年の見積もり。関税の率は品目で変わる。</p></div>
-    <div class="card"><h2>3年目の売上</h2><div class="kpi"><div class="v"><span data-f="rev.y9"></span><small>億円</small></div></div></div>
+  <div class="cols c64">
+    <div class="chart" style="height:600px" data-chart='{"type":"bar","horizontal":true,"labels":["認知","興味","検討","購入","継続（3か月）"],"values":[120000,36000,9600,2400,1700],"highlight":3,"unit":"人（月）","labelWidth":230}'></div>
+    <div class="stack">
+      <h3>段ごとに残る割合</h3>
+      <table class="tbl">
+        <tr><th>段</th><th class="r">残る割合</th><th class="r">同業の目安</th></tr>
+        <tr><td>認知 → 興味</td><td class="r">30%</td><td class="r">25〜35%</td></tr>
+        <tr><td>興味 → 検討</td><td class="r">27%</td><td class="r">20〜30%</td></tr>
+        <tr class="em"><td>検討 → 購入</td><td class="r">25%</td><td class="r">35〜45%</td></tr>
+        <tr><td>購入 → 継続</td><td class="r">71%</td><td class="r">60〜70%</td></tr>
+      </table>
+      <div class="strip">検討した人の<b>4人に3人</b>が買わずに去る。送料の表示と支払い方法の少なさが原因の上位。</div>
+    </div>
   </div>
-  <div class="foot"><span>見本</span></div>
+  <div class="foot"><span>見本用の架空の数字</span></div>
 </section>
 
-<section id="good" class="sample" data-nopno>
-  <div class="kicker">MARKET</div>
-  <h1>市場は3年で2倍に伸び、アジアから先に開く</h1>
+<section id="position">
+  <div class="kicker"><span class="sec">02</span>POSITIONING</div>
+  <h1>競合のいない「手頃で本格的」の位置を取る</h1>
   <div class="rule"></div>
-  <div class="grid g3">
-    <div class="card key" style="height:260px"><h2>アジア</h2><p>越境ECが毎年2割伸びる。配送も短く、最初に売る。</p></div>
-    <div class="card"><h2>北米</h2><p>市場は最も大きいが、送料と関税が重い。</p><div class="note">送料は2025年の見積もり</div></div>
-    <div class="card"><h2>3年目の売上</h2><div class="kpi"><div class="v"><span data-f="rev.2" data-d="1"></span><small>億円</small></div></div></div>
+  <div class="cols c64">
+    <div class="chart" style="height:680px" data-chart='{"type":"bubble","x":{"label":"月の値段（円）","min":500,"max":3200},"y":{"label":"本格さ（調査の平均点）","min":1,"max":10},"quad":{"x":1850,"y":5.5,"labels":["手頃・本格","高い・本格","手頃・手軽","高い・手軽"]},"points":[{"x":2700,"y":8.2,"r":56,"label":"A社"},{"x":900,"y":3.2,"r":70,"label":"B社"},{"x":2300,"y":4.1,"r":38,"label":"C社"},{"x":1400,"y":7.6,"r":34,"label":"自社（狙う位置）","key":true}]}'></div>
+    <div class="stack">
+      <h3>読み取り</h3>
+      <ul class="pts">
+        <li>本格派は月2,500円以上に集まる</li>
+        <li>手頃な価格帯は「手軽さ」で競っている</li>
+        <li>左上に、大きな競合がいない</li>
+      </ul>
+      <div class="quote">この値段でこの品質なら、毎月でも続けられる<cite>試用者インタビュー（30代・会社員）</cite></div>
+    </div>
   </div>
-  <div class="foot"><span>見本</span></div>
+  <div class="foot"><span>円の大きさは会員数。見本用の架空の数字</span></div>
 </section>
 
-<script>
-  /* .crop：元の PNG（1920 幅）の (x, y) から幅 w の範囲を、枠いっぱいに拡大して見せる */
-  document.querySelectorAll(".crop").forEach(c => {
-    const img = document.createElement("img");
-    img.src = c.dataset.src; img.alt = "";
-    c.appendChild(img);
-  });
-  const fitCrops = sec => sec.querySelectorAll(".crop").forEach(c => {
-    const k = c.offsetWidth / +c.dataset.w;
-    Object.assign(c.firstElementChild.style, { width: 1920 * k + "px", left: -c.dataset.x * k + "px", top: -c.dataset.y * k + "px" });
-  });
-  document.addEventListener("DOMContentLoaded", () => Slides.onShow(fitCrops));
-  /* テーマの色見本（強調色・お金の色。assets/themes.css の --accent・--warn） */
-  const SW = { navy: ["#1f3a68", "#e4572e"], mono: ["#111111", "#d62828"], blue: ["#2563eb", "#b7791f"], wa: ["#264e86", "#d9480f"], dark: ["#34d399", "#fb923c"] };
-  document.querySelectorAll("[data-sw]").forEach(l => l.insertAdjacentHTML("afterbegin", SW[l.dataset.sw].map(c => `<i style="background:${c}"></i>`).join("")));
-</script>
-<script>/*DATA*/window.DATA = {"rev": [0.6, 7.4, 20.9]};/*END DATA*/</script>
+<section id="channels">
+  <div class="kicker"><span class="sec">03</span>CHANNELS</div>
+  <h1>獲得単価が低いのは紹介とSNS。広告は上限を決めて使う</h1>
+  <div class="rule"></div>
+  <div class="cols c64">
+    <div class="chart" style="height:640px" data-chart='{"type":"bar","labels":["紹介","SNS","検索広告","動画広告","展示会"],"unit":"円","series":[{"name":"獲得単価（円）","values":[1800,2600,4200,6800,9500],"colors":["accent","accent","mid","mid","mid"]},{"name":"獲得件数（月）","values":[420,1100,800,650,120],"type":"line","axis":"right","color":"warn","valueLabels":true}]}'></div>
+    <div class="stack">
+      <h3>次の四半期の配分</h3>
+      <table class="tbl">
+        <tr><th>チャネル</th><th class="r">予算</th><th class="s">打ち手</th></tr>
+        <tr class="em"><td>紹介</td><td class="r">+40%</td><td class="s">紹介した人にも特典</td></tr>
+        <tr class="em"><td>SNS</td><td class="r">+25%</td><td class="s">短い動画を週3本</td></tr>
+        <tr><td>検索広告</td><td class="r">±0</td><td class="s">指名語に絞る</td></tr>
+        <tr><td>動画広告</td><td class="r">−30%</td><td class="s">単価5,000円で止める</td></tr>
+        <tr><td>展示会</td><td class="r">−100%</td><td class="s">今期は出ない</td></tr>
+      </table>
+    </div>
+  </div>
+  <div class="foot"><span>見本用の架空の数字</span></div>
+</section>
+
+<section id="plan">
+  <div class="kicker"><span class="sec">04</span>CAMPAIGN</div>
+  <h1>3か月で「知る→試す→続ける」の順に施策を重ねる</h1>
+  <div class="rule"></div>
+  <div class="chart" style="height:640px" data-chart='{"type":"gantt","min":0,"max":12,"ticks":[{"v":0,"label":"1か月目"},{"v":4,"label":"2か月目"},{"v":8,"label":"3か月目"}],"marks":[{"v":8,"label":"試用の申込 1,000件"},{"v":12,"label":"継続率 70%","anchor":"end","color":"accent"}],"rows":[{"group":"知る","label":"短い動画（SNS）","a":0,"b":12,"text":"週3本"},{"label":"インフルエンサー","a":1,"b":6,"text":"10人と提携"},{"group":"試す","label":"初月半額","a":3,"b":9,"color":"accent","text":"試用の入口"},{"label":"送料の表示を先に","a":2,"b":4,"text":"検討→購入の改善"},{"group":"続ける","label":"2か月目の案内メール","a":6,"b":12,"text":"好みを3問で聞く"},{"label":"紹介の特典","a":8,"b":12,"color":"c6","dash":true,"text":"予定"}]}'></div>
+  <div class="strip">2か月目の終わりに<b>試用の申込 1,000件</b>を見て、届かなければ動画の予算を紹介へ移す。</div>
+  <div class="foot"><span>見本用の架空の計画</span></div>
+</section>
+
+<script>/*DATA*/window.DATA = {};/*END DATA*/</script>
 <script id="html-slides-lib-js">/*LIB:JS*/
 /* html-slides runtime：画面合わせ・ページ送り・番号・章の並び・data-f の数字・?check・発表者メモ。
    デッキ側の <script> は window.DATA と Slides.onShow(fn) を使える（DOMContentLoaded で初期化するので、デッキ側の定義が先に済む）。 */

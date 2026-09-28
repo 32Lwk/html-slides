@@ -1,7 +1,7 @@
-# イラスト（GenerateImage → to_webp.py）
+# イラスト（画像生成ツール → to_webp.py）
 
-Cursor の GenerateImage（`cursor` 名前空間の組み込みツール。GetDynamicTools で形を確かめてから CallDynamicTool）で描き、`scripts/to_webp.py` で背景を抜いて webp にする。
-1デッキの絵は**同じ画風にそろえる**：下の「画風の指示」を毎回そのまま付け、2枚目からは1枚目を `reference_image_paths` に渡す。
+エージェントの画像生成ツール（Cursor なら `cursor` 名前空間の GenerateImage。GetDynamicTools で形を確かめてから CallDynamicTool。ほかのエージェントでは、そのエージェントの画像生成ツールや画像生成 API）で描き、`scripts/to_webp.py` で背景を抜いて webp にする。
+1デッキの絵は**同じ画風にそろえる**：下の「画風の指示」を毎回そのまま付け、2枚目からは1枚目を参考画像として渡す（GenerateImage では `reference_image_paths`。参考画像を渡せないツールでは、同じ指示を一字も変えずに付ける）。
 
 ## 手順
 
