@@ -451,8 +451,12 @@ body.presenter .np .next { font-size: 22px; margin-top: 26px; }
   #hero .stack img { position: absolute; width: 860px; border-radius: 12px; box-shadow: 0 20px 50px rgba(0, 0, 0, .35); }
 
   /* features */
-  .tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px 40px; margin-top: 32px; }
-  .tiles .crop { height: 280px; }
+  #features { padding: 48px 72px; }
+  #features .fig-s { margin-top: 4px; }
+  .tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px 40px; margin-top: 26px; }
+  .tiles .crop { aspect-ratio: 16 / 9; }
+  .tiles .lbl { display: flex; align-items: baseline; gap: 16px; font-size: 40px; margin-top: 12px; white-space: nowrap; }
+  .tiles .lbl small { display: inline; margin: 0; font-size: 28px; }
 
   /* workflow */
   .wf { display: grid; grid-template-columns: repeat(3, 1fr); gap: 48px 64px; margin-top: 44px; }
@@ -508,12 +512,12 @@ body.presenter .np .next { font-size: 22px; margin-top: 26px; }
   <div class="fig-h">1 つのスキルで、<em>6 種類の表現</em>がそろう</div>
   <div class="fig-s">Charts, diagrams, maps, computed numbers, illustrations and a pitch mode</div>
   <div class="tiles">
-    <div><div class="crop" data-src="../../examples/demo/png/12-growth.png" data-x="60" data-y="190" data-w="1100"></div><div class="lbl">グラフ<small>棒・線・円・滝・サンキーほか</small></div></div>
-    <div><div class="crop" data-src="../../examples/demo/png/08-lanes.png" data-x="50" data-y="200" data-w="1250"></div><div class="lbl">図<small>関係図・担当者ごとのフロー</small></div></div>
-    <div><div class="crop" data-src="../../examples/demo/png/04-markets.png" data-x="50" data-y="170" data-w="1150"></div><div class="lbl">地図<small>世界・国・日本の都道府県</small></div></div>
-    <div><div class="crop" data-src="../../examples/demo/png/11-kpi.png" data-x="50" data-y="170" data-w="1150"></div><div class="lbl">数字は計算から<small>Python の結果を埋め込む</small></div></div>
-    <div><div class="crop" data-src="../../examples/demo/png/03-value.png" data-x="50" data-y="170" data-w="1250"></div><div class="lbl">イラスト<small>テーマに合わせて生成</small></div></div>
-    <div><div class="crop" data-src="../../examples/demo/png-pitch/01-cover.png" data-x="0" data-y="0" data-w="1920"></div><div class="lbl">発表用の型<small>文字 54px 以上・発表者メモ</small></div></div>
+    <div><div class="crop" data-src="../../examples/demo/png/12-growth.png" data-x="0" data-y="0" data-w="1920"></div><div class="lbl">グラフ<small>Charts</small></div></div>
+    <div><div class="crop" data-src="../../examples/demo/png/08-lanes.png" data-x="0" data-y="0" data-w="1920"></div><div class="lbl">図<small>Diagrams</small></div></div>
+    <div><div class="crop" data-src="../../examples/demo/png/05-farms.png" data-x="0" data-y="0" data-w="1920"></div><div class="lbl">地図<small>Maps</small></div></div>
+    <div><div class="crop" data-src="../../examples/demo/png/11-kpi.png" data-x="0" data-y="0" data-w="1920"></div><div class="lbl">数字<small>Numbers from code</small></div></div>
+    <div><div class="crop" data-src="../../examples/demo/png/03-value.png" data-x="0" data-y="0" data-w="1920"></div><div class="lbl">イラスト<small>Illustrations</small></div></div>
+    <div><div class="crop" data-src="../../examples/demo/png-pitch/03-three.png" data-x="0" data-y="0" data-w="1920"></div><div class="lbl">発表用の型<small>Pitch mode</small></div></div>
   </div>
 </section>
 
