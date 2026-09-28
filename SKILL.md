@@ -4,10 +4,12 @@ description: >-
   1920×1080 固定の 1 ファイル HTML スライドを、決まったデザイン（結論を言い切る見出し・強調色とお金の色の 2 色・
   6 つのテーマ）で安定して作り、Chrome headless で PNG に書き出してはみ出し・小さすぎる文字・数字の抜けを自動で確かめる。
   自前の SVG グラフ（棒・線・面・円・散布・滝・ガント・サンキーほか）、関係図・担当者ごとのフロー図・循環図、
-  世界・国・日本の都道府県の地図、Python の計算結果の埋め込み、テーマに合わせたイラスト（エージェントの画像生成ツール）まで扱う。
+  世界・国・日本の都道府県の地図、Python の計算結果の埋め込み、テーマに合わせたイラスト（エージェントの画像生成ツール）、
+  出典・前提の一覧・用語集・ページ内リンク、損益計算書・資金繰り・損益分岐の表、数字の食い違いの機械の検査と専門家役のレビューまで扱う。
   資料（doc）と発表（pitch、文字 54px 以上）の 2 つの型、日本語と英語。オフラインで開ける。
   「スライドを作って」「発表資料」「プレゼン」「ピッチ」「slides.html」「HTML でスライド」「PNG に書き出して」
-  「グラフを入れて」「地図を入れて」「図にして」「イラストを入れて」と頼まれたとき、既存のデッキにページを足す・直すときに使う。
+  「グラフを入れて」「地図を入れて」「図にして」「イラストを入れて」「出典」「用語集」「PL」「資金繰り」「レビュー」「検査」と頼まれたとき、
+  既存のデッキにページを足す・直すときに使う。
 ---
 
 # HTML スライド
@@ -15,7 +17,7 @@ description: >-
 1 つの HTML ファイル（デッキ）で 1 ページ＝1 つの `<section id>`（1920×1080 固定）。CSS・JS・データ・地図はファイルに埋め込み、フォントは隣の `fonts/` に置くので、ネットなしで開ける。`deck.html#id` でそのページを開く。
 
 - スキルの場所：この SKILL.md のあるフォルダ（例：Cursor は `~/.cursor/skills/html-slides/`、Claude Code は `~/.claude/skills/html-slides/`。Windows は `~` を `%USERPROFILE%` に）。以下 `$HS` と書く。スクリプトは自分の場所から `assets/` を探すので、どこに置いても動く
-- 見本：`$HS/examples/demo/slides.html`（資料・和風・日本語 18 枚）と `pitch.html`（発表・紺・英語 7 枚）。PNG は同じフォルダの `png/`・`png-pitch/`（`sheet.png` が一覧）。**迷ったら見本の同じ種類のページを開いて、そのまま写す**
+- 見本：`$HS/examples/demo/slides.html`（資料・和風・日本語 26 枚。付録に財務の表・前提の一覧・出典・用語集）と `pitch.html`（発表・紺・英語 7 枚）。PNG は同じフォルダの `png/`・`png-pitch/`（`sheet.png` が一覧）。**迷ったら見本の同じ種類のページを開いて、そのまま写す**
 - Windows・Mac とも Node 18 以上と Chrome（か Edge）で動く。計算は Python 3（numpy）
 
 ## 初めて使うとき（1 回だけ）
@@ -43,9 +45,13 @@ Windows で Python の日本語が化ける・`UnicodeEncodeError` が出ると�
 - [ ] 4. 数字があれば calc.py で計算して inject-data.mjs で埋め込む（reference/data.md）
 - [ ] 5. 地図があれば make-map.mjs --into で書き込む（reference/maps.md）
 - [ ] 6. イラストがあれば画像生成ツール → to_webp.py（reference/illustrations.md。ツールがなければ絵なしのページにする）
-- [ ] 7. export.mjs --check を「問題: なし」になるまで繰り返す
-- [ ] 8. export.mjs --sheet で PNG を書き出し、sheet.png と数枚を開いて目で確かめる
+- [ ] 7. 出典・前提・用語があれば build-sources.mjs → build-glossary.mjs（reference/sources.md）。財務の表は finance.py と data-fin（reference/finance.md）
+- [ ] 8. export.mjs --check を「問題: なし」になるまで繰り返す
+- [ ] 9. export.mjs --sheet で PNG を書き出し、sheet.png と数枚を開いて目で確かめる
+- [ ] 10. 数字の多い資料・人に見せる前は audit.mjs と専門家役のレビュー（reference/review.md。既定 20人×5問、頼まれた数に合わせる）
 ```
+
+手順 7・10 は頼まれたとき、または出典のある数字・財務の表がある資料のときに行う。ページの並び・本文を変えたら手順 7 をやり直す。
 
 **手順 2**
 
@@ -58,7 +64,7 @@ node "$HS/scripts/deck.mjs" new <出力フォルダ> --mode doc --theme green --
 
 **手順 3**：どのページも `kicker → h1 → rule → 本文 → strip（任意）→ foot` の並び。h1 は題名でなく **そのページの結論を 1 文で言い切る**。部品は reference/components.md のものだけで組み、ページごとの `<style>` で新しい見た目を作らない（大きさ・位置の微調整は `style=""` で）。
 
-**手順 7**：`?check` を付けて開いたときと同じ検査を全ページにかける。
+**手順 8**：`?check` を付けて開いたときと同じ検査を全ページにかける。
 
 ```bash
 node "$HS/scripts/export.mjs" <deck.html> --check          # 問題のページと理由を一覧、赤枠の PNG は png/check/
@@ -74,13 +80,14 @@ node "$HS/scripts/export.mjs" <deck.html> --check          # 問題のページ�
 | `map-empty` | 地図がまだ書き込まれていない | `make-map.mjs <spec> --into <deck>` |
 | `image-missing` | 画像が読めない | パス・ファイル名 |
 | `dup-id` | 同じ id が 2 か所（ページの id と図の箱など） | 図の箱の id にページごとの接頭辞を付ける |
+| `link-missing` | `href="#id"` の飛び先がない | id の綴り。消したページへのリンクを直す |
 | `sparse 右がN%・下がN%空いている` | 中身が片側に寄り、空きが大きい（左右の空きの差が 15% 以上、または下の空きが上より 35% 以上多い。PNG では空きに赤い斜線） | 幅の固定をやめて横いっぱいに → グラフ・カードを大きく → まとめの帯・表・数字を足す → 中身が少ないなら前後のページとまとめる。わざと空けるページだけ `<section data-sparse-ok>` |
 
 `sparse` は本文（見出しの線から下の注記まで）の文字・画像・グラフ・枠や背景のある箱の範囲で測る。表紙（`.cover`）・中扉（`.chap`）・締め（`.dark`）・全面の写真（`.full-img`）と、中央に寄せたページ（発表の大きな一言など）は対象外。
 
-「問題: なし」でも崩れはありうるので、**手順 8 で必ず PNG を目で見る**（重なり・読みにくい色・弱い空き）。`png/check/` は消してよい。
+「問題: なし」でも崩れはありうるので、**手順 9 で必ず PNG を目で見る**（重なり・読みにくい色・弱い空き）。`png/check/` は消してよい。
 
-**手順 8**
+**手順 9**
 
 ```bash
 node "$HS/scripts/export.mjs" <deck.html> --sheet          # png/NN-id.png と一覧の png/sheet.png
@@ -89,6 +96,15 @@ node "$HS/scripts/export.mjs" <deck.html> --theme dark --out /tmp/dark   # テ�
 ```
 
 見る点：空きすぎたページ（下 1/3 が空なら絵・グラフを大きくするか要素を足す）、図の線が箱や文字を横切っていないか、グラフの目盛り・ラベルの重なり、強調色が 1 ページ 1〜2 か所に収まっているか。
+
+**手順 10**：見た目でなく中身を疑う。
+
+```bash
+node "$HS/scripts/audit.mjs" <deck.html>     # review/<name>-audit.md（数字の食い違い・出典のない数字・切れたリンク）と、レビューが読む <name>-text.md
+node "$HS/scripts/build-review.mjs" review/<name>-review.json --experts 20 --questions 5
+```
+
+エラーは直す。専門家役のレビューは reference/review.md の手順で、`<name>-text.md` だけを根拠に答える。サブエージェントを使えるなら 5 人ずつ並列に書かせる。原文で確かめた食い違いを直したら `fixed` に書き、`audit.mjs` をやり直す。
 
 ## コマンド一覧
 
@@ -100,6 +116,10 @@ node "$HS/scripts/export.mjs" <deck.html> --theme dark --out /tmp/dark   # テ�
 | `inject-data.mjs <deck.html> [deck2.html…] <data.json>` | 計算結果を `/*DATA*/…/*END DATA*/` に埋め込む |
 | `make-map.mjs <spec.json> [--into deck.html …]` | 地図の SVG を作り `<!--MAP:name-->…<!--END MAP:name-->` に書き込む |
 | `export.mjs <deck.html> [--check] [--sheet] [--only a,b] [--theme] [--out] [--jobs 4]` | PNG の書き出しと検査 |
+| `build-sources.mjs <deck.html> <sources.json> [--md]` | 一次調査・外部の資料・前提の一覧のページと、各ページの出典欄（`/*CITES*/`）。`sources.md` も書く |
+| `build-glossary.mjs <deck.html> <glossary.json>` | 用語集のページと本文の下線（`/*GLOSS*/`） |
+| `audit.mjs <deck.html> [--out] [--terms a,b] [--online]` | 機械の検査。エラーがあれば終了コード 1 |
+| `build-review.mjs <review.json> [--pages] [--out] [--experts N --questions M]` | 専門家役のレビューを Markdown に |
 | `python to_webp.py in.png [out.webp] [--max 1400] [--keep-bg]` | 生成した絵の背景を透明にして webp に |
 
 Chrome が見つからないときは環境変数 `CHROME` に場所を入れる。スキルの部品を埋め込んでいない古いデッキにも `export.mjs` は使える（そのときは赤枠の `.ovf-badge` があるかだけで判定する）。
@@ -123,11 +143,13 @@ Chrome が見つからないときは環境変数 `CHROME` に場所を入れる
 | `assets/slides.css` | 型と部品 |
 | `assets/runtime.js` | 画面合わせ・ページ送り・番号・章の並び・`data-f`・`?check`・メモ |
 | `assets/charts.js` `assets/diagrams.js` | グラフと図（`data-chart`・`data-links`） |
+| `assets/tables.js` | 財務の表（`data-fin`） |
 | `assets/fonts/` | Noto Sans JP・Inter（OFL） |
 | `assets/geo/` | Natural Earth（110m・10m）と日本の都道府県 |
 | `templates/doc.html` `pitch.html` `maps.json` | `deck new` の元 |
+| `templates/finance.py` | 損益計算書・資金繰り・損益分岐の計算（`data/` にコピーして import） |
 | `reference/` | 下の詳しい説明 |
-| `examples/demo/` | 見本（`data/calc.py` から数字・地図まで通したもの） |
+| `examples/demo/` | 見本（`data/calc.py` から数字・地図・付録まで通したもの。`review/` に検査とレビューの結果） |
 | `examples/project-skill/SKILL.template.md` | 案件ごとのプロジェクトスキルのひな形 |
 
 ## 詳しい説明（必要になったら読む）
@@ -139,10 +161,14 @@ Chrome が見つからないときは環境変数 `CHROME` に場所を入れる
 - [reference/maps.md](reference/maps.md) — 世界・国・日本の都道府県の地図
 - [reference/data.md](reference/data.md) — Python で計算して埋め込む流れ
 - [reference/illustrations.md](reference/illustrations.md) — テーマごとのイラストの作り方（固定のスタイル指示）
+- [reference/sources.md](reference/sources.md) — 出典・前提の一覧・用語集・ページ内リンク（`p.N` の自動・元のページへ戻る）
+- [reference/finance.md](reference/finance.md) — 損益計算書・資金繰り・損益分岐の計算と `data-fin` の表
+- [reference/review.md](reference/review.md) — 機械の検査と専門家役のレビューの手順、review.json の形
 
 ## 守ること
 
-- 数字は手で打たず、計算の出力を `data-f`・`"@path"` で参照する（前提を変えても食い違わない）
+- 数字は手で打たず、計算の出力を `data-f`・`"@path"` で参照する（前提を変えても食い違わない）。出典のない数字は前提の一覧に載せる
+- 出典の番号・ページ番号・用語集は手で書かず、JSON から作る（文の中で資料を指すときは `{{key}}`）
 - 色は CSS 変数だけ。強調（`.key`）は 1 ページ 1〜2 か所。お金の流れはお金の色（`--warn`）と破線
 - 決まっていないことは決まったものとして書かない（`.card.open`・`.tag` で分けて選択肢を並べる）
 - 生成したイラストを使ったら foot に「イラストは生成AIで作成したイメージ」と書く。地図は foot に「地図：Natural Earth」

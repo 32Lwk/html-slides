@@ -1,4 +1,5 @@
-/* html-slides runtime：画面合わせ・ページ送り・番号・章の並び・data-f の数字・?check・発表者メモ。
+/* html-slides runtime：画面合わせ・ページ送り・番号・章の並び・data-f の数字・?check・発表者メモ・
+   出典の番号と用語の下線（window.CITES・window.GLOSS）・リンクの p.番号・戻るリンク・飛び先を光らせる。
    デッキ側の <script> は window.DATA と Slides.onShow(fn) を使える（DOMContentLoaded で初期化するので、デッキ側の定義が先に済む）。 */
 (() => {
   const H = document.documentElement;
@@ -109,6 +110,8 @@
       const hasText = [...el.childNodes].some(n => n.nodeType === 3 && n.textContent.trim());
       if (hasText && parseFloat(cs.fontSize) < MIN_FS) add(el, `font ${parseFloat(cs.fontSize)}px < ${MIN_FS}px`);
       if (el.tagName === "IMG" && el.complete && !el.naturalWidth) add(el, "image-missing");
+      const href = el.tagName === "A" ? el.getAttribute("href") || "" : "";
+      if (href.length > 1 && href[0] === "#" && !document.getElementById(decodeURIComponent(href.slice(1)))) add(el, `link-missing ${href}（飛び先の id がない）`);
       if (el.classList.contains("f-missing")) add(el, `data-missing ${el.dataset.f || el.dataset.chart?.slice(0, 40) || ""}`);
     });
     hits.forEach(h => h.el.classList.add("ovf"));
@@ -134,10 +137,77 @@
     }
   }
 
+  /* ---------- 出典・用語：build-sources.mjs / build-glossary.mjs が書く window.CITES・window.GLOSS から ---------- */
+  const citesRow = sec => {
+    let c = sec.querySelector(":scope > .cites");
+    if (!c) { c = document.createElement("div"); c.className = "cites"; sec.appendChild(c); }
+    return c;
+  };
+  const attr = s => String(s).replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;");
+  /** 各ページの下に出典の番号（3つ以上続く番号は 4–7 にまとめる）。マウスを乗せると資料名、クリックで出典のページへ */
+  function renderCites(ids) {
+    const C = window.CITES;
+    if (!C || !C.pages || MODE === "pitch") return;
+    for (const [id, list] of Object.entries(C.pages)) {
+      const sec = document.getElementById(id);
+      if (!sec || sec.tagName !== "SECTION" || !list.length) continue;
+      const num = n => /^\d+$/.test(n), runs = [];
+      list.forEach(n => {
+        const r = runs[runs.length - 1];
+        if (r && num(n) && num(r[r.length - 1]) && +n === +r[r.length - 1] + 1) r.push(n); else runs.push([n]);
+      });
+      const tip = ns => attr(ns.map(n => `${n}. ${C.src[n]?.t || ""}`).join("\n"));
+      const chips = runs.flatMap(r => (r.length > 2 ? [r] : r.map(x => [x]))).map(g => {
+        const s = C.src[g[0]] || {};
+        return `<a class="cite${num(g[0]) ? "" : " p"}" href="#${s.p || ""}" data-n="${g[0]}" title="${tip(g)}">${g.length > 1 ? `${g[0]}–${g[g.length - 1]}` : g[0]}</a>`;
+      }).join("");
+      citesRow(sec).insertAdjacentHTML("beforeend", `<span class="cw">${EN ? "Sources" : "出典"} ${chips}</span>`);
+    }
+  }
+  /** 各ページで、用語集にある言葉の最初の1回に点線の下線（マウスで意味、クリックで用語集へ）。ページの下に用語集のページ番号 */
+  function renderGloss(secs, ids) {
+    const G = window.GLOSS;
+    if (!G || !G.length) return;
+    const res = G.map(g => { try { return new RegExp(g.re); } catch { return null; } });
+    const SKIP = "h1, .kicker, .foot, .cites, a, svg, script, style, .chaps, .pno, .back, .toc, .nav, aside.notes, [data-nogloss]";
+    secs.forEach(sec => {
+      if (sec.matches(".cover, .chap, [data-gen], [data-nogloss]")) return;
+      const texts = [];
+      const w = document.createTreeWalker(sec, NodeFilter.SHOW_TEXT);
+      for (let n; (n = w.nextNode());) if (n.data.trim() && !n.parentElement.closest(SKIP)) texts.push(n);
+      const used = new Set();
+      G.forEach((g, i) => {
+        if (!res[i]) return;
+        for (let k = 0; k < texts.length; k++) {
+          const m = res[i].exec(texts[k].data);
+          if (!m || !m[0]) continue;
+          const hit = texts[k].splitText(m.index), after = hit.splitText(m[0].length);
+          const a = document.createElement("a");
+          a.className = "gl";
+          a.href = `#${g.sec}`;
+          if (g.fl) a.dataset.fl = g.fl; else a.dataset.n = g.id;
+          a.title = `${g.t}：${g.d}`;
+          hit.replaceWith(a);
+          a.appendChild(hit);
+          texts.splice(k, 1, texts[k], after);
+          used.add(g.sec);
+          break;
+        }
+      });
+      if (!used.size || MODE === "pitch") return;
+      const links = [...used].filter(s => ids.includes(s)).sort((x, y) => ids.indexOf(x) - ids.indexOf(y))
+        .map(s => `<a class="glc" href="#${s}">p.${ids.indexOf(s) + 1}</a>`).join("");
+      if (links) citesRow(sec).insertAdjacentHTML("afterbegin", `<span class="cw">${EN ? "Terms" : "用語"} ${links}</span>`);
+    });
+  }
+
   function init() {
     const secs = [...document.querySelectorAll("section")];
     const ids = (Slides.ids = secs.map(s => s.id));
     fillData(document);
+    Slides.tables?.(document);
+    renderGloss(secs, ids);
+    renderCites(ids);
 
     /* ページ番号（data-nopno で消す） */
     secs.forEach((s, i) => {
@@ -160,6 +230,31 @@
       const n = ids.indexOf(a.hash.slice(1)) + 1;
       if (n) a.insertAdjacentHTML("beforeend", `<span class="pg">p.${n}</span>`);
     });
+    document.querySelectorAll("a.pgl").forEach(a => { const n = ids.indexOf(a.hash.slice(1)) + 1; if (n) a.textContent = `p.${n}`; });
+
+    /* リンクで飛んだら：飛び先の行（data-fl の id、出典・用語は srow-番号）を光らせ、飛び先のページに「← 元のページへ」 */
+    let flashId = null, backFrom = null, backTo = null;
+    document.addEventListener("click", e => {
+      const a = e.target.closest?.("a[href^='#']");
+      if (!a || a.closest(".nav")) return;
+      if (a.classList.contains("back")) { e.preventDefault(); const f = backFrom; backFrom = backTo = null; if (f) location.hash = f; return; }
+      const to = decodeURIComponent(a.hash.slice(1));
+      if (!ids.includes(to)) return;
+      backFrom = current(); backTo = to;
+      flashId = a.dataset.fl || (a.dataset.n ? `srow-${a.dataset.n}` : null);
+    });
+    Slides.afterShow = sec => {
+      let b = sec.querySelector(":scope > a.back");
+      if (backTo === sec.id && backFrom && backFrom !== sec.id) {
+        if (!b) { b = document.createElement("a"); b.className = "back"; b.href = "#"; b.textContent = EN ? "← Back" : "← 元のページへ"; sec.appendChild(b); }
+        b.classList.add("show");
+      } else b?.classList.remove("show");
+      if (flashId) {
+        const r = document.getElementById(flashId);
+        if (r) { r.classList.add("flash"); setTimeout(() => r.classList.remove("flash"), 2500); }
+        flashId = null;
+      }
+    };
 
     const nav = document.createElement("div");
     nav.className = "nav";
@@ -203,6 +298,7 @@
       if (t0 === null && id !== ids[0]) t0 = performance.now();
       nav.querySelector("span").textContent = `${ids.indexOf(id) + 1} / ${ids.length}`;
       hooks.forEach(fn => { try { fn(sec); } catch (e) { console.error(e); } });
+      Slides.afterShow?.(sec);
       paintNotes();
       if (CHECK) setTimeout(() => check(sec), 80);
     }

@@ -17,7 +17,7 @@ for (let i = 0; i < rest.length; i++) if (rest[i].startsWith("--")) opt[rest[i].
 const die = m => { console.error(m); process.exit(1); };
 const read = p => readFileSync(join(ROOT, p), "utf8");
 const libCss = () => read("assets/themes.css") + "\n" + read("assets/slides.css");
-const libJs = () => ["runtime.js", "charts.js", "diagrams.js"].map(f => read("assets/" + f)).join("\n");
+const libJs = () => ["runtime.js", "tables.js", "charts.js", "diagrams.js"].map(f => read("assets/" + f)).join("\n");
 
 function fillLib(html) {
   const put = (h, tag, body) => {

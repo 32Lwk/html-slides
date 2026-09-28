@@ -44,6 +44,17 @@ h1 { font-size: 46px; font-weight: 800; line-height: 1.3; margin-top: 8px; lette
 a.ref { text-decoration: none; border-bottom: 2px solid var(--accent-mid); }
 a.ref .pg { margin-left: 4px; font-size: max(0.7em, 16px); color: var(--sub); font-weight: 600; }
 html[data-mode="pitch"] a.ref .pg { font-size: max(0.7em, 54px); }
+/* 出典の番号・用語の下線・戻るリンク・飛び先を光らせる（runtime.js が付ける） */
+.cites { position: absolute; left: 72px; right: 140px; bottom: 3px; overflow: hidden; white-space: nowrap; font-size: 16px; font-weight: 700; line-height: 21px; color: var(--sub); }
+.cites .cw + .cw { margin-left: 16px; }
+a.cite, a.glc { display: inline-block; min-width: 24px; margin: 0 2px; padding: 0 5px; border-radius: 5px; background: var(--accent-bg); color: var(--accent); font-size: 16px; font-weight: 800; line-height: 20px; text-align: center; text-decoration: none; }
+a.cite.p, a.glc { background: var(--lane); color: var(--sub); }
+a.gl { color: inherit; text-decoration: underline dotted var(--accent); text-decoration-thickness: 2px; text-underline-offset: 5px; }
+.back { display: none; position: absolute; right: 72px; top: 44px; z-index: 5; padding: 8px 20px; border: 2px solid var(--accent); border-radius: 999px; background: var(--bg); color: var(--accent); font-size: 18px; font-weight: 800; text-decoration: none; }
+.back.show { display: block; }
+html[data-mode="pitch"] .back { font-size: 54px; padding: 10px 34px; }
+.flash, tr.flash > td { background: var(--warn-bg) !important; }
+.flash:not(tr) { outline: 4px solid var(--warn); outline-offset: 2px; }
 
 /* レイアウト */
 .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; }
@@ -99,7 +110,7 @@ ol.steps li::before { content: counter(s); position: absolute; left: 0; top: 0; 
 
 /* 大きな数字 */
 .kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; }
-.kpis.k3 { grid-template-columns: repeat(3, 1fr); } .kpis.k2 { grid-template-columns: 1fr 1fr; }
+.kpis.k3 { grid-template-columns: repeat(3, 1fr); } .kpis.k2 { grid-template-columns: 1fr 1fr; } .kpis.k1 { grid-template-columns: 1fr; }
 .kpi { border: 2px solid var(--line); border-radius: var(--r); padding: 26px 28px; background: var(--bg); }
 .kpi.key { border-color: var(--accent); background: var(--accent-bg); }
 .kpi .v { font-size: 62px; font-weight: 800; line-height: 1.1; font-variant-numeric: tabular-nums; letter-spacing: -0.01em; }
@@ -152,6 +163,46 @@ table.tbl tr.sum td { font-weight: 800; border-top: 2px solid var(--ink); }
 table.tbl.tight td { padding: 9px 10px; font-size: 20px; }
 table.tbl .mk { display: inline-flex; width: 34px; height: 34px; border-radius: 50%; align-items: center; justify-content: center; font-weight: 900; }
 table.tbl .mk.o { background: var(--accent-bg); color: var(--accent); } table.tbl .mk.t { background: var(--warn-bg); color: var(--warn); } table.tbl .mk.x { background: var(--lane); color: var(--sub); }
+/* 財務の表（tables.js が data-fin から作る） */
+.fin table { border-collapse: collapse; width: 100%; font-size: 19px; font-variant-numeric: tabular-nums; }
+.fin th, .fin td { padding: 8px 9px; text-align: right; white-space: nowrap; border-bottom: 1px solid var(--line); font-weight: 600; }
+.fin th { font-size: 17px; color: var(--sub); font-weight: 700; border-bottom: 2px solid var(--ink); }
+.fin tr.grp th { border-bottom: 0; padding-bottom: 2px; color: var(--ink); font-size: 18px; text-align: center; }
+.fin .lb { text-align: left; font-weight: 700; padding-left: 4px; }
+.fin th.lb { font-weight: 600; font-size: 16px; }
+.fin .gs { border-left: 2px solid var(--line); }
+.fin .em { background: var(--lane); }
+.fin tr.sum td { font-weight: 800; border-top: 2px solid var(--ink); }
+.fin tr.key td { font-weight: 800; background: var(--accent-bg); }
+.fin tr.pct td { color: var(--sub); font-size: 17px; font-weight: 600; }
+.fin tr.head td { color: var(--accent); font-weight: 800; padding-top: 12px; }
+.fin tr.i1 td.lb { padding-left: 30px; font-weight: 600; } .fin tr.i2 td.lb { padding-left: 56px; font-weight: 600; }
+.fin td.neg { color: var(--warn); }
+.fin.tight td, .fin.tight th { padding: 5px 7px; }
+/* 出典・前提の一覧（build-sources.mjs が作る） */
+table.src { table-layout: fixed; width: 100%; border-collapse: collapse; }
+table.src th { font-size: 16px; font-weight: 700; color: var(--sub); text-align: left; padding: 6px 8px; border-bottom: 2px solid var(--ink); }
+table.src td { font-size: 17px; font-weight: 500; line-height: 1.4; padding: 6px 8px; border-bottom: 1px solid var(--line); vertical-align: top; overflow-wrap: anywhere; }
+table.src td.no { font-weight: 800; color: var(--accent); font-variant-numeric: tabular-nums; }
+table.src td.dt { font-variant-numeric: tabular-nums; }
+table.src .pub { font-weight: 700; }
+table.src .nt { color: var(--sub); font-size: 16px; }
+table.src td.u { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; font-size: 16px; }
+table.src td.u a { color: var(--ink); text-decoration: underline; text-decoration-color: var(--line); }
+table.src td.pg a { margin-right: 8px; color: var(--accent); font-weight: 700; text-decoration: none; white-space: nowrap; }
+table.src tr.grp td { padding-top: 10px; font-weight: 800; color: var(--accent); border-bottom: 2px solid var(--accent); }
+table.src.prim td { padding: 10px 8px; }
+.stag { display: inline-block; margin-left: 6px; padding: 0 8px; border-radius: 999px; background: var(--lane); color: var(--sub); font-size: 16px; font-weight: 700; }
+.st { display: inline-block; padding: 1px 12px; border-radius: 999px; font-size: 16px; font-weight: 800; white-space: nowrap; }
+.st.plan { background: var(--accent-bg); color: var(--accent); } .st.est { background: var(--lane); color: var(--ink); } .st.tbd { background: var(--warn-bg); color: var(--warn); }
+/* 用語集（build-glossary.mjs が作る） */
+.gls { display: grid; grid-template-columns: 1fr 1fr; column-gap: 48px; margin-top: 14px; align-items: start; }
+.gls .gh { padding: 10px 8px 4px; font-size: 18px; font-weight: 800; color: var(--accent); border-bottom: 2px solid var(--accent); }
+.ge { display: grid; grid-template-columns: 220px 1fr; gap: 14px; align-items: baseline; padding: 9px 8px; border-bottom: 1px solid var(--line); }
+.ge b { font-size: 21px; font-weight: 800; line-height: 1.3; }
+.ge b small { display: block; margin-top: 2px; font-size: 16px; font-weight: 600; color: var(--sub); }
+.ge p { font-size: 19px; font-weight: 600; line-height: 1.45; }
+.ge a.ref { margin-left: 6px; font-size: 17px; font-weight: 800; color: var(--accent); white-space: nowrap; border: 0; }
 
 .legend { display: flex; flex-wrap: wrap; gap: 8px 26px; font-size: 19px; color: var(--sub); font-weight: 600; }
 .legend span { display: inline-flex; align-items: center; gap: 8px; }

@@ -9,3 +9,4 @@ docs/figures/fonts/
 docs/figures/illust/
 examples/usecases/fonts/
 examples/usecases/illust/
+__pycache__/

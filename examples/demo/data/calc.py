@@ -7,6 +7,7 @@
 数字はすべて見本用の仮の値。前提を変えたら、上の3行をやり直すだけでスライドの数字・グラフ・地図がそろって変わる。
 """
 import json
+import sys
 from pathlib import Path
 
 import numpy as np
@@ -87,6 +88,37 @@ data = {
 }
 data["ltvCac"] = round(data["ltv"] / CAC, 1)
 
+# ---- 損益計算書・資金繰り・損益分岐（スキルの templates/finance.py。自分のデッキでは data/ にコピーして import する） ----
+sys.path.insert(0, str(HERE.parents[2] / "templates"))
+from finance import income_statement, to_columns, cash_flow, break_even, scale  # noqa: E402
+
+CAPEX = {1: 30e6}            # 1か月目にアプリと倉庫の仕組み（仮置き）
+EQUITY = {0: 400e6}          # 開業前の出資（仮置き）。カードの入金は翌月（collect_lag=1）
+L = lambda a: [float(v) for v in a]
+pl = income_statement(
+    L(revenue),
+    cogs={"tea": L(boxes * COST["tea"]), "pack": L(boxes * COST["pack"]), "ship": L(boxes * COST["ship"])},
+    sga={"pay": L(revenue * COST["pay_rate"]), "ads": L(ads), "fixed": L(fixed)},
+)
+cols = to_columns(pl, unit=1e6, digits=1, rates={"gross_rate": ("gross", "rev"), "op_rate": ("op", "rev")},
+                  negate=["cogs_tea", "cogs_pack", "cogs_ship", "cogs_total", "sga_pay", "sga_ads", "sga_fixed", "sga_total"])
+cf = cash_flow(pl["op"], capex=CAPEX, financing=EQUITY, revenue=L(revenue), collect_lag=1)
+variable = [c + p for c, p in zip(pl["cogs_total"], pl["sga"]["pay"])]
+bep = break_even(L(revenue), variable, L(ads + fixed))
+data["fin"] = {
+    "pl": {**cols, **cols.pop("lines")},
+    "cf": {"balance": scale(cf["balance"]), "cum": scale(cf["cum"]), "need": round(cf["need"] / 1e8, 2),
+           "trough": cf["trough_month"], "recover": cf["recover_month"], "equity": round(cf["pre"] / 1e8, 1),
+           "capex": round(sum(CAPEX.values()) / 1e6), "low": round(min(cf["balance"]) / 1e8, 2),
+           "colors": ["warn" if v < 0 else "accent" for v in cf["cum"]]},
+    "bep": {"rev": scale(revenue), "line": scale(bep["bep"]), "first": bep["first_month"],
+            "cm": round(bep["cm_rate"][-1], 3), "fixedY3": round(sum((ads + fixed)[24:36]) / 12 / 1e6),
+            "bepY3": round(sum(bep["bep"][24:36]) / 12 / 1e6), "revY3": round(sum(revenue[24:36]) / 12 / 1e6),
+            "bepEnd": round(bep["bep"][-1] / 1e6),
+            # 率は月の率の平均でなく、年の合計から出す（表の売上高・損益分岐点から読者が計算し直して合うように）
+            "safetyY3": round(1 - sum(bep["bep"][24:36]) / sum(revenue[24:36]), 3)},
+}
+
 # ---- 産地（見本用の概数） ----
 TEA_T = {"鹿児島": 27000, "静岡": 25800, "三重": 5200, "宮崎": 2900, "京都": 2300, "福岡": 1700,
          "奈良": 1400, "熊本": 1200, "佐賀": 1100, "長崎": 700, "埼玉": 600, "愛知": 500,
@@ -129,3 +161,7 @@ maps = {"maps": [
 
 print("売上高（億円）", data["rev"], "営業利益", data["op"], "会員（年末）", data["members"])
 print("1箱", unit, "黒字化の月", data["breakeven"])
+print("資金：必要", data["fin"]["cf"]["need"], "億円・底の月", data["fin"]["cf"]["trough"], "・戻る月", data["fin"]["cf"]["recover"],
+      "／損益分岐を超える月", data["fin"]["bep"]["first"])
+print("四半期の売上高", data["fin"]["pl"]["rev"])
+print("四半期の営業利益", data["fin"]["pl"]["op"])

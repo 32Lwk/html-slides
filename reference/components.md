@@ -31,7 +31,8 @@
 
 - 本文の高さの目安（doc）：h1 が1行なら本文は約 y=200〜1000 の 800px。`.strip.bottom` を使うなら本文は約 700px まで
 - ページ番号は自動（`data-nopno` を section に付けると消える。`<html data-nopno>` で全部消える）
-- 別ページへのリンク：`<a class="ref" href="#unit">1箱の内訳</a>` → 自動で「p.13」が付く（PNG でもたどれる）
+- 別ページへのリンク：`<a class="ref" href="#unit">1箱の内訳</a>` → 自動で「p.13」が付く（PNG でもたどれる）。`data-fl="要素の id"` で飛んだ先を光らせる、`<a class="pgl" href="#unit"></a>` は「p.13」だけ。飛んだ先に「← 元のページへ」が出る（reference/sources.md）
+- 出典欄（注記の下の「出典 1 3–6 P2」）と用語の下線は `build-sources.mjs`・`build-glossary.mjs` が付ける。手で書かない
 
 ## 表紙・中扉
 
@@ -115,6 +116,8 @@
 
 <div class="legend"><span><i style="background:var(--accent)"></i>1か月目から</span> …</div>
 ```
+
+損益計算書のような「行＝科目・列＝期間」の数字の表は、手で `table.tbl` を書かず `data-fin`（`assets/tables.js`）で計算の出力から描く（reference/finance.md）。
 
 ## 比べる：左右・2×2・ピラミッド・ベン図
 

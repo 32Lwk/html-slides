@@ -115,6 +115,17 @@ h1 { font-size: 46px; font-weight: 800; line-height: 1.3; margin-top: 8px; lette
 a.ref { text-decoration: none; border-bottom: 2px solid var(--accent-mid); }
 a.ref .pg { margin-left: 4px; font-size: max(0.7em, 16px); color: var(--sub); font-weight: 600; }
 html[data-mode="pitch"] a.ref .pg { font-size: max(0.7em, 54px); }
+/* 出典の番号・用語の下線・戻るリンク・飛び先を光らせる（runtime.js が付ける） */
+.cites { position: absolute; left: 72px; right: 140px; bottom: 3px; overflow: hidden; white-space: nowrap; font-size: 16px; font-weight: 700; line-height: 21px; color: var(--sub); }
+.cites .cw + .cw { margin-left: 16px; }
+a.cite, a.glc { display: inline-block; min-width: 24px; margin: 0 2px; padding: 0 5px; border-radius: 5px; background: var(--accent-bg); color: var(--accent); font-size: 16px; font-weight: 800; line-height: 20px; text-align: center; text-decoration: none; }
+a.cite.p, a.glc { background: var(--lane); color: var(--sub); }
+a.gl { color: inherit; text-decoration: underline dotted var(--accent); text-decoration-thickness: 2px; text-underline-offset: 5px; }
+.back { display: none; position: absolute; right: 72px; top: 44px; z-index: 5; padding: 8px 20px; border: 2px solid var(--accent); border-radius: 999px; background: var(--bg); color: var(--accent); font-size: 18px; font-weight: 800; text-decoration: none; }
+.back.show { display: block; }
+html[data-mode="pitch"] .back { font-size: 54px; padding: 10px 34px; }
+.flash, tr.flash > td { background: var(--warn-bg) !important; }
+.flash:not(tr) { outline: 4px solid var(--warn); outline-offset: 2px; }
 
 /* レイアウト */
 .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; }
@@ -170,7 +181,7 @@ ol.steps li::before { content: counter(s); position: absolute; left: 0; top: 0; 
 
 /* 大きな数字 */
 .kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; }
-.kpis.k3 { grid-template-columns: repeat(3, 1fr); } .kpis.k2 { grid-template-columns: 1fr 1fr; }
+.kpis.k3 { grid-template-columns: repeat(3, 1fr); } .kpis.k2 { grid-template-columns: 1fr 1fr; } .kpis.k1 { grid-template-columns: 1fr; }
 .kpi { border: 2px solid var(--line); border-radius: var(--r); padding: 26px 28px; background: var(--bg); }
 .kpi.key { border-color: var(--accent); background: var(--accent-bg); }
 .kpi .v { font-size: 62px; font-weight: 800; line-height: 1.1; font-variant-numeric: tabular-nums; letter-spacing: -0.01em; }
@@ -223,6 +234,46 @@ table.tbl tr.sum td { font-weight: 800; border-top: 2px solid var(--ink); }
 table.tbl.tight td { padding: 9px 10px; font-size: 20px; }
 table.tbl .mk { display: inline-flex; width: 34px; height: 34px; border-radius: 50%; align-items: center; justify-content: center; font-weight: 900; }
 table.tbl .mk.o { background: var(--accent-bg); color: var(--accent); } table.tbl .mk.t { background: var(--warn-bg); color: var(--warn); } table.tbl .mk.x { background: var(--lane); color: var(--sub); }
+/* 財務の表（tables.js が data-fin から作る） */
+.fin table { border-collapse: collapse; width: 100%; font-size: 19px; font-variant-numeric: tabular-nums; }
+.fin th, .fin td { padding: 8px 9px; text-align: right; white-space: nowrap; border-bottom: 1px solid var(--line); font-weight: 600; }
+.fin th { font-size: 17px; color: var(--sub); font-weight: 700; border-bottom: 2px solid var(--ink); }
+.fin tr.grp th { border-bottom: 0; padding-bottom: 2px; color: var(--ink); font-size: 18px; text-align: center; }
+.fin .lb { text-align: left; font-weight: 700; padding-left: 4px; }
+.fin th.lb { font-weight: 600; font-size: 16px; }
+.fin .gs { border-left: 2px solid var(--line); }
+.fin .em { background: var(--lane); }
+.fin tr.sum td { font-weight: 800; border-top: 2px solid var(--ink); }
+.fin tr.key td { font-weight: 800; background: var(--accent-bg); }
+.fin tr.pct td { color: var(--sub); font-size: 17px; font-weight: 600; }
+.fin tr.head td { color: var(--accent); font-weight: 800; padding-top: 12px; }
+.fin tr.i1 td.lb { padding-left: 30px; font-weight: 600; } .fin tr.i2 td.lb { padding-left: 56px; font-weight: 600; }
+.fin td.neg { color: var(--warn); }
+.fin.tight td, .fin.tight th { padding: 5px 7px; }
+/* 出典・前提の一覧（build-sources.mjs が作る） */
+table.src { table-layout: fixed; width: 100%; border-collapse: collapse; }
+table.src th { font-size: 16px; font-weight: 700; color: var(--sub); text-align: left; padding: 6px 8px; border-bottom: 2px solid var(--ink); }
+table.src td { font-size: 17px; font-weight: 500; line-height: 1.4; padding: 6px 8px; border-bottom: 1px solid var(--line); vertical-align: top; overflow-wrap: anywhere; }
+table.src td.no { font-weight: 800; color: var(--accent); font-variant-numeric: tabular-nums; }
+table.src td.dt { font-variant-numeric: tabular-nums; }
+table.src .pub { font-weight: 700; }
+table.src .nt { color: var(--sub); font-size: 16px; }
+table.src td.u { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; font-size: 16px; }
+table.src td.u a { color: var(--ink); text-decoration: underline; text-decoration-color: var(--line); }
+table.src td.pg a { margin-right: 8px; color: var(--accent); font-weight: 700; text-decoration: none; white-space: nowrap; }
+table.src tr.grp td { padding-top: 10px; font-weight: 800; color: var(--accent); border-bottom: 2px solid var(--accent); }
+table.src.prim td { padding: 10px 8px; }
+.stag { display: inline-block; margin-left: 6px; padding: 0 8px; border-radius: 999px; background: var(--lane); color: var(--sub); font-size: 16px; font-weight: 700; }
+.st { display: inline-block; padding: 1px 12px; border-radius: 999px; font-size: 16px; font-weight: 800; white-space: nowrap; }
+.st.plan { background: var(--accent-bg); color: var(--accent); } .st.est { background: var(--lane); color: var(--ink); } .st.tbd { background: var(--warn-bg); color: var(--warn); }
+/* 用語集（build-glossary.mjs が作る） */
+.gls { display: grid; grid-template-columns: 1fr 1fr; column-gap: 48px; margin-top: 14px; align-items: start; }
+.gls .gh { padding: 10px 8px 4px; font-size: 18px; font-weight: 800; color: var(--accent); border-bottom: 2px solid var(--accent); }
+.ge { display: grid; grid-template-columns: 220px 1fr; gap: 14px; align-items: baseline; padding: 9px 8px; border-bottom: 1px solid var(--line); }
+.ge b { font-size: 21px; font-weight: 800; line-height: 1.3; }
+.ge b small { display: block; margin-top: 2px; font-size: 16px; font-weight: 600; color: var(--sub); }
+.ge p { font-size: 19px; font-weight: 600; line-height: 1.45; }
+.ge a.ref { margin-left: 6px; font-size: 17px; font-weight: 800; color: var(--accent); white-space: nowrap; border: 0; }
 
 .legend { display: flex; flex-wrap: wrap; gap: 8px 26px; font-size: 19px; color: var(--sub); font-weight: 600; }
 .legend span { display: inline-flex; align-items: center; gap: 8px; }
@@ -441,7 +492,7 @@ body.presenter .np .next { font-size: 22px; margin-top: 26px; }
 
 <section id="cover" class="cover" data-nopno>
   <div class="kicker">SENCHA BOX · 見本の提案書</div>
-  <h1>日本の茶農家の新茶を、海外の家へ毎月届ける</h1>
+  <h1>日本の茶農家のお茶を、海外の家へ毎月届ける</h1>
   <div class="lead">静岡と鹿児島の農家から直接仕入れ、関税込みの定額で5つの国・地域へ。3年目に会員<span data-f="members.2" data-x="0.0001" data-d="1"></span>万人・売上高<span data-f="rev.2"></span>億円。</div>
   <img class="hero-img" src="illust/teabox.webp" alt="">
   <div class="toc">
@@ -456,7 +507,7 @@ body.presenter .np .next { font-size: 22px; margin-top: 26px; }
   <div class="ck">Chapter 01</div>
   <div class="cn">01</div>
   <h1>市場と顧客</h1>
-  <div class="lead">海外の日本茶好きは、産地の新茶を手に入れる道がない。産地は2県に集まっている。</div>
+  <div class="lead">海外の日本茶好きは、産地のお茶を手に入れる道がない。産地は2県に集まっている。</div>
 </section>
 
 <section id="value">
@@ -464,7 +515,7 @@ body.presenter .np .next { font-size: 22px; margin-top: 26px; }
   <h1>飲む人・作る人・運ぶ人の3者に、それぞれ得がある定期便</h1>
   <div class="rule"></div>
   <div class="grid">
-    <div class="card"><img class="ill" src="illust/fan.webp" alt=""><div class="when">飲む人</div><h2>産地の新茶が毎月届く</h2><p>農家と品種を選べる。関税・送料込みの定額で、届いてから払う額が増えない</p></div>
+    <div class="card"><img class="ill" src="illust/fan.webp" alt=""><div class="when">飲む人</div><h2>産地の旬の茶葉が毎月届く</h2><p>上位プランは農家と品種を選べる。関税・送料込みの定額で、届いてから払う額が増えない</p></div>
     <div class="card key"><img class="ill" src="illust/farmer.webp" alt=""><div class="when">作る人</div><h2>決まった量が、市場より高く売れる</h2><p>1箱の約2割が農家に渡る。1年分の量を先に約束する</p></div>
     <div class="card"><img class="ill" src="illust/delivery.webp" alt=""><div class="when">運ぶ人</div><h2>毎月決まった荷物になる</h2><p>月初にまとめて出すので、倉庫と運送の段取りが読める</p></div>
   </div>
@@ -474,7 +525,7 @@ body.presenter .np .next { font-size: 22px; margin-top: 26px; }
 
 <section id="markets">
   <div class="kicker"><span class="sec">01</span>MARKETS</div>
-  <h1>アジアの3つの国・地域から始め、7か月目に北米へ広げる</h1>
+  <h1>台湾・香港から始め、4か月目にシンガポール、7か月目に北米へ広げる</h1>
   <div class="rule"></div>
   <div class="cols c64">
     <div>
@@ -493,7 +544,7 @@ body.presenter .np .next { font-size: 22px; margin-top: 26px; }
       <tr><td>シンガポール</td><td>4か月目</td><td class="r"><span data-f="regions.SG" data-u="%"></span></td></tr>
       <tr><td>米国</td><td>7か月目</td><td class="r"><span data-f="regions.US" data-u="%"></span></td></tr>
       <tr><td>カナダ</td><td>7か月目</td><td class="r"><span data-f="regions.CA" data-u="%"></span></td></tr>
-      <tr><td class="s" colspan="3">アジアは日本からの配送が3〜4日で、関税の手続きも軽い。北米は会員の半分を占めるが、確かめる事が多い</td></tr>
+      <tr><td class="s" colspan="3">アジアは発送から1〜2日で届き、関税の手続きも軽い。北米は会員の半分を占めるが、確かめる事が多い</td></tr>
     </table>
   </div>
   <div class="foot"><span>地図：Natural Earth（パブリックドメイン）。割合は calc.py の仮の値</span></div>
@@ -528,7 +579,7 @@ body.presenter .np .next { font-size: 22px; margin-top: 26px; }
       <ul class="pts">
         <li>量販は安いが、産地も農家も分からない</li>
         <li>専門店は質が高いが、月1万円前後で続けにくい</li>
-        <li><b class="accent">月5,000円で産地直送</b>の所に大きな会員の塊がない</li>
+        <li><b class="accent">月5,000円前後で産地直送</b>の所に大きな会員の塊がない</li>
       </ul>
       <div class="quote">5,000円なら毎月でも払う。どの農家のお茶かが分かるのが大事。<cite>海外の日本茶好き（見本の声）</cite></div>
     </div>
@@ -540,7 +591,7 @@ body.presenter .np .next { font-size: 22px; margin-top: 26px; }
   <div class="ck">Chapter 02</div>
   <div class="cn">02</div>
   <h1>仕組み</h1>
-  <div class="lead">農家から家まで7日。自社は選ぶ・まとめる・知らせるに集中する。</div>
+  <div class="lead">農家から家まで7日。自社は締める・量を決める・知らせるに集中する。</div>
 </section>
 
 <section id="lanes">
@@ -557,7 +608,7 @@ body.presenter .np .next { font-size: 22px; margin-top: 26px; }
     <div class="cell"></div><div class="cell"></div><div class="cell"></div>
     <div class="cell"><div class="box key" id="l9">受け取る<small>感想をアプリで</small></div></div>
 
-    <div class="who me">自社<small>選ぶ・まとめる・知らせる</small></div>
+    <div class="who me">自社<small>締める・量を決める・知らせる</small></div>
     <div class="cell"><div class="box" id="l2">月の注文を締める<small>農家ごとの量を決める</small></div></div>
     <div class="cell"></div><div class="cell"></div>
     <div class="cell"><div class="box" id="l7">発送を知らせる</div></div>
@@ -575,7 +626,7 @@ body.presenter .np .next { font-size: 22px; margin-top: 26px; }
     <div class="cell"><div class="box money" id="l6">梱包・国際発送<small>関税込み</small></div></div>
     <div class="cell"><div class="box" id="l8">配達</div></div>
   </div>
-  <div class="strip">自社が手を動かすのは<b>締める・知らせる</b>の2か所だけ。仕上げと梱包は農家と倉庫に任せる。</div>
+  <div class="strip">自社が手を動かすのは<b>締める・量を決める・知らせる</b>の3つだけ。仕上げと梱包は農家と倉庫に任せる。</div>
   <div class="foot"><span>日数は目安（見本）</span></div>
 </section>
 
@@ -588,7 +639,7 @@ body.presenter .np .next { font-size: 22px; margin-top: 26px; }
       <h3>お金と物の流れ<small>破線はお金</small></h3>
       <div class="dgm" style="height:560px; display:grid; grid-template-columns:repeat(3, 230px); justify-content:space-between; align-content:center; row-gap:150px"
            data-links='[["r-a","r-b","月額",{"dash":true}],["r-b","r-d","3.5%",{"dash":true}],["r-b","r-c","代金",{"dash":true}],["r-c","r-e","茶葉"],["r-e","r-a","届く",{"tone":"key"}]]'>
-        <div class="node" id="r-a">お客さま<small>月5,000円</small></div>
+        <div class="node" id="r-a">お客さま<small>平均 月5,000円</small></div>
         <div class="node solid" id="r-b">自社</div>
         <div class="node money" id="r-d">決済会社</div>
         <div class="node" id="r-e">倉庫<small>関税込みで発送</small></div>
@@ -607,7 +658,7 @@ body.presenter .np .next { font-size: 22px; margin-top: 26px; }
     </div>
   </div>
   <div class="strip">感想で選ぶ茶葉を変えるので、やめる人は<b>毎月<span data-f="churn" data-x="100" data-d="0"></span>%</b>にとどまる前提。</div>
-  <div class="foot"><span>前提は calc.py</span></div>
+  <div class="foot"><span>やめる割合は <a class="ref" href="#assump">前提の一覧</a> の仮置き</span></div>
 </section>
 
 <section id="ch03" class="chap" data-n="03" data-t="数字と計画">
@@ -623,8 +674,8 @@ body.presenter .np .next { font-size: 22px; margin-top: 26px; }
   <div class="rule"></div>
   <div class="kpis">
     <div class="kpi"><div class="v"><span data-f="members.2" data-x="0.0001" data-d="1"></span><small>万人</small></div><div class="k">会員（3年目の年末）</div><div class="d">毎月<span data-f="churn" data-x="100" data-d="0"></span>%がやめる前提</div></div>
-    <div class="kpi key"><div class="v"><span data-f="rev.2"></span><small>億円</small></div><div class="k">売上高（3年目）</div><div class="d">1年目 <span data-f="rev.0"></span>億円 → 2年目 <span data-f="rev.1"></span>億円</div></div>
-    <div class="kpi"><div class="v"><span data-f="op.2"></span><small>億円</small></div><div class="k">営業利益（3年目）</div><div class="d">広告費を引いた後</div></div>
+    <div class="kpi key"><div class="v"><span data-f="rev.2"></span><small>億円</small></div><div class="k">売上高（3年目）</div><div class="d">1年目 <span data-f="rev.0" data-d="1"></span>億円 → 2年目 <span data-f="rev.1" data-d="1"></span>億円</div></div>
+    <div class="kpi"><div class="v"><span data-f="op.2" data-d="1"></span><small>億円</small></div><div class="k">営業利益（3年目）</div><div class="d">広告費を引いた後</div></div>
     <div class="kpi"><div class="v"><span data-f="breakeven"></span><small>か月目</small></div><div class="k">月の利益が黒字に</div><div class="d">会員が約2万人を超えたころ</div></div>
   </div>
   <h3 style="margin-top:44px">1人の会員から残る額<small>単位：円</small></h3>
@@ -637,7 +688,7 @@ body.presenter .np .next { font-size: 22px; margin-top: 26px; }
   </div>
   <h3 style="margin-top:40px">残る額と集める費用<small>円／人</small></h3>
   <div class="chart" style="height:170px" data-chart='{"type":"bar","horizontal":true,"labels":["1人から残る額","集める広告費"],"series":[{"values":["@ltv","@cac"],"colors":["accent","warn"]}],"labelWidth":250}'></div>
-  <div class="foot"><span>すべて calc.py の計算結果（見本の仮の値）</span></div>
+  <div class="foot"><span>すべて data/calc.py の計算結果（見本の仮の値）。前提は <a class="ref" href="#assump">前提の一覧</a></span></div>
 </section>
 
 <section id="growth">
@@ -656,7 +707,7 @@ body.presenter .np .next { font-size: 22px; margin-top: 26px; }
       <div class="strip">黒字に届くかは<b>やめる割合</b>で決まる。4%が6%になると、黒字は1年遅れる。</div>
     </div>
   </div>
-  <div class="foot"><span>calc.py の計算結果（見本の仮の値）</span></div>
+  <div class="foot"><span>data/calc.py の計算結果（見本の仮の値）。詳細は <a class="ref" href="#fin-pl">付録：四半期の損益</a></span></div>
 </section>
 
 <section id="unit">
@@ -664,8 +715,8 @@ body.presenter .np .next { font-size: 22px; margin-top: 26px; }
   <h1>1箱<span data-f="unit.price"></span>円のうち、農家に1,100円、自社に<span data-f="unit.profit"></span>円が残る</h1>
   <div class="rule"></div>
   <div class="chart" style="height:600px" data-chart='{"type":"waterfall","unit":"円（3年目の平均）","items":[{"label":"支払い","v":"@unit.price","total":true},{"label":"茶葉\n（農家へ）","v":"@unit.tea","color":"accent"},{"label":"梱包","v":"@unit.pack"},{"label":"国際送料\n関税込み","v":"@unit.ship"},{"label":"決済","v":"@unit.pay"},{"label":"広告","v":"@unit.ads"},{"label":"人件費\nなど","v":"@unit.fixed"},{"label":"自社に\n残る","total":true}]}'></div>
-  <div class="strip">いちばん大きいのは<span class="w">国際送料</span>。月初にまとめて出し、2年目に1箱1,200円まで下げるのが次の課題。</div>
-  <div class="foot"><span>広告・人件費は3年目の合計を箱の数で割った値（calc.py）</span></div>
+  <div class="strip">いちばん大きいのは<span class="w">国際送料</span>。月初にまとめて出す。1箱1,200円まで下げられれば残る額が増える（計画には入れていない）。</div>
+  <div class="foot"><span>広告・人件費は3年目の合計を箱の数で割った値。詳細は <a class="ref" href="#fin-bep">付録：損益分岐</a></span></div>
 </section>
 
 <section id="mix">
@@ -700,7 +751,7 @@ body.presenter .np .next { font-size: 22px; margin-top: 26px; }
       <div class="chart" style="height:560px" data-chart='{"type":"bar","labels":"@monthly.labels","series":[{"values":"@monthly.op","colors":"@monthly.opColors"}],"valueLabels":false,"gap":0.25,"xEvery":6,"marks":[]}'></div>
     </div>
   </div>
-  <div class="foot"><span>横軸は月（1〜36か月目）。calc.py の計算結果</span></div>
+  <div class="foot"><span>横軸は月（1〜36か月目）。詳細は <a class="ref" href="#fin-cf">付録：資金繰り</a></span></div>
 </section>
 
 <section id="roadmap">
@@ -724,8 +775,8 @@ body.presenter .np .next { font-size: 22px; margin-top: 26px; }
     <div class="stack">
       <h3>90日で確かめること</h3>
       <ul class="check">
-        <li>台湾・香港で1,000人が申し込む</li>
-        <li>2か月目も続ける人が85%以上</li>
+        <li>台湾・香港で200人が申し込む</li>
+        <li>やめる割合が毎月5%以下</li>
         <li>届くまで7日以内が95%以上</li>
         <li>破損の申告が1%未満</li>
       </ul>
@@ -737,27 +788,201 @@ body.presenter .np .next { font-size: 22px; margin-top: 26px; }
 
 <section id="risks">
   <div class="kicker"><span class="sec">03</span>RISKS</div>
-  <h1>影響の大きいリスクは2つ。どれも90日の中で確かめ、だめなら止められる</h1>
+  <h1>影響の大きいリスクは2つ。どちらも90日の中で確かめ、だめなら止められる</h1>
   <div class="rule"></div>
   <table class="tbl">
     <tr><th>リスク</th><th class="c">影響</th><th>起きたときの手</th><th>確かめる時期</th></tr>
-    <tr><td>やめる人が毎月6%を超える</td><td class="c"><span class="mk t">大</span></td><td class="s">感想で選ぶ茶葉を変える。上位プランに試飲の小袋を付ける</td><td>60日</td></tr>
+    <tr><td>やめる人が毎月6%を超える</td><td class="c"><span class="mk t">大</span></td><td class="s">感想で選ぶ茶葉を変える。基本プランにも試飲の小袋を付ける</td><td>60日</td></tr>
     <tr><td>国際送料が1箱1,450円より上がる</td><td class="c"><span class="mk t">大</span></td><td class="s">月初のまとめ発送。重さ1kg以内の箱に合わせる</td><td>30日</td></tr>
     <tr><td>新茶の量が天候で足りない</td><td class="c"><span class="mk o">中</span></td><td class="s">2県6軒に分けて約束する。足りない月は2番茶に切り替える</td><td>毎月</td></tr>
     <tr><td>北米の関税の手続きが変わる</td><td class="c"><span class="mk o">中</span></td><td class="s">関税込みで運ぶ運送会社を2社と契約し、切り替えられるようにする</td><td>6か月目まで</td></tr>
     <tr><td>契約した農家が抜ける</td><td class="c"><span class="mk x">小</span></td><td class="s">1軒の量を全体の2割以下にする。候補の農家を3軒持つ</td><td>毎年</td></tr>
   </table>
   <div class="grid g2" style="margin-top:36px">
-    <div class="card key"><div class="when">止める線</div><h2>60日で続ける人が75%未満</h2><p>北米の準備を止め、アジアの2つだけで値段と茶葉を見直す</p></div>
-    <div class="card"><div class="when">進める線</div><h2>90日で1,000人・続ける人85%</h2><p>シンガポールを開き、北米の運送会社と契約する</p></div>
+    <div class="card key"><div class="when">止める線</div><h2>60日でやめる割合が毎月6%超</h2><p>北米の準備を止め、アジアの2つだけで値段と茶葉を見直す</p></div>
+    <div class="card"><div class="when">進める線</div><h2>90日で200人・やめる割合5%以下</h2><p>シンガポールを開き、北米の運送会社と契約する</p></div>
   </div>
-  <div class="strip bottom">お願い：<b>静岡・鹿児島の農家の紹介</b>と、最初の1,000人に届く販路。</div>
-  <div class="foot"><span>見本の仮のリスク</span></div>
+  <div class="strip bottom">お願い：<b>静岡・鹿児島の農家の紹介</b>と、最初の200人に届く販路。</div>
+  <div class="foot"><span>見本の仮のリスク。やめる割合の置き方は <a class="ref" href="#assump">前提の一覧</a></span></div>
 </section>
 
-<script>/*DATA*/window.DATA = {"rev":[0.6,7.4,20.9],"op":[-0.8,-0.9,2.9],"margin":[-1.236,-0.124,0.137],"members":[3119,22585,44124],"arpu":5000,"churn":0.04,"cac":6000,"ltv":48125,"grossBox":1925,"life":25,"premShare":0.405,"byPlan":{"standard":[0.3,3.4,9.5],"premium":[0.3,4,11.4]},"monthly":{"labels":["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36"],"members":[0,0.1,0.2,0.3,0.4,0.6,0.8,1.1,1.4,1.9,2.4,3.1,4,5,6.1,7.5,9,10.7,12.5,14.4,16.4,18.4,20.5,22.6,24.6,26.7,28.7,30.6,32.5,34.3,36.1,37.8,39.5,41.1,42.6,44.1],"op":[-4,-4,-4,-5,-5,-6,-6,-7,-8,-8,-9,-10,-11,-11,-12,-12,-12,-11,-9,-8,-6,-3,0,3,6,9,13,16,19,23,26,29,32,35,38,41],"opColors":["warn","warn","warn","warn","warn","warn","warn","warn","warn","warn","warn","warn","warn","warn","warn","warn","warn","warn","warn","warn","warn","warn","warn","accent","accent","accent","accent","accent","accent","accent","accent","accent","accent","accent","accent","accent"]},"breakeven":24,"unit":{"price":5000,"tea":-1100,"pack":-350,"ship":-1450,"pay":-175,"ads":-536,"fixed":-702,"profit":687},"regions":{"US":42,"HK":20,"TW":16,"CA":12,"SG":10},"sankey":[{"from":"US","to":"premium","v":8339},{"from":"US","to":"standard","v":10193},{"from":"HK","to":"premium","v":3530},{"from":"HK","to":"standard","v":5295},{"from":"TW","to":"premium","v":2118},{"from":"TW","to":"standard","v":4942},{"from":"CA","to":"premium","v":2224},{"from":"CA","to":"standard","v":3071},{"from":"SG","to":"premium","v":1677},{"from":"SG","to":"standard","v":2736}],"ltvCac":8,"tea":{"labels":["鹿児島","静岡","三重","宮崎","京都","福岡"],"values":[27000,25800,5200,2900,2300,1700],"share2":0.731}};/*END DATA*/</script>
+<section id="ch04" class="chap" data-n="04" data-t="付録">
+  <div class="ck">Appendix</div>
+  <div class="cn">04</div>
+  <h1>付録</h1>
+  <div class="lead">四半期の損益・資金繰り・損益分岐と、数字の前提・出典・用語集。本編の注記のリンクから飛べる。</div>
+</section>
+
+<section id="fin-pl">
+  <div class="kicker"><span class="sec">04</span>APPENDIX · P&amp;L</div>
+  <h1>付録：四半期の損益。3年目の第1四半期から営業利益が黒字になり、年<span data-f="fin.pl.op.14" data-x="0.01" data-d="1"></span>億円に届く</h1>
+  <div class="rule"></div>
+  <div class="fin" data-fin='{"cols":"@fin.pl.cols","groups":"@fin.pl.groups","em":"@fin.pl.em","unit":"百万円","fmt":{"d":1},"rows":[
+    {"label":"売上高","v":"@fin.pl.rev","kind":"key"},
+    {"label":"売上原価","v":"@fin.pl.cogs_total"},
+    {"label":"茶葉（農家へ）","v":"@fin.pl.cogs_tea","indent":1},
+    {"label":"梱包","v":"@fin.pl.cogs_pack","indent":1},
+    {"label":"国際送料（関税込み）","v":"@fin.pl.cogs_ship","indent":1},
+    {"label":"売上総利益","v":"@fin.pl.gross","kind":"sum"},
+    {"label":"売上総利益率","v":"@fin.pl.gross_rate","kind":"pct"},
+    {"label":"販売費・一般管理費","v":"@fin.pl.sga_total"},
+    {"label":"決済手数料","v":"@fin.pl.sga_pay","indent":1},
+    {"label":"広告費","v":"@fin.pl.sga_ads","indent":1},
+    {"label":"人件費・家賃など","v":"@fin.pl.sga_fixed","indent":1},
+    {"label":"営業利益","v":"@fin.pl.op","kind":"key"},
+    {"label":"営業利益率","v":"@fin.pl.op_rate","kind":"pct"}]}'></div>
+  <div class="strip">2年目までの赤字の大半は<b>広告費と人件費</b>。会員が増えて1人あたりの人件費が下がる3年目に、売上総利益が2つを上回る。</div>
+  <div class="foot"><span>data/calc.py の計算結果（見本の仮の値）。前提は <a class="ref" href="#assump">前提の一覧</a></span></div>
+</section>
+
+<section id="fin-cf">
+  <div class="kicker"><span class="sec">04</span>APPENDIX · CASH FLOW</div>
+  <h1>付録：資金繰り。一番へこむのは<span data-f="fin.cf.trough"></span>か月目の<span data-f="fin.cf.need" data-d="1"></span>億円で、開業前の出資<span data-f="fin.cf.equity" data-d="0"></span>億円で足りる</h1>
+  <div class="rule"></div>
+  <div class="cols c64">
+    <div>
+      <h3>月末の資金<small>百万円</small></h3>
+      <div class="chart" style="height:640px" data-chart='{"type":"line","labels":"@monthly.labels","xEvery":6,"series":[{"name":"残高（出資込み）","values":"@fin.cf.balance","color":"accent","area":true},{"name":"累計（出資なし）","values":"@fin.cf.cum","color":"warn","dash":true}],"marks":[{"i":25,"label":"一番へこむ月","color":"warn"}],"fmt":{"d":0}}'></div>
+    </div>
+    <div class="stack">
+      <div class="kpis k1">
+        <div class="kpi key"><div class="v"><span data-f="fin.cf.need" data-d="1"></span><small>億円</small></div><div class="k">必要な資金（出資なしの累計の底）</div><div class="d"><span data-f="fin.cf.trough"></span>か月目。1か月目の投資<span data-f="fin.cf.capex"></span>百万円を含む</div></div>
+        <div class="kpi"><div class="v"><span data-f="fin.cf.low" data-d="1"></span><small>億円</small></div><div class="k">出資<span data-f="fin.cf.equity" data-d="0"></span>億円のあとの残高の底</div><div class="d">残高はマイナスにならない</div></div>
+      </div>
+      <ul class="pts">
+        <li>カードの代金は<b>翌月に入金</b>される。売上が伸びるほど、入金待ちの額が増える</li>
+        <li>営業利益は24か月目に黒字でも、資金が増え始めるのは<span data-f="fin.cf.trough"></span>か月目から</li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot"><span>data/calc.py の cash_flow（templates/finance.py）。出資・投資の額は <a class="ref" href="#assump">前提の一覧</a> の仮置き</span></div>
+</section>
+
+<section id="fin-bep">
+  <div class="kicker"><span class="sec">04</span>APPENDIX · BREAK-EVEN</div>
+  <h1>付録：損益分岐。月の売上高は<span data-f="fin.bep.first"></span>か月目に損益分岐点を超え、3年目の安全余裕率は<span data-f="fin.bep.safetyY3" data-x="100" data-d="0"></span>%</h1>
+  <div class="rule"></div>
+  <div class="cols c64">
+    <div>
+      <h3>月の売上高と損益分岐点<small>百万円・右端は36か月目（表は3年目の平均）</small></h3>
+      <div class="chart" style="height:640px" data-chart='{"type":"line","labels":"@monthly.labels","xEvery":6,"series":[{"name":"売上高","values":"@fin.bep.rev","color":"accent"},{"name":"損益分岐点","values":"@fin.bep.line","color":"warn","dash":true}],"marks":[{"i":23,"label":"超える月","color":"accent"}],"fmt":{"d":0}}'></div>
+    </div>
+    <div class="stack">
+      <h3>3年目の月の平均</h3>
+      <table class="tbl">
+        <tr><td>固定費（広告費・人件費など）</td><td class="r"><span data-f="fin.bep.fixedY3"></span>百万円</td></tr>
+        <tr><td>限界利益率（1 − 変動費 ÷ 売上高）</td><td class="r"><span data-f="fin.bep.cm" data-x="100" data-d="1" data-u="%"></span></td></tr>
+        <tr class="sum"><td>損益分岐点の売上高</td><td class="r"><span data-f="fin.bep.bepY3"></span>百万円</td></tr>
+        <tr class="em"><td>実際の売上高</td><td class="r"><span data-f="fin.bep.revY3"></span>百万円</td></tr>
+        <tr><td>安全余裕率</td><td class="r"><span data-f="fin.bep.safetyY3" data-x="100" data-d="1" data-u="%"></span></td></tr>
+      </table>
+      <div class="strip">広告費を固定費に入れている。広告を止めれば損益分岐点は下がるが、会員の伸びも止まる。</div>
+    </div>
+  </div>
+  <div class="foot"><span>損益分岐点 ＝ 固定費 ÷ 限界利益率。変動費は茶葉・梱包・送料・決済（data/calc.py の break_even）</span></div>
+</section>
+
+<!-- ASSUMPTIONS:BEGIN -->
+<section id="assump" data-gen="sources" data-sparse-ok>
+  <div class="kicker">ASSUMPTIONS</div>
+  <h1>前提の一覧：出典のない数字を、計画・推計・仮置きに分ける</h1>
+  <div class="rule"></div>
+  <table class="src asmt">
+<colgroup><col style="width:300px"><col style="width:250px"><col style="width:120px"><col><col style="width:260px"><col style="width:170px"></colgroup>
+<tr><th>数字</th><th>置いた値</th><th>状態</th><th>置き方・理由</th><th>計算の場所</th><th>使うページ</th></tr>
+<tr id="srow-A1"><td><span class="pub">月の値段</span></td><td>基本3,800円・上位6,800円</td><td><span class="st plan">計画</span></td><td>競合の中価格帯（外部の資料 2）に合わせて決めた</td><td class="nt">calc.py の PLANS</td><td class="pg"><a class="pgl" href="#kpi">kpi</a><a class="pgl" href="#unit">unit</a><a class="pgl" href="#mix">mix</a><a class="pgl" href="#fin-pl">fin-pl</a></td></tr>
+<tr id="srow-A2"><td><span class="pub">上位プランを選ぶ割合</span></td><td>40%（地域ごとに30〜45%。3年目の会員の構成では約41%）</td><td><span class="st est">推計</span></td><td>アンケート（P1）で上位を選んだ割合</td><td class="nt">calc.py の PLANS・PREMIUM_BY_REGION</td><td class="pg"><a class="pgl" href="#growth">growth</a><a class="pgl" href="#mix">mix</a></td></tr>
+<tr id="srow-A3"><td><span class="pub">やめる割合</span></td><td>毎月4%</td><td><span class="st tbd">仮置き</span></td><td>業界の調査（外部の資料 7）の中央値より低く置いた。90日で測って置き直す</td><td class="nt">calc.py の CHURN</td><td class="pg"><a class="pgl" href="#loop">loop</a><a class="pgl" href="#kpi">kpi</a><a class="pgl" href="#growth">growth</a><a class="pgl" href="#risks">risks</a></td></tr>
+<tr id="srow-A4"><td><span class="pub">新しい会員</span></td><td>月最大3,200人（16か月目が中心の S 字）</td><td><span class="st est">推計</span></td><td>広告の獲得単価（外部の資料 8）と広告費から</td><td class="nt">calc.py の NEW_PEAK・NEW_MID・NEW_K</td><td class="pg"><a class="pgl" href="#growth">growth</a><a class="pgl" href="#members">members</a></td></tr>
+<tr id="srow-A5"><td><span class="pub">集める広告費</span></td><td>1人6,000円</td><td><span class="st est">推計</span></td><td>SNS 広告の目安（外部の資料 8）の中央</td><td class="nt">calc.py の CAC</td><td class="pg"><a class="pgl" href="#kpi">kpi</a><a class="pgl" href="#unit">unit</a></td></tr>
+<tr id="srow-A6"><td><span class="pub">1箱の原価</span></td><td>茶葉1,100円・梱包350円</td><td><span class="st plan">計画</span></td><td>農家と約束する買い値と、倉庫の見積もり</td><td class="nt">calc.py の COST</td><td class="pg"><a class="pgl" href="#loop">loop</a><a class="pgl" href="#unit">unit</a><a class="pgl" href="#fin-pl">fin-pl</a></td></tr>
+<tr id="srow-A7"><td><span class="pub">国際送料</span></td><td>1箱1,450円（関税込み）</td><td><span class="st est">推計</span></td><td>運賃表（外部の資料 5）の1kg の箱</td><td class="nt">calc.py の COST[&quot;ship&quot;]</td><td class="pg"><a class="pgl" href="#unit">unit</a><a class="pgl" href="#risks">risks</a><a class="pgl" href="#fin-pl">fin-pl</a></td></tr>
+<tr id="srow-A8"><td><span class="pub">人件費・家賃など</span></td><td>月300万円 → 2,500万円（14か月目が中心）</td><td><span class="st tbd">仮置き</span></td><td>採用の計画から置いた</td><td class="nt">calc.py の FIXED</td><td class="pg"><a class="pgl" href="#unit">unit</a><a class="pgl" href="#fin-pl">fin-pl</a><a class="pgl" href="#fin-bep">fin-bep</a></td></tr>
+<tr id="srow-A9"><td><span class="pub">契約する農家</span></td><td>1年目6軒 → 2年目10軒</td><td><span class="st plan">計画</span></td><td>聞き取り（P2）で1年分の量を約束できると答えた軒数から</td><td class="nt">計画の値（calc.py では使わない）</td><td class="pg"><a class="pgl" href="#farms">farms</a><a class="pgl" href="#roadmap">roadmap</a></td></tr>
+<tr id="srow-A10"><td><span class="pub">地域の割合</span></td><td>米国42%・香港20%・台湾16%・カナダ12%・シンガポール10%</td><td><span class="st est">推計</span></td><td>市場調査（外部の資料 2）の購入者の分布</td><td class="nt">calc.py の REGIONS</td><td class="pg"><a class="pgl" href="#markets">markets</a><a class="pgl" href="#mix">mix</a></td></tr>
+<tr id="srow-A11"><td><span class="pub">カードの入金</span></td><td>翌月</td><td><span class="st est">推計</span></td><td>決済会社の入金の案内（外部の資料 6）</td><td class="nt">calc.py の cash_flow(collect_lag=1)</td><td class="pg"><a class="pgl" href="#fin-cf">fin-cf</a></td></tr>
+<tr id="srow-A12"><td><span class="pub">1か月目の投資</span></td><td>3,000万円</td><td><span class="st tbd">仮置き</span></td><td>アプリと倉庫の仕組みの見積もり前の置き値</td><td class="nt">calc.py の CAPEX</td><td class="pg"><a class="pgl" href="#fin-cf">fin-cf</a></td></tr>
+<tr id="srow-A13"><td><span class="pub">開業前の出資</span></td><td>4億円</td><td><span class="st tbd">仮置き</span></td><td>資金繰りの底（必要な資金）を覆う額</td><td class="nt">calc.py の EQUITY</td><td class="pg"><a class="pgl" href="#fin-cf">fin-cf</a></td></tr>
+  </table>
+  <div class="foot"><span>計画＝自分たちで決めた値。推計＝調べた数字からの計算。仮置き＝実績で置き直す値</span><span>前提の一覧</span></div>
+</section>
+<!-- ASSUMPTIONS:END -->
+
+<!-- SOURCES:BEGIN -->
+<section id="src-prim" data-gen="sources" data-sparse-ok>
+  <div class="kicker">SOURCES · 1/2</div>
+  <h1>一次調査：自分たちで聞いた2件の声</h1>
+  <div class="rule"></div>
+  <table class="src prim">
+<colgroup><col style="width:60px"><col style="width:290px"><col style="width:320px"><col style="width:150px"><col><col style="width:250px"><col style="width:170px"></colgroup>
+<tr><th>№</th><th>調査</th><th>だれ・何人</th><th>いつ</th><th>方法</th><th>記録</th><th>使うページ</th></tr>
+<tr id="srow-P1"><td class="no">P1</td><td><span class="pub">海外の日本茶好きへのオンラインのアンケート（見本）</span></td><td>台湾・香港・米国の120人</td><td class="dt">2026-08</td><td>Web のアンケート（選ぶ問い10・自由記述2）</td><td class="nt">data/survey.csv（見本）</td><td class="pg"><a class="pgl" href="#value">value</a><a class="pgl" href="#rivals">rivals</a><a class="pgl" href="#base">base</a></td></tr>
+<tr id="srow-P2"><td class="no">P2</td><td><span class="pub">静岡・鹿児島の茶農家への聞き取り（見本）</span></td><td>農家6軒</td><td class="dt">2026-07</td><td>訪ねて1時間ずつ聞く</td><td class="nt">notes/farms.md（見本）</td><td class="pg"><a class="pgl" href="#value">value</a><a class="pgl" href="#farms">farms</a><a class="pgl" href="#lanes">lanes</a></td></tr>
+  </table>
+  <div class="foot"><span>見本用の架空の調査。実際の資料では、記録の置き場所と、発言は要旨であることを書く</span><span>出典 1/2</span></div>
+</section>
+<section id="src-1" data-gen="sources" data-sparse-ok>
+  <div class="kicker">SOURCES · 2/2</div>
+  <h1>外部の資料 1〜8：01・02・03の章</h1>
+  <div class="rule"></div>
+  <table class="src">
+<colgroup><col style="width:60px"><col><col style="width:140px"><col style="width:400px"><col style="width:230px"></colgroup>
+<tr><th>№</th><th>発行者「資料名」</th><th>日付</th><th>リンク</th><th>使うページ</th></tr>
+<tr class="grp"><td colspan="5">01 市場と顧客</td></tr>
+<tr id="srow-1"><td class="no">1</td><td><span class="pub">見本の貿易統計</span>「緑茶の輸出額（国・地域別）」</td><td class="dt">2026-03</td><td class="u"><a href="https://example.com/trade/green-tea-exports" target="_blank" rel="noopener">example.com/trade/green-tea-exports</a></td><td class="pg"><a class="pgl" href="#value">value</a><a class="pgl" href="#markets">markets</a></td></tr>
+<tr id="srow-2"><td class="no">2</td><td><span class="pub">見本の市場調査会社</span>「海外の日本茶の消費者調査 2026」</td><td class="dt">2026-05</td><td class="u"><a href="https://example.com/research/japanese-tea-2026" target="_blank" rel="noopener">example.com/research/japanese-tea-2026</a></td><td class="pg"><a class="pgl" href="#markets">markets</a><a class="pgl" href="#rivals">rivals</a><a class="pgl" href="#mix">mix</a></td></tr>
+<tr id="srow-3"><td class="no">3</td><td><span class="pub">見本の関税当局</span>「少額の輸入品の扱い（北米）」</td><td class="dt">2026-06</td><td class="u"><a href="https://example.com/customs/low-value-imports" target="_blank" rel="noopener">example.com/customs/low-value-imports</a></td><td class="pg"><a class="pgl" href="#markets">markets</a><a class="pgl" href="#risks">risks</a></td></tr>
+<tr id="srow-4"><td class="no">4</td><td><span class="pub">見本の統計局</span>「作物統計：茶の栽培面積と荒茶の生産量」</td><td class="dt">2026-02</td><td class="u"><a href="https://example.com/stats/tea-production" target="_blank" rel="noopener">example.com/stats/tea-production</a></td><td class="pg"><a class="pgl" href="#farms">farms</a></td></tr>
+<tr class="grp"><td colspan="5">02 仕組み</td></tr>
+<tr id="srow-5"><td class="no">5</td><td><span class="pub">見本の運送会社</span>「国際配送の運賃表（関税込みの配送）」</td><td class="dt">2026-04</td><td class="u"><a href="https://example.com/carrier/ddp-rates" target="_blank" rel="noopener">example.com/carrier/ddp-rates</a></td><td class="pg"><a class="pgl" href="#lanes">lanes</a><a class="pgl" href="#unit">unit</a><a class="pgl" href="#risks">risks</a></td></tr>
+<tr id="srow-6"><td class="no">6</td><td><span class="pub">見本の決済会社</span>「手数料と入金のご案内」</td><td class="dt">2026-01</td><td class="u"><a href="https://example.com/payments/pricing" target="_blank" rel="noopener">example.com/payments/pricing</a></td><td class="pg"><a class="pgl" href="#loop">loop</a><a class="pgl" href="#unit">unit</a><a class="pgl" href="#fin-cf">fin-cf</a></td></tr>
+<tr id="srow-7"><td class="no">7</td><td><span class="pub">見本の業界団体</span>「定期便の解約率の調査」</td><td class="dt">2025-11</td><td class="u"><a href="https://example.com/association/subscription-churn" target="_blank" rel="noopener">example.com/association/subscription-churn</a></td><td class="pg"><a class="pgl" href="#loop">loop</a><a class="pgl" href="#kpi">kpi</a><a class="pgl" href="#growth">growth</a><a class="pgl" href="#risks">risks</a></td></tr>
+<tr class="grp"><td colspan="5">03 数字と計画</td></tr>
+<tr id="srow-8"><td class="no">8</td><td><span class="pub">見本の広告会社</span>「SNS 広告の獲得単価の目安」</td><td class="dt">2026-02</td><td class="u"><a href="https://example.com/ads/cac-benchmarks" target="_blank" rel="noopener">example.com/ads/cac-benchmarks</a></td><td class="pg"><a class="pgl" href="#kpi">kpi</a><a class="pgl" href="#unit">unit</a></td></tr>
+  </table>
+  <div class="foot"><span>見本用の架空の出典（リンクは example.com）。実際の資料では、リンクを確かめた日と、規約・料金・法令は使う前に最新版を確かめ直すことを書く</span><span>出典 2/2</span></div>
+</section>
+<!-- SOURCES:END -->
+
+<!-- GLOSSARY:BEGIN -->
+<section id="gl1" data-gen="glossary" data-sparse-ok>
+  <div class="kicker">GLOSSARY · 1/1</div>
+  <h1>用語集：商品とお客さま・運ぶ・払う・数字の言葉</h1>
+  <div class="rule"></div>
+  <div class="gls"><div class="gc">
+<div class="gh">商品とお客さま</div>
+<div class="ge" id="srow-gl-box"><b>定期便<small>SENCHA BOX</small></b><p>毎月1箱、産地の茶葉を届ける会員制の販売。単発の通販ではなく、1年分の量を農家に先に約束できる <a class="ref" href="#value">詳しく</a></p></div>
+<div class="ge" id="srow-gl-member"><b>会員</b><p>定期便を申し込み、毎月払っている人。やめるまで毎月1箱が届く <a class="ref" href="#kpi">詳しく</a></p></div>
+<div class="ge" id="srow-gl-premium"><b>上位プラン<small>6,800円</small></b><p>農家と品種を選べ、試飲の小袋が付くプラン <a class="ref" href="#mix">詳しく</a></p></div>
+<div class="ge" id="srow-gl-standard"><b>基本プラン<small>3,800円</small></b><p>産地の旬の茶葉を自社が選んで届けるプラン <a class="ref" href="#mix">詳しく</a></p></div>
+<div class="ge" id="srow-gl-shincha"><b>新茶</b><p>その年の最初に摘んだ茶葉。香りが強く、春から初夏にだけ出る <a class="ref" href="#farms">詳しく</a></p></div>
+<div class="ge" id="srow-gl-aracha"><b>荒茶</b><p>摘んだ葉を蒸して乾かした、仕上げる前の茶。産地の生産量はこの重さで数える <a class="ref" href="#farms">詳しく</a></p></div>
+<div class="gh">運ぶ・払う</div>
+<div class="ge" id="srow-gl-ddp"><b>関税込み<small>DDP</small></b><p>関税・税を送る側が先に払う送り方。届いてからお客さまが払う額が増えない <a class="ref" href="#lanes">詳しく</a></p></div>
+<div class="ge" id="srow-gl-warehouse"><b>倉庫</b><p>農家から届いた茶葉を検品・小分けし、梱包して国際発送する日本の1か所 <a class="ref" href="#lanes">詳しく</a></p></div>
+<div class="ge" id="srow-gl-payfee"><b>決済手数料</b><p>カードの支払いのたびに決済会社に払う手数料。売上高の3.5% <a class="ref" href="#unit">詳しく</a></p></div>
+</div><div class="gc">
+<div class="gh">数字の言葉</div>
+<div class="ge" id="srow-gl-churn"><b>やめる割合<small>解約率</small></b><p>会員のうち、その月にやめる人の割合。毎月4%なら平均25か月続く <a class="ref" href="#loop">詳しく</a></p></div>
+<div class="ge" id="srow-gl-cac"><b>集める広告費<small>CAC</small></b><p>新しい会員1人を集めるのにかかる広告費 <a class="ref" href="#kpi">詳しく</a></p></div>
+<div class="ge" id="srow-gl-ltv"><b>1人から残る額<small>LTV</small></b><p>1人の会員がやめるまでに自社に残す額。1箱で残る額 × 続く月数 <a class="ref" href="#kpi">詳しく</a></p></div>
+<div class="ge" id="srow-gl-gross"><b>売上総利益<small>粗利</small></b><p>売上高から売上原価（茶葉・梱包・送料）を引いた額 <a class="ref" href="#fin-pl">詳しく</a></p></div>
+<div class="ge" id="srow-gl-op"><b>営業利益</b><p>売上総利益から、決済手数料・広告費・人件費などを引いた額。本業のもうけ <a class="ref" href="#fin-pl">詳しく</a></p></div>
+<div class="ge" id="srow-gl-cm"><b>限界利益率</b><p>売上高のうち、変動費（茶葉・梱包・送料・決済）を引いて残る割合 <a class="ref" href="#fin-bep">詳しく</a></p></div>
+<div class="ge" id="srow-gl-bep"><b>損益分岐点</b><p>営業利益がちょうど0になる売上高。固定費 ÷ 限界利益率 <a class="ref" href="#fin-bep">詳しく</a></p></div>
+<div class="ge" id="srow-gl-need"><b>必要な資金</b><p>出資なしで、お金の出入りの累計が一番へこんだ額。開業前にこれ以上を用意する <a class="ref" href="#fin-cf">詳しく</a></p></div>
+<div class="ge" id="srow-gl-safety"><b>安全余裕率</b><p>売上高のうち、損益分岐点を超えている分の割合。(売上高 − 損益分岐点) ÷ 売上高。売上高がこの割合だけ減るまで赤字にならない <a class="ref" href="#fin-bep">詳しく</a></p></div>
+</div></div>
+  <div class="foot"><span>本文の点線の言葉にマウスを乗せると意味が出て、クリックするとここへ飛ぶ</span></div>
+</section>
+<!-- GLOSSARY:END -->
+
+<script>/*DATA*/window.DATA = {"rev":[0.6,7.4,20.9],"op":[-0.8,-0.9,2.9],"margin":[-1.236,-0.124,0.137],"members":[3119,22585,44124],"arpu":5000,"churn":0.04,"cac":6000,"ltv":48125,"grossBox":1925,"life":25,"premShare":0.405,"byPlan":{"standard":[0.3,3.4,9.5],"premium":[0.3,4,11.4]},"monthly":{"labels":["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36"],"members":[0,0.1,0.2,0.3,0.4,0.6,0.8,1.1,1.4,1.9,2.4,3.1,4,5,6.1,7.5,9,10.7,12.5,14.4,16.4,18.4,20.5,22.6,24.6,26.7,28.7,30.6,32.5,34.3,36.1,37.8,39.5,41.1,42.6,44.1],"op":[-4,-4,-4,-5,-5,-6,-6,-7,-8,-8,-9,-10,-11,-11,-12,-12,-12,-11,-9,-8,-6,-3,0,3,6,9,13,16,19,23,26,29,32,35,38,41],"opColors":["warn","warn","warn","warn","warn","warn","warn","warn","warn","warn","warn","warn","warn","warn","warn","warn","warn","warn","warn","warn","warn","warn","warn","accent","accent","accent","accent","accent","accent","accent","accent","accent","accent","accent","accent","accent"]},"breakeven":24,"unit":{"price":5000,"tea":-1100,"pack":-350,"ship":-1450,"pay":-175,"ads":-536,"fixed":-702,"profit":687},"regions":{"US":42,"HK":20,"TW":16,"CA":12,"SG":10},"sankey":[{"from":"US","to":"premium","v":8339},{"from":"US","to":"standard","v":10193},{"from":"HK","to":"premium","v":3530},{"from":"HK","to":"standard","v":5295},{"from":"TW","to":"premium","v":2118},{"from":"TW","to":"standard","v":4942},{"from":"CA","to":"premium","v":2224},{"from":"CA","to":"standard","v":3071},{"from":"SG","to":"premium","v":1677},{"from":"SG","to":"standard","v":2736}],"ltvCac":8,"fin":{"pl":{"cols":["Q1","Q2","Q3","Q4","Q1","Q2","Q3","Q4","Q1","Q2","Q3","Q4","1年目","2年目","3年目"],"groups":[{"label":"1年目","span":4},{"label":"2年目","span":4},{"label":"3年目","span":4},{"label":"年の合計","span":3}],"em":[12,13,14],"lines":{"rev":[1.7,6.4,16.5,37.1,75.3,136.1,216.6,307.7,399.9,487.3,567.3,639.3,61.7,735.7,2093.9],"cogs_tea":[-0.4,-1.4,-3.6,-8.2,-16.6,-29.9,-47.7,-67.7,-88,-107.2,-124.8,-140.7,-13.6,-161.9,-460.7],"cogs_pack":[-0.1,-0.4,-1.2,-2.6,-5.3,-9.5,-15.2,-21.5,-28,-34.1,-39.7,-44.8,-4.3,-51.5,-146.6],"cogs_ship":[-0.5,-1.9,-4.8,-10.8,-21.8,-39.5,-62.8,-89.2,-116,-141.3,-164.5,-185.4,-17.9,-213.4,-607.2],"cogs_total":[-1,-3.7,-9.6,-21.5,-43.7,-78.9,-125.6,-178.5,-232,-282.6,-329.1,-370.8,-35.8,-426.7,-1214.5],"gross":[0.7,2.7,6.9,15.6,31.6,57.1,91,129.2,168,204.7,238.3,268.5,25.9,309,879.4],"sga_pay":[-0.1,-0.2,-0.6,-1.3,-2.6,-4.8,-7.6,-10.8,-14,-17.1,-19.9,-22.4,-2.2,-25.8,-73.3],"sga_ads":[-1.1,-2.6,-5.6,-11.5,-21,-32.8,-43.3,-50.4,-54.2,-56.1,-56.9,-57.3,-20.9,-147.4,-224.6],"sga_fixed":[-12.2,-15.4,-21.2,-30.3,-42,-53.7,-62.8,-68.6,-71.8,-73.5,-74.3,-74.6,-79,-227.2,-294.2],"sga_total":[-13.4,-18.2,-27.4,-43.1,-65.7,-91.2,-113.7,-129.7,-140,-146.6,-151.1,-154.3,-102.1,-400.4,-592],"op":[-12.7,-15.5,-20.5,-27.5,-34,-34.1,-22.7,-0.5,27.9,58.1,87.2,114.2,-76.2,-91.3,287.4],"ordinary":[-12.7,-15.5,-20.5,-27.5,-34,-34.1,-22.7,-0.5,27.9,58.1,87.2,114.2,-76.2,-91.3,287.4],"gross_rate":[0.42,0.42,0.42,0.42,0.42,0.42,0.42,0.42,0.42,0.42,0.42,0.42,0.42,0.42,0.42],"op_rate":[-7.4564,-2.4221,-1.2436,-0.7426,-0.4518,-0.2506,-0.1049,-0.0016,0.0698,0.1192,0.1537,0.1786,-1.236,-0.1242,0.1373]},"rev":[1.7,6.4,16.5,37.1,75.3,136.1,216.6,307.7,399.9,487.3,567.3,639.3,61.7,735.7,2093.9],"cogs_tea":[-0.4,-1.4,-3.6,-8.2,-16.6,-29.9,-47.7,-67.7,-88,-107.2,-124.8,-140.7,-13.6,-161.9,-460.7],"cogs_pack":[-0.1,-0.4,-1.2,-2.6,-5.3,-9.5,-15.2,-21.5,-28,-34.1,-39.7,-44.8,-4.3,-51.5,-146.6],"cogs_ship":[-0.5,-1.9,-4.8,-10.8,-21.8,-39.5,-62.8,-89.2,-116,-141.3,-164.5,-185.4,-17.9,-213.4,-607.2],"cogs_total":[-1,-3.7,-9.6,-21.5,-43.7,-78.9,-125.6,-178.5,-232,-282.6,-329.1,-370.8,-35.8,-426.7,-1214.5],"gross":[0.7,2.7,6.9,15.6,31.6,57.1,91,129.2,168,204.7,238.3,268.5,25.9,309,879.4],"sga_pay":[-0.1,-0.2,-0.6,-1.3,-2.6,-4.8,-7.6,-10.8,-14,-17.1,-19.9,-22.4,-2.2,-25.8,-73.3],"sga_ads":[-1.1,-2.6,-5.6,-11.5,-21,-32.8,-43.3,-50.4,-54.2,-56.1,-56.9,-57.3,-20.9,-147.4,-224.6],"sga_fixed":[-12.2,-15.4,-21.2,-30.3,-42,-53.7,-62.8,-68.6,-71.8,-73.5,-74.3,-74.6,-79,-227.2,-294.2],"sga_total":[-13.4,-18.2,-27.4,-43.1,-65.7,-91.2,-113.7,-129.7,-140,-146.6,-151.1,-154.3,-102.1,-400.4,-592],"op":[-12.7,-15.5,-20.5,-27.5,-34,-34.1,-22.7,-0.5,27.9,58.1,87.2,114.2,-76.2,-91.3,287.4],"ordinary":[-12.7,-15.5,-20.5,-27.5,-34,-34.1,-22.7,-0.5,27.9,58.1,87.2,114.2,-76.2,-91.3,287.4],"gross_rate":[0.42,0.42,0.42,0.42,0.42,0.42,0.42,0.42,0.42,0.42,0.42,0.42,0.42,0.42,0.42],"op_rate":[-7.4564,-2.4221,-1.2436,-0.7426,-0.4518,-0.2506,-0.1049,-0.0016,0.0698,0.1192,0.1537,0.1786,-1.236,-0.1242,0.1373]},"cf":{"balance":[365.7,361.2,356.4,351.1,345.3,338.9,331.7,323.5,314.2,303.6,291.7,278.2,263.2,246.7,229,210.4,191.3,172.2,153.7,136.4,120.9,107.7,97.1,89.5,85.2,84.4,87,93.3,103.2,116.7,133.8,154.3,178.2,205.4,235.7,269.2],"cum":[-34.3,-38.8,-43.6,-48.9,-54.7,-61.1,-68.3,-76.5,-85.8,-96.4,-108.3,-121.8,-136.8,-153.3,-171,-189.6,-208.7,-227.8,-246.3,-263.6,-279.1,-292.3,-302.9,-310.5,-314.8,-315.6,-313,-306.7,-296.8,-283.3,-266.2,-245.7,-221.8,-194.6,-164.3,-130.8],"need":3.16,"trough":26,"recover":null,"equity":4,"capex":30,"low":0.84,"colors":["warn","warn","warn","warn","warn","warn","warn","warn","warn","warn","warn","warn","warn","warn","warn","warn","warn","warn","warn","warn","warn","warn","warn","warn","warn","warn","warn","warn","warn","warn","warn","warn","warn","warn","warn","warn"]},"bep":{"rev":[0.2,0.5,0.9,1.4,2.1,2.9,4,5.4,7.1,9.4,12.1,15.6,19.8,24.8,30.7,37.5,45.1,53.5,62.5,72.1,82,92.2,102.6,112.9,123.2,133.4,143.3,153.1,162.5,171.7,180.6,189.2,197.5,205.5,213.2,220.6],"line":[10.7,11.5,12.5,13.8,15.4,17.5,20,23,26.7,31,36,41.6,47.8,54.5,61.4,68.3,75,81.3,87,92.1,96.5,100.2,103.2,105.7,107.7,109.2,110.5,111.5,112.2,112.8,113.3,113.6,113.9,114.1,114.3,114.4],"first":24,"cm":0.385,"fixedY3":43,"bepY3":112,"revY3":174,"bepEnd":114,"safetyY3":0.357}},"tea":{"labels":["鹿児島","静岡","三重","宮崎","京都","福岡"],"values":[27000,25800,5200,2900,2300,1700],"share2":0.731}};/*END DATA*/</script>
+<script>/*GLOSS*/window.GLOSS = [{"id":"gl-premium","sec":"gl1","t":"上位プラン","d":"農家と品種を選べ、試飲の小袋が付くプラン","re":"上位 6,800円|上位プラン"},{"id":"gl-standard","sec":"gl1","t":"基本プラン","d":"産地の旬の茶葉を自社が選んで届けるプラン","re":"基本 3,800円|基本プラン"},{"id":"gl-ddp","sec":"gl1","t":"関税込み","d":"関税・税を送る側が先に払う送り方。届いてからお客さまが払う額が増えない","re":"関税・送料込み|関税込み|(?<![A-Za-z0-9])DDP(?![A-Za-z0-9])"},{"id":"gl-ltv","sec":"gl1","t":"1人から残る額","d":"1人の会員がやめるまでに自社に残す額。1箱で残る額 × 続く月数","re":"(?<![A-Za-z0-9])1人から残る額|(?<![A-Za-z0-9])LTV(?![A-Za-z0-9])"},{"id":"gl-cac","sec":"gl1","t":"集める広告費","d":"新しい会員1人を集めるのにかかる広告費","re":"集める広告費|(?<![A-Za-z0-9])CAC(?![A-Za-z0-9])"},{"id":"gl-payfee","sec":"gl1","t":"決済手数料","d":"カードの支払いのたびに決済会社に払う手数料。売上高の3.5%","re":"決済手数料|決済"},{"id":"gl-churn","sec":"gl1","t":"やめる割合","d":"会員のうち、その月にやめる人の割合。毎月4%なら平均25か月続く","re":"やめる割合|解約率"},{"id":"gl-gross","sec":"gl1","t":"売上総利益","d":"売上高から売上原価（茶葉・梱包・送料）を引いた額","re":"売上総利益|粗利"},{"id":"gl-cm","sec":"gl1","t":"限界利益率","d":"売上高のうち、変動費（茶葉・梱包・送料・決済）を引いて残る割合","re":"限界利益率"},{"id":"gl-bep","sec":"gl1","t":"損益分岐点","d":"営業利益がちょうど0になる売上高。固定費 ÷ 限界利益率","re":"損益分岐点|損益分岐"},{"id":"gl-need","sec":"gl1","t":"必要な資金","d":"出資なしで、お金の出入りの累計が一番へこんだ額。開業前にこれ以上を用意する","re":"必要な資金"},{"id":"gl-safety","sec":"gl1","t":"安全余裕率","d":"売上高のうち、損益分岐点を超えている分の割合。(売上高 − 損益分岐点) ÷ 売上高。売上高がこの割合だけ減るまで赤字にならない","re":"安全余裕率"},{"id":"gl-op","sec":"gl1","t":"営業利益","d":"売上総利益から、決済手数料・広告費・人件費などを引いた額。本業のもうけ","re":"営業利益"},{"id":"gl-box","sec":"gl1","t":"定期便","d":"毎月1箱、産地の茶葉を届ける会員制の販売。単発の通販ではなく、1年分の量を農家に先に約束できる","re":"定期便"},{"id":"gl-l-assump","k":"link","sec":"assump","t":"仮の値","d":"外部の出典がない数字。前提の一覧で、計画・推計・仮置きに分けている","re":"仮の値"},{"id":"gl-member","sec":"gl1","t":"会員","d":"定期便を申し込み、毎月払っている人。やめるまで毎月1箱が届く","re":"会員"},{"id":"gl-shincha","sec":"gl1","t":"新茶","d":"その年の最初に摘んだ茶葉。香りが強く、春から初夏にだけ出る","re":"新茶"},{"id":"gl-aracha","sec":"gl1","t":"荒茶","d":"摘んだ葉を蒸して乾かした、仕上げる前の茶。産地の生産量はこの重さで数える","re":"荒茶"},{"id":"gl-warehouse","sec":"gl1","t":"倉庫","d":"農家から届いた茶葉を検品・小分けし、梱包して国際発送する日本の1か所","re":"倉庫"}];/*END GLOSS*/</script>
+<script>/*CITES*/window.CITES = {"src":{"1":{"p":"src-1","t":"見本の貿易統計「緑茶の輸出額（国・地域別）」2026-03"},"2":{"p":"src-1","t":"見本の市場調査会社「海外の日本茶の消費者調査 2026」2026-05"},"3":{"p":"src-1","t":"見本の関税当局「少額の輸入品の扱い（北米）」2026-06"},"4":{"p":"src-1","t":"見本の統計局「作物統計：茶の栽培面積と荒茶の生産量」2026-02"},"5":{"p":"src-1","t":"見本の運送会社「国際配送の運賃表（関税込みの配送）」2026-04"},"6":{"p":"src-1","t":"見本の決済会社「手数料と入金のご案内」2026-01"},"7":{"p":"src-1","t":"見本の業界団体「定期便の解約率の調査」2025-11"},"8":{"p":"src-1","t":"見本の広告会社「SNS 広告の獲得単価の目安」2026-02"},"P1":{"p":"src-prim","t":"海外の日本茶好きへのオンラインのアンケート（見本）"},"P2":{"p":"src-prim","t":"静岡・鹿児島の茶農家への聞き取り（見本）"},"A1":{"p":"assump","t":"月の値段：基本3,800円・上位6,800円（計画）"},"A2":{"p":"assump","t":"上位プランを選ぶ割合：40%（地域ごとに30〜45%。3年目の会員の構成では約41%）（推計）"},"A3":{"p":"assump","t":"やめる割合：毎月4%（仮置き）"},"A4":{"p":"assump","t":"新しい会員：月最大3,200人（16か月目が中心の S 字）（推計）"},"A5":{"p":"assump","t":"集める広告費：1人6,000円（推計）"},"A6":{"p":"assump","t":"1箱の原価：茶葉1,100円・梱包350円（計画）"},"A7":{"p":"assump","t":"国際送料：1箱1,450円（関税込み）（推計）"},"A8":{"p":"assump","t":"人件費・家賃など：月300万円 → 2,500万円（14か月目が中心）（仮置き）"},"A9":{"p":"assump","t":"契約する農家：1年目6軒 → 2年目10軒（計画）"},"A10":{"p":"assump","t":"地域の割合：米国42%・香港20%・台湾16%・カナダ12%・シンガポール10%（推計）"},"A11":{"p":"assump","t":"カードの入金：翌月（推計）"},"A12":{"p":"assump","t":"1か月目の投資：3,000万円（仮置き）"},"A13":{"p":"assump","t":"開業前の出資：4億円（仮置き）"}},"pages":{"value":["P1","P2","1"],"rivals":["P1","2"],"base":["P1"],"farms":["P2","4","A9"],"lanes":["P2","5"],"markets":["1","2","3","A10"],"mix":["2","A1","A2","A10"],"risks":["3","5","7","A3","A7"],"unit":["5","6","8","A1","A5","A6","A7","A8"],"loop":["6","7","A3","A6"],"fin-cf":["6","A11","A12","A13"],"kpi":["7","8","A1","A3","A5"],"growth":["7","A2","A3","A4"],"fin-pl":["A1","A6","A7","A8"],"members":["A4"],"fin-bep":["A8"],"roadmap":["A9"]}};/*END CITES*/</script>
 <script id="html-slides-lib-js">/*LIB:JS*/
-/* html-slides runtime：画面合わせ・ページ送り・番号・章の並び・data-f の数字・?check・発表者メモ。
+/* html-slides runtime：画面合わせ・ページ送り・番号・章の並び・data-f の数字・?check・発表者メモ・
+   出典の番号と用語の下線（window.CITES・window.GLOSS）・リンクの p.番号・戻るリンク・飛び先を光らせる。
    デッキ側の <script> は window.DATA と Slides.onShow(fn) を使える（DOMContentLoaded で初期化するので、デッキ側の定義が先に済む）。 */
 (() => {
   const H = document.documentElement;
@@ -868,6 +1093,8 @@ body.presenter .np .next { font-size: 22px; margin-top: 26px; }
       const hasText = [...el.childNodes].some(n => n.nodeType === 3 && n.textContent.trim());
       if (hasText && parseFloat(cs.fontSize) < MIN_FS) add(el, `font ${parseFloat(cs.fontSize)}px < ${MIN_FS}px`);
       if (el.tagName === "IMG" && el.complete && !el.naturalWidth) add(el, "image-missing");
+      const href = el.tagName === "A" ? el.getAttribute("href") || "" : "";
+      if (href.length > 1 && href[0] === "#" && !document.getElementById(decodeURIComponent(href.slice(1)))) add(el, `link-missing ${href}（飛び先の id がない）`);
       if (el.classList.contains("f-missing")) add(el, `data-missing ${el.dataset.f || el.dataset.chart?.slice(0, 40) || ""}`);
     });
     hits.forEach(h => h.el.classList.add("ovf"));
@@ -893,10 +1120,77 @@ body.presenter .np .next { font-size: 22px; margin-top: 26px; }
     }
   }
 
+  /* ---------- 出典・用語：build-sources.mjs / build-glossary.mjs が書く window.CITES・window.GLOSS から ---------- */
+  const citesRow = sec => {
+    let c = sec.querySelector(":scope > .cites");
+    if (!c) { c = document.createElement("div"); c.className = "cites"; sec.appendChild(c); }
+    return c;
+  };
+  const attr = s => String(s).replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;");
+  /** 各ページの下に出典の番号（3つ以上続く番号は 4–7 にまとめる）。マウスを乗せると資料名、クリックで出典のページへ */
+  function renderCites(ids) {
+    const C = window.CITES;
+    if (!C || !C.pages || MODE === "pitch") return;
+    for (const [id, list] of Object.entries(C.pages)) {
+      const sec = document.getElementById(id);
+      if (!sec || sec.tagName !== "SECTION" || !list.length) continue;
+      const num = n => /^\d+$/.test(n), runs = [];
+      list.forEach(n => {
+        const r = runs[runs.length - 1];
+        if (r && num(n) && num(r[r.length - 1]) && +n === +r[r.length - 1] + 1) r.push(n); else runs.push([n]);
+      });
+      const tip = ns => attr(ns.map(n => `${n}. ${C.src[n]?.t || ""}`).join("\n"));
+      const chips = runs.flatMap(r => (r.length > 2 ? [r] : r.map(x => [x]))).map(g => {
+        const s = C.src[g[0]] || {};
+        return `<a class="cite${num(g[0]) ? "" : " p"}" href="#${s.p || ""}" data-n="${g[0]}" title="${tip(g)}">${g.length > 1 ? `${g[0]}–${g[g.length - 1]}` : g[0]}</a>`;
+      }).join("");
+      citesRow(sec).insertAdjacentHTML("beforeend", `<span class="cw">${EN ? "Sources" : "出典"} ${chips}</span>`);
+    }
+  }
+  /** 各ページで、用語集にある言葉の最初の1回に点線の下線（マウスで意味、クリックで用語集へ）。ページの下に用語集のページ番号 */
+  function renderGloss(secs, ids) {
+    const G = window.GLOSS;
+    if (!G || !G.length) return;
+    const res = G.map(g => { try { return new RegExp(g.re); } catch { return null; } });
+    const SKIP = "h1, .kicker, .foot, .cites, a, svg, script, style, .chaps, .pno, .back, .toc, .nav, aside.notes, [data-nogloss]";
+    secs.forEach(sec => {
+      if (sec.matches(".cover, .chap, [data-gen], [data-nogloss]")) return;
+      const texts = [];
+      const w = document.createTreeWalker(sec, NodeFilter.SHOW_TEXT);
+      for (let n; (n = w.nextNode());) if (n.data.trim() && !n.parentElement.closest(SKIP)) texts.push(n);
+      const used = new Set();
+      G.forEach((g, i) => {
+        if (!res[i]) return;
+        for (let k = 0; k < texts.length; k++) {
+          const m = res[i].exec(texts[k].data);
+          if (!m || !m[0]) continue;
+          const hit = texts[k].splitText(m.index), after = hit.splitText(m[0].length);
+          const a = document.createElement("a");
+          a.className = "gl";
+          a.href = `#${g.sec}`;
+          if (g.fl) a.dataset.fl = g.fl; else a.dataset.n = g.id;
+          a.title = `${g.t}：${g.d}`;
+          hit.replaceWith(a);
+          a.appendChild(hit);
+          texts.splice(k, 1, texts[k], after);
+          used.add(g.sec);
+          break;
+        }
+      });
+      if (!used.size || MODE === "pitch") return;
+      const links = [...used].filter(s => ids.includes(s)).sort((x, y) => ids.indexOf(x) - ids.indexOf(y))
+        .map(s => `<a class="glc" href="#${s}">p.${ids.indexOf(s) + 1}</a>`).join("");
+      if (links) citesRow(sec).insertAdjacentHTML("afterbegin", `<span class="cw">${EN ? "Terms" : "用語"} ${links}</span>`);
+    });
+  }
+
   function init() {
     const secs = [...document.querySelectorAll("section")];
     const ids = (Slides.ids = secs.map(s => s.id));
     fillData(document);
+    Slides.tables?.(document);
+    renderGloss(secs, ids);
+    renderCites(ids);
 
     /* ページ番号（data-nopno で消す） */
     secs.forEach((s, i) => {
@@ -919,6 +1213,31 @@ body.presenter .np .next { font-size: 22px; margin-top: 26px; }
       const n = ids.indexOf(a.hash.slice(1)) + 1;
       if (n) a.insertAdjacentHTML("beforeend", `<span class="pg">p.${n}</span>`);
     });
+    document.querySelectorAll("a.pgl").forEach(a => { const n = ids.indexOf(a.hash.slice(1)) + 1; if (n) a.textContent = `p.${n}`; });
+
+    /* リンクで飛んだら：飛び先の行（data-fl の id、出典・用語は srow-番号）を光らせ、飛び先のページに「← 元のページへ」 */
+    let flashId = null, backFrom = null, backTo = null;
+    document.addEventListener("click", e => {
+      const a = e.target.closest?.("a[href^='#']");
+      if (!a || a.closest(".nav")) return;
+      if (a.classList.contains("back")) { e.preventDefault(); const f = backFrom; backFrom = backTo = null; if (f) location.hash = f; return; }
+      const to = decodeURIComponent(a.hash.slice(1));
+      if (!ids.includes(to)) return;
+      backFrom = current(); backTo = to;
+      flashId = a.dataset.fl || (a.dataset.n ? `srow-${a.dataset.n}` : null);
+    });
+    Slides.afterShow = sec => {
+      let b = sec.querySelector(":scope > a.back");
+      if (backTo === sec.id && backFrom && backFrom !== sec.id) {
+        if (!b) { b = document.createElement("a"); b.className = "back"; b.href = "#"; b.textContent = EN ? "← Back" : "← 元のページへ"; sec.appendChild(b); }
+        b.classList.add("show");
+      } else b?.classList.remove("show");
+      if (flashId) {
+        const r = document.getElementById(flashId);
+        if (r) { r.classList.add("flash"); setTimeout(() => r.classList.remove("flash"), 2500); }
+        flashId = null;
+      }
+    };
 
     const nav = document.createElement("div");
     nav.className = "nav";
@@ -962,6 +1281,7 @@ body.presenter .np .next { font-size: 22px; margin-top: 26px; }
       if (t0 === null && id !== ids[0]) t0 = performance.now();
       nav.querySelector("span").textContent = `${ids.indexOf(id) + 1} / ${ids.length}`;
       hooks.forEach(fn => { try { fn(sec); } catch (e) { console.error(e); } });
+      Slides.afterShow?.(sec);
       paintNotes();
       if (CHECK) setTimeout(() => check(sec), 80);
     }
@@ -1017,6 +1337,44 @@ body.presenter .np .next { font-size: 22px; margin-top: 26px; }
   }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
   else setTimeout(init);
+})();
+
+/* html-slides 財務の表：<div class="fin" data-fin='{…}'> を、DATA の数字から損益計算書・資金繰りなどの表にする。
+   列は四半期と年など（groups で上に見出し、各まとまりの頭に縦線）。行は小計（sum）・強調（key）・率（pct）・見出し（head）・字下げ（indent）。
+   マイナスは「−」で赤く、数字がないセルは「—」にして ?check の data-missing に出す。 */
+(() => {
+  const S = window.Slides;
+  const at = v => (typeof v === "string" && v.startsWith("@") ? S.get(v.slice(1)) : v);
+  const esc = s => String(s ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;");
+  function one(host) {
+    let o;
+    try { o = JSON.parse(host.dataset.fin); } catch (e) { host.textContent = "data-fin の JSON が読めない"; host.classList.add("f-missing"); return; }
+    const cols = at(o.cols) || [], groups = at(o.groups) || [], em = new Set(at(o.em) || []);
+    const starts = new Set();
+    let c = 0;
+    groups.forEach(g => { if (c) starts.add(c); c += g.span || 1; });
+    const cls = i => [starts.has(i) ? "gs" : "", em.has(i) ? "em" : ""].filter(Boolean).join(" ");
+    const missing = [];
+    let h = "<table class=\"fin\">";
+    if (groups.length) h += `<tr class="grp"><th class="lb"></th>${groups.map((g, gi) => `<th colspan="${g.span || 1}" class="${gi ? "gs" : ""}">${esc(g.label)}</th>`).join("")}</tr>`;
+    h += `<tr><th class="lb">${esc(o.unit ? (S.lang === "en" ? `Unit: ${o.unit}` : `単位：${o.unit}`) : "")}</th>${cols.map((x, i) => `<th class="${cls(i)}">${esc(x)}</th>`).join("")}</tr>`;
+    (o.rows || []).forEach(r => {
+      if (r.head) { h += `<tr class="head"><td class="lb" colspan="${cols.length + 1}">${esc(r.head)}</td></tr>`; return; }
+      const vals = at(r.v);
+      const f = Object.assign({}, r.kind === "pct" ? { d: 1, x: 100, u: "%" } : o.fmt || {}, r.fmt || {});
+      if (!Array.isArray(vals)) missing.push(typeof r.v === "string" ? r.v.replace(/^@/, "") : r.label);
+      const tr = [r.kind || "", r.indent ? `i${r.indent}` : ""].filter(Boolean).join(" ");
+      h += `<tr class="${tr}"><td class="lb">${esc(r.label)}</td>${cols.map((_, i) => {
+        const v = Array.isArray(vals) ? vals[i] : undefined;
+        const neg = typeof v === "number" && v * (f.x ?? 1) < 0 && S.fmt(v, f).startsWith("−");
+        return `<td class="${[cls(i), neg ? "neg" : ""].filter(Boolean).join(" ")}">${S.fmt(v, f)}</td>`;
+      }).join("")}</tr>`;
+    });
+    host.innerHTML = h + "</table>";
+    host.classList.toggle("f-missing", missing.length > 0);
+    if (missing.length) host.dataset.f = missing.join(",");
+  }
+  S.tables = root => root.querySelectorAll("[data-fin]").forEach(one);
 })();
 
 /* html-slides charts：<div class="chart" style="height:…px" data-chart='{"type":"bar",…}'> を SVG で描く。

@@ -27,6 +27,7 @@
   - [7. 発表用の型（pitch）](#7-発表用の型pitch)
   - [8. 崩れの自動検査](#8-崩れの自動検査)
   - [9. テーマ](#9-テーマ)
+  - [10. 付録と敵対的な検査](#10-付録と敵対的な検査)
 - [入れ方](#入れ方)・[手で使う](#手で使う)・[中身](#中身)・[ライセンス](#ライセンス)
 
 ### 全体像
@@ -258,6 +259,7 @@ node scripts/inject-data.mjs slides.html pitch.html data/data.json
 | `map-empty` | 地図がまだ書き込まれていない |
 | `image-missing` | 画像が読めない |
 | `dup-id` | 同じ id が 2 か所（ページと図の箱など） |
+| `link-missing` | ページ内リンクの飛び先の id がない |
 
 エージェントは「問題: なし」になるまで直してから、PNG を書き出して目で確かめます。
 
@@ -278,12 +280,44 @@ node scripts/export.mjs slides.html --theme navy --out /tmp/navy   # 変えず�
 html[data-theme] { --accent: #7c3aed; --accent-bg: #f3edff; --accent-mid: #c4b5fd; --c1: #7c3aed; }
 ```
 
+### 10. 付録と敵対的な検査
+
+読んだ人が数字をたどれて、疑いに耐える資料にするための道具です。付録は JSON から作るので、ページの並びや本文を変えても番号・ページ番号がずれません。
+
+<p>
+<img src="examples/demo/png/20-fin-pl.png" width="49%" alt="四半期の損益計算書（data-fin の表）">
+<img src="examples/demo/png/23-assump.png" width="49%" alt="前提の一覧（計画・推計・仮置き）">
+</p>
+<p>
+<img src="examples/demo/png/25-src-1.png" width="49%" alt="出典（最初に使う順の番号・使うページ）">
+<img src="examples/demo/png/26-gl1.png" width="49%" alt="用語集（本文の下線から飛ぶ）">
+</p>
+
+| 道具 | やること |
+|---|---|
+| `build-sources.mjs` | `sources.json` から一次調査・外部の資料・前提の一覧のページを作る。外部の資料は最初に使うページの順に番号を振り、各ページの注記の下に「出典 1 3–6 P2 A3」を出す。前提の一覧は数字ごとに計画・推計・仮置きと計算の場所を書く。文の中で資料を指すときは `{{key}}` で、番号は振り直したものに置き換わる |
+| `build-glossary.mjs` | `glossary.json` から用語集を作り、本文の各ページで最初に出る言葉に下線を引く（クリックで意味へ） |
+| ページ内リンク | `<a class="ref" href="#unit">` に「p.13」が自動で付き、飛んだ先に「← 元のページへ」。飛び先がなければ検査が知らせる |
+| `templates/finance.py`＋`data-fin` | 月ごとの売上・費用から、四半期と年の損益計算書・資金繰り（入金の遅れ・出資・必要な資金）・損益分岐を計算し、表の部品で描く |
+| `audit.mjs`（機械の検査） | 描いたあとの全ページを読み、ページをまたいだ数字の食い違い（丸めの違いは分ける）・出典のない数字・切れたリンク・題名だけの見出しを一覧にする |
+| 専門家役のレビュー＋`build-review.mjs` | エージェントが 20 の分野の専門家の役で 5 問ずつ厳しい質問を出し、資料だけを根拠に答えて A/B/C を付ける。何人もが突いた論点・原文で確かめた食い違い・ページ別の参照索引の Markdown にまとめる |
+
+見本では、機械の検査で見つからなかった「新茶を毎月届ける」と「新茶は春から初夏だけ」の矛盾や、見出しの「36%上回る」（表の数字では約 55%）をレビューが見つけ、直しました。レビューの結果は [examples/demo/review/slides-review.md](examples/demo/review/slides-review.md)、機械の検査は [slides-audit.md](examples/demo/review/slides-audit.md) です。
+
+```bash
+node scripts/build-sources.mjs slides.html data/sources.json
+node scripts/build-glossary.mjs slides.html data/glossary.json
+node scripts/export.mjs slides.html --check
+node scripts/audit.mjs slides.html                 # review/ に検査の結果と、レビューが読む本文
+node scripts/build-review.mjs review/slides-review.json --experts 20 --questions 5
+```
+
 <details>
-<summary>資料の見本の全 18 ページ</summary>
+<summary>資料の見本の全 26 ページ</summary>
 
 架空の日本茶の定期便の事業計画を題材にした見本です（`examples/demo/slides.html`。数字は `data/calc.py` の計算、イラストは生成 AI）。
 
-![資料の見本（18 枚）](examples/demo/png/sheet.png)
+![資料の見本（26 枚）](examples/demo/png/sheet.png)
 
 <p>
 <img src="examples/demo/png/06-rivals.png" width="49%" alt="散布・バブル">
@@ -335,11 +369,11 @@ node $S/export.mjs ./my-deck/slides.html --sheet                                
 | パス | 中身 |
 |---|---|
 | [SKILL.md](SKILL.md) | エージェントが読む手順（最初に決めること・手順・検査の直し方・コマンド） |
-| [reference/](reference/) | 書き方・部品・グラフ・図・地図・データ・イラストの詳しい説明 |
-| `assets/` | テーマ・CSS・ランタイム・グラフ・図・フォント・地図のデータ |
-| `scripts/` | `deck.mjs`（作る・更新）`export.mjs`（書き出し・検査）`inject-data.mjs` `make-map.mjs` `to_webp.py` |
-| `templates/` | `deck new` の元（doc・pitch） |
-| `examples/demo/` | 見本のデッキ（事業計画の資料 18 枚・発表 7 枚）・計算・地図の仕様・PNG |
+| [reference/](reference/) | 書き方・部品・グラフ・図・地図・データ・イラスト・出典と用語集・財務の表・敵対的な検査の詳しい説明 |
+| `assets/` | テーマ・CSS・ランタイム・表・グラフ・図・フォント・地図のデータ |
+| `scripts/` | `deck.mjs`（作る・更新）`export.mjs`（書き出し・検査）`inject-data.mjs` `make-map.mjs` `build-sources.mjs` `build-glossary.mjs` `audit.mjs` `build-review.mjs` `to_webp.py` |
+| `templates/` | `deck new` の元（doc・pitch）と財務の計算のひな形 `finance.py` |
+| `examples/demo/` | 見本のデッキ（事業計画の資料 26 枚・発表 7 枚）・計算・出典と用語集の JSON・地図の仕様・PNG・検査とレビューの結果（`review/`） |
 | [examples/usecases/](examples/usecases/) | マーケティング（4 枚）とコンサルティング（5 枚）の見本と PNG。開く前に `node scripts/deck.mjs update examples/usecases/marketing.html` でフォントを置く |
 | [examples/project-skill/SKILL.template.md](examples/project-skill/SKILL.template.md) | 案件ごとの約束（表記・出典・公開手順）を書くプロジェクトスキルのひな形 |
 | `docs/figures/` | この README の図（図もこのスキルで作っている。`node docs/figures/build.mjs` で作り直す） |
@@ -377,6 +411,9 @@ Beyond business plans and pitches, the same takeaway-headline style fits **marke
 | **Pitch mode** | All text ≥ 54px (checked), speaker notes, synced presenter window with timer | [pitch sheet](examples/demo/png-pitch/sheet.png) |
 | **Automatic checks** | Headless Chrome flags overflow, lopsided or sparse layouts (large empty areas), off-canvas, tiny text, missing data, empty maps, missing images, duplicate ids | see below |
 | **Themes** | `green` `navy` `mono` `blue` `wa` `dark`, switchable in one command; brand colors via CSS variables (`html[data-theme] { --accent: … }`) | see below |
+| **Appendices** | Sources (numbered by first use, per-page citation row), an assumptions table (plan / estimate / placeholder + where it is computed) and a glossary with in-text links, all generated from JSON; auto page numbers on internal links with a "back" link | [assumptions](examples/demo/png/23-assump.png), [sources](examples/demo/png/25-src-1.png), [glossary](examples/demo/png/26-gl1.png) |
+| **Finance** | `templates/finance.py` computes a quarterly P&L, cash flow (collection lag, equity, funding need) and break-even; `data-fin` renders the statement table | [P&L](examples/demo/png/20-fin-pl.png), [cash](examples/demo/png/21-fin-cf.png), [break-even](examples/demo/png/22-fin-bep.png) |
+| **Adversarial review** | `audit.mjs` cross-checks numbers across pages, unsourced numbers and broken links; the agent then role-plays 20 domain experts × 5 hard questions, answers only from the deck and grades A/B/C; `build-review.mjs` writes the Markdown report | [review](examples/demo/review/slides-review.md) (Japanese) |
 
 ![Pitch demo](examples/demo/png-pitch/sheet.png)
 

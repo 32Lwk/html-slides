@@ -1,0 +1,34 @@
+{
+  "checked": "2026-09-28",
+  "foot": "見本用の架空の出典（リンクは example.com）。実際の資料では、リンクを確かめた日と、規約・料金・法令は使う前に最新版を確かめ直すことを書く",
+  "primaryFoot": "見本用の架空の調査。実際の資料では、記録の置き場所と、発言は要旨であることを書く",
+  "primary": [
+    {"id": "P1", "name": "海外の日本茶好きへのオンラインのアンケート（見本）", "who": "台湾・香港・米国の120人", "when": "2026-08", "how": "Web のアンケート（選ぶ問い10・自由記述2）", "where": "data/survey.csv（見本）", "pages": ["value", "rivals", "base"]},
+    {"id": "P2", "name": "静岡・鹿児島の茶農家への聞き取り（見本）", "who": "農家6軒", "when": "2026-07", "how": "訪ねて1時間ずつ聞く", "where": "notes/farms.md（見本）", "pages": ["farms", "value", "lanes"]}
+  ],
+  "external": [
+    {"key": "stats", "pub": "見本の統計局", "title": "作物統計：茶の栽培面積と荒茶の生産量", "date": "2026-02", "url": "https://example.com/stats/tea-production", "pages": ["farms"]},
+    {"key": "trade", "pub": "見本の貿易統計", "title": "緑茶の輸出額（国・地域別）", "date": "2026-03", "url": "https://example.com/trade/green-tea-exports", "pages": ["markets", "value"]},
+    {"key": "survey", "pub": "見本の市場調査会社", "title": "海外の日本茶の消費者調査 2026", "date": "2026-05", "url": "https://example.com/research/japanese-tea-2026", "pages": ["markets", "rivals", "mix"]},
+    {"key": "customs", "pub": "見本の関税当局", "title": "少額の輸入品の扱い（北米）", "date": "2026-06", "url": "https://example.com/customs/low-value-imports", "pages": ["markets", "risks"]},
+    {"key": "rates", "pub": "見本の運送会社", "title": "国際配送の運賃表（関税込みの配送）", "date": "2026-04", "url": "https://example.com/carrier/ddp-rates", "pages": ["lanes", "unit", "risks"]},
+    {"key": "pay", "pub": "見本の決済会社", "title": "手数料と入金のご案内", "date": "2026-01", "url": "https://example.com/payments/pricing", "pages": ["loop", "unit", "fin-cf"]},
+    {"key": "churn", "pub": "見本の業界団体", "title": "定期便の解約率の調査", "date": "2025-11", "url": "https://example.com/association/subscription-churn", "pages": ["loop", "kpi", "growth", "risks"]},
+    {"key": "ads", "pub": "見本の広告会社", "title": "SNS 広告の獲得単価の目安", "date": "2026-02", "url": "https://example.com/ads/cac-benchmarks", "pages": ["kpi", "unit"]}
+  ],
+  "assumptions": [
+    {"item": "月の値段", "value": "基本3,800円・上位6,800円", "status": "計画", "basis": "競合の中価格帯（外部の資料 {{survey}}）に合わせて決めた", "where": "calc.py の PLANS", "pages": ["kpi", "unit", "mix", "fin-pl"]},
+    {"item": "上位プランを選ぶ割合", "value": "40%（地域ごとに30〜45%。3年目の会員の構成では約41%）", "status": "推計", "basis": "アンケート（P1）で上位を選んだ割合", "where": "calc.py の PLANS・PREMIUM_BY_REGION", "pages": ["mix", "growth"]},
+    {"item": "やめる割合", "value": "毎月4%", "status": "仮置き", "basis": "業界の調査（外部の資料 {{churn}}）の中央値より低く置いた。90日で測って置き直す", "where": "calc.py の CHURN", "pages": ["loop", "kpi", "growth", "risks"]},
+    {"item": "新しい会員", "value": "月最大3,200人（16か月目が中心の S 字）", "status": "推計", "basis": "広告の獲得単価（外部の資料 {{ads}}）と広告費から", "where": "calc.py の NEW_PEAK・NEW_MID・NEW_K", "pages": ["members", "growth"]},
+    {"item": "集める広告費", "value": "1人6,000円", "status": "推計", "basis": "SNS 広告の目安（外部の資料 {{ads}}）の中央", "where": "calc.py の CAC", "pages": ["kpi", "unit"]},
+    {"item": "1箱の原価", "value": "茶葉1,100円・梱包350円", "status": "計画", "basis": "農家と約束する買い値と、倉庫の見積もり", "where": "calc.py の COST", "pages": ["unit", "loop", "fin-pl"]},
+    {"item": "国際送料", "value": "1箱1,450円（関税込み）", "status": "推計", "basis": "運賃表（外部の資料 {{rates}}）の1kg の箱", "where": "calc.py の COST[\"ship\"]", "pages": ["unit", "risks", "fin-pl"]},
+    {"item": "人件費・家賃など", "value": "月300万円 → 2,500万円（14か月目が中心）", "status": "仮置き", "basis": "採用の計画から置いた", "where": "calc.py の FIXED", "pages": ["unit", "fin-pl", "fin-bep"]},
+    {"item": "契約する農家", "value": "1年目6軒 → 2年目10軒", "status": "計画", "basis": "聞き取り（P2）で1年分の量を約束できると答えた軒数から", "where": "計画の値（calc.py では使わない）", "pages": ["farms", "roadmap"]},
+    {"item": "地域の割合", "value": "米国42%・香港20%・台湾16%・カナダ12%・シンガポール10%", "status": "推計", "basis": "市場調査（外部の資料 {{survey}}）の購入者の分布", "where": "calc.py の REGIONS", "pages": ["markets", "mix"]},
+    {"item": "カードの入金", "value": "翌月", "status": "推計", "basis": "決済会社の入金の案内（外部の資料 {{pay}}）", "where": "calc.py の cash_flow(collect_lag=1)", "pages": ["fin-cf"]},
+    {"item": "1か月目の投資", "value": "3,000万円", "status": "仮置き", "basis": "アプリと倉庫の仕組みの見積もり前の置き値", "where": "calc.py の CAPEX", "pages": ["fin-cf"]},
+    {"item": "開業前の出資", "value": "4億円", "status": "仮置き", "basis": "資金繰りの底（必要な資金）を覆う額", "where": "calc.py の EQUITY", "pages": ["fin-cf"]}
+  ]
+}

@@ -51,9 +51,12 @@ node "$HS/scripts/export.mjs" <decks/slides.html> --sheet                       
 |---|---|---|
 | 数字（`data-f`・グラフ） | `<model/calc.py>` | `python <model/calc.py>` → `node "$HS/scripts/inject-data.mjs" <decks/*.html> <model/data.json>` |
 | 地図 | `<decks/maps.json>` | `node "$HS/scripts/make-map.mjs" <decks/maps.json> --into <decks/slides.html>` |
-| 出典のページ | `<sources.json>` | `<python build_sources.py>`（ページの並びを変えたら必ず） |
+| 出典・前提の一覧のページ | `<data/sources.json>` | `node "$HS/scripts/build-sources.mjs" <decks/slides.html> <data/sources.json>`（ページの並びを変えたら必ず。独自のスクリプトがあればそれ） |
+| 用語集 | `<data/glossary.json>` | `node "$HS/scripts/build-glossary.mjs" <decks/slides.html> <data/glossary.json>` |
+| 機械の検査・レビュー | 描いたあとのデッキ | `node "$HS/scripts/audit.mjs" <decks/slides.html>` → 専門家役のレビュー（`<人数×問い>`）→ `build-review.mjs` |
 
 - 前提の一覧のページ（`#<assump>`）を作り、各ページで最初に出る「モデル」「推計」をそこへのリンク（`<a class="ref" href="#assump">`）にする
+- レビューで突いてほしい分野：`<投資家・財務・法務・物流・顧客 など、この案件の審査員>`
 - 出典に載せるもの・載せないもの：`<一次調査は載せる、社内の相談・講評は載せない など>`
 
 ## ページの並び
