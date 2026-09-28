@@ -423,6 +423,7 @@ body.presenter .np .next { font-size: 22px; margin-top: 26px; }
 
 /* ?check のときだけ：はみ出し・小さすぎる文字・数字の抜けに赤枠 */
 .ovf { outline: 3px solid #e11d48 !important; outline-offset: -2px; }
+.ovf-gap { position: absolute; z-index: 39; pointer-events: none; outline: 3px dashed #e11d48; outline-offset: -3px; background: repeating-linear-gradient(45deg, rgba(225, 29, 72, 0.13) 0 16px, transparent 16px 32px); }
 .ovf-badge { position: absolute; left: 0; top: 0; z-index: 40; padding: 6px 14px; background: #e11d48; color: #fff; font-size: 22px; font-weight: 800; }
 .f-missing { background: #ffe4e6; color: #be123c; }
 
@@ -477,11 +478,13 @@ body.presenter .np .next { font-size: 22px; margin-top: 26px; }
   .wf .loop { grid-column: 1 / -1; text-align: center; font-size: 42px; font-weight: 800; color: var(--accent); margin-top: -8px; }
 
   /* check */
-  .ba { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; margin-top: 40px; }
-  .ba .crop { height: 520px; }
+  #check { padding: 44px 72px; }
+  .ba { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; margin-top: 44px; }
+  .ba .crop { aspect-ratio: 16 / 9; }
+  .ba .lbl { font-size: 40px; margin-top: 14px; }
   .ba .lbl.bad { color: var(--warn); }
-  .why { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 34px; }
-  .why span { font-size: 36px; font-weight: 800; padding: 8px 22px; border-radius: 12px; border: 3px solid var(--warn); color: var(--warn); background: var(--warn-bg); }
+  .why { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 48px; }
+  .why span { font-size: 29px; font-weight: 800; padding: 8px 18px; border-radius: 12px; border: 3px solid var(--warn); color: var(--warn); background: var(--warn-bg); }
 
   /* themes */
   #themes { padding: 40px 64px; }
@@ -496,7 +499,14 @@ body.presenter .np .next { font-size: 22px; margin-top: 26px; }
   .md ul { margin-top: 18px; padding-left: 1.1em; font-size: 34px; font-weight: 600; line-height: 1.5; }
 
   /* 検査の見本（README には出さない。check の図の元） */
-  .sample h1 { font-size: 40px; max-width: 1180px; } .sample .rule { width: 1180px; } .sample .grid { width: 1180px; }
+  /* 図の中で縮んでも形が分かるように、見本は文字を大きめにする。bad は幅を狭くして空き（sparse）も出す */
+  .sample .kicker { font-size: 30px; } .sample h1 { font-size: 60px; }
+  .sample .card h2 { font-size: 48px; } .sample .card p { font-size: 32px; line-height: 1.45; }
+  #good .card { padding: 36px 40px; } #good .card .when { font-size: 26px; }
+  .sample .card .big { display: block; font-size: 120px; font-weight: 900; line-height: 1.1; margin-top: 28px; }
+  .sample .card .big small { font-size: 40px; margin-left: 6px; }
+  .sample .strip { font-size: 38px; margin-top: 44px; padding: 30px 40px; }
+  #bad h1, #bad .rule, #bad .grid { width: 1180px; }
 </style>
 </head>
 <body>
@@ -571,10 +581,10 @@ body.presenter .np .next { font-size: 22px; margin-top: 26px; }
   <div class="fig-h">崩れは<em>自動で見つかる</em>。直すまで仕上がりにしない</div>
   <div class="fig-s">Layout problems are detected automatically and fixed before export</div>
   <div class="ba">
-    <div><div class="crop" data-src="png/check/07-bad.png" data-x="0" data-y="0" data-w="1290"></div><div class="lbl bad">直す前<small>赤枠と、左上に理由の一覧</small></div></div>
-    <div><div class="crop" data-src="png/08-good.png" data-x="0" data-y="0" data-w="1290"></div><div class="lbl">直した後<small>「問題: なし」</small></div></div>
+    <div><div class="crop" data-src="png/check/08-bad.png" data-x="0" data-y="0" data-w="1920"></div><div class="lbl bad">直す前<small>赤枠・空きの斜線と、左上に理由の一覧</small></div></div>
+    <div><div class="crop" data-src="png/09-good.png" data-x="0" data-y="0" data-w="1920"></div><div class="lbl">直した後<small>「問題: なし」</small></div></div>
   </div>
-  <div class="why"><span>文字のはみ出し</span><span>画面の外</span><span>小さすぎる文字</span><span>数字の抜け</span><span>空の地図</span><span>画像の抜け</span><span>id の重複</span></div>
+  <div class="why"><span>文字のはみ出し</span><span>空きすぎ・偏り</span><span>画面の外</span><span>小さすぎる文字</span><span>数字の抜け</span><span>空の地図</span><span>画像の抜け</span><span>id の重複</span></div>
 </section>
 
 <section id="themes" data-nopno>
@@ -617,10 +627,11 @@ body.presenter .np .next { font-size: 22px; margin-top: 26px; }
   <h1>市場は3年で2倍に伸び、アジアから先に開く</h1>
   <div class="rule"></div>
   <div class="grid g3">
-    <div class="card key" style="height:260px"><h2>アジア</h2><p>越境ECが毎年2割伸びる。配送も短く、最初に売る。</p></div>
-    <div class="card"><h2>北米</h2><p>市場は最も大きいが、送料と関税が重い。</p><div class="note">送料は2025年の見積もり</div></div>
-    <div class="card"><h2>3年目の売上</h2><div class="kpi"><div class="v"><span data-f="rev.2" data-d="1"></span><small>億円</small></div></div></div>
+    <div class="card key"><div class="when">最初に売る</div><h2>アジア</h2><p>越境ECが毎年2割伸びる。配送の日数も短く、現地の決済も使える。</p><span class="big">+20<small>%/年</small></span></div>
+    <div class="card"><div class="when">次に売る</div><h2>北米</h2><p>市場は最も大きいが、送料と関税が重い。</p><span class="big">7<small>か月目</small></span><div class="note">送料は2025年の見積もり</div></div>
+    <div class="card"><div class="when">目標</div><h2>3年目の売上</h2><p>アジアと北米の合計。2年目の約3倍。</p><span class="big"><span data-f="rev.2" data-d="1"></span><small>億円</small></span></div>
   </div>
+  <div class="strip">まず<b>アジア</b>で売り、送料の見通しが立った<b>7か月目</b>に北米へ広げる。</div>
   <div class="foot"><span>見本</span></div>
 </section>
 
@@ -655,7 +666,7 @@ body.presenter .np .next { font-size: 22px; margin-top: 26px; }
   const CHECK = Q.has("check"), PRESENTER = Q.has("presenter");
   const T = EN
     ? { prev: "Previous", next: "Next", fs: "Fullscreen", ovf: "Issues", elapsed: "Elapsed", until: "End this page by", reset: "T: reset timer", nx: "Next: " }
-    : { prev: "前へ", next: "次へ", fs: "全画面", ovf: "はみ出し", elapsed: "経過", until: "このページは", reset: "T で時計を0に", nx: "次：" };
+    : { prev: "前へ", next: "次へ", fs: "全画面", ovf: "問題", elapsed: "経過", until: "このページは", reset: "T で時計を0に", nx: "次：" };
   const hooks = [];
 
   const get = path => path.split(".").reduce((o, k) => (o == null ? undefined : o[k]), window.DATA);
@@ -687,9 +698,51 @@ body.presenter .np .next { font-size: 22px; margin-top: 26px; }
     const txt = (el.textContent || "").trim().replace(/\s+/g, " ").slice(0, 28);
     return `${el.tagName.toLowerCase()}${el.id ? "#" + el.id : ""}${cls}${txt ? ` "${txt}"` : ""}`;
   }
+  /* 本文（見出しの線から下の注記まで）で実際に塗られている範囲：文字・画像・SVG・背景や枠のある箱 */
+  function painted(sec) {
+    const boxes = [], skip = ".kicker, h1, .rule, .foot, .pno, .ovf-badge, .ovf-gap, aside.notes, [data-nocheck], .nav";
+    const visible = c => c && c !== "transparent" && !/rgba\([^)]*,\s*0\)$/.test(c);
+    sec.querySelectorAll("*").forEach(el => {
+      if (el.closest(skip) || el.parentElement.closest("svg")) return;
+      const cs = getComputedStyle(el);
+      if (cs.visibility === "hidden" || +cs.opacity === 0) return;
+      const r = el.getBoundingClientRect();
+      if (!r.width || !r.height) return;
+      const boxy = ["IMG", "svg", "CANVAS", "VIDEO"].includes(el.tagName) || visible(cs.backgroundColor) || cs.backgroundImage !== "none"
+        || (parseFloat(cs.borderTopWidth) + parseFloat(cs.borderLeftWidth) > 0 && visible(cs.borderTopColor)) || cs.boxShadow !== "none";
+      if (boxy) boxes.push(r);
+      if (el.tagName === "svg") return;
+      for (const n of el.childNodes) if (n.nodeType === 3 && n.textContent.trim()) {
+        const rg = document.createRange(); rg.selectNodeContents(n);
+        const t = rg.getBoundingClientRect(); if (t.width && t.height) boxes.push(t);
+      }
+    });
+    return boxes;
+  }
+  /* 空き・偏り：左右の空きの差が 15% 以上、または下の空きが上より 35% 以上多い（中央に寄せたページは差が出ないので通る） */
+  const SPARSE_X = 15, SPARSE_Y = 35;
+  function sparse(sec, S, k, foot) {
+    if (sec.matches(".cover, .chap, .dark, .full-img, [data-sparse-ok]")) return null;
+    const cs = getComputedStyle(sec), px = v => parseFloat(v) * k;
+    const head = sec.querySelector(":scope > .rule") || sec.querySelector(":scope > h1");
+    const A = { l: S.left + px(cs.paddingLeft), r: S.right - px(cs.paddingRight),
+      t: head ? head.getBoundingClientRect().bottom : S.top + px(cs.paddingTop), b: foot ? foot.top : S.bottom - px(cs.paddingBottom) };
+    const bx = painted(sec);
+    if (!bx.length || A.r <= A.l || A.b <= A.t) return null;
+    const U = { l: Math.min(...bx.map(r => r.left)), r: Math.max(...bx.map(r => r.right)), t: Math.min(...bx.map(r => r.top)), b: Math.max(...bx.map(r => r.bottom)) };
+    const W = A.r - A.l, H = A.b - A.t, pct = v => Math.round(Math.max(0, v) * 100);
+    const e = { l: pct((U.l - A.l) / W), r: pct((A.r - U.r) / W), t: pct((U.t - A.t) / H), b: pct((A.b - U.b) / H) };
+    const said = [], gaps = [];
+    if (e.r - e.l >= SPARSE_X) { said.push(`右が${e.r}%`); gaps.push({ l: U.r, r: A.r, t: A.t, b: A.b }); }
+    if (e.l - e.r >= SPARSE_X) { said.push(`左が${e.l}%`); gaps.push({ l: A.l, r: U.l, t: A.t, b: A.b }); }
+    if (e.b - e.t >= SPARSE_Y) { said.push(`下が${e.b}%`); gaps.push({ l: A.l, r: A.r, t: U.b, b: A.b }); }
+    if (!said.length) return null;
+    return { why: `sparse ${said.join("・")}空いている（中身を広げる・大きくする・ページをまとめる。わざと空けるなら data-sparse-ok）`,
+      gaps: gaps.map(g => ({ left: (g.l - S.left) / k, top: (g.t - S.top) / k, width: (g.r - g.l) / k, height: (g.b - g.t) / k })) };
+  }
   function check(sec) {
     sec.querySelectorAll(".ovf").forEach(e => e.classList.remove("ovf"));
-    sec.querySelector(".ovf-badge")?.remove();
+    sec.querySelectorAll(".ovf-badge, .ovf-gap").forEach(e => e.remove());
     const S = sec.getBoundingClientRect(), k = S.width / 1920;
     const foot = sec.querySelector(":scope > .foot")?.getBoundingClientRect();
     const hits = [];
@@ -714,6 +767,16 @@ body.presenter .np .next { font-size: 22px; margin-top: 26px; }
       if (el.classList.contains("f-missing")) add(el, `data-missing ${el.dataset.f || el.dataset.chart?.slice(0, 40) || ""}`);
     });
     hits.forEach(h => h.el.classList.add("ovf"));
+    const sp = sparse(sec, S, k, foot);
+    if (sp) {
+      hits.push({ el: sec, why: sp.why });
+      sp.gaps.forEach(g => {
+        const d = document.createElement("div");
+        d.className = "ovf-gap";
+        Object.assign(d.style, Object.fromEntries(Object.entries(g).map(([p, v]) => [p, v + "px"])));
+        sec.appendChild(d);
+      });
+    }
     let out = document.getElementById("check-out");
     if (!out) { out = document.createElement("script"); out.type = "application/json"; out.id = "check-out"; document.body.appendChild(out); }
     out.textContent = JSON.stringify({ id: sec.id, issues: hits.map(h => ({ why: h.why, el: describe(h.el) })) });

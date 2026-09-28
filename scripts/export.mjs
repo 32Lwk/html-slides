@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // HTML スライドを <section id> の並び順で 1 枚ずつ PNG（1920×1080）に書き出す。Windows・Mac・Linux で動く。
 //   node export.mjs <deck.html>                 → png/01-<id>.png …（pitch.html なら png-pitch/）。古い NN-*.png は消して振り直す
-//   node export.mjs <deck.html> --check         → png…/check/ に赤枠つきで書き出し、はみ出し・小さすぎる文字・数字の抜け・画像の抜けを一覧にする
+//   node export.mjs <deck.html> --check         → png…/check/ に赤枠つきで書き出し、はみ出し・空きすぎ・小さすぎる文字・数字の抜け・画像の抜けを一覧にする
 //   オプション: --only id1,id2  --theme navy（テーマを一時的に変えて撮る）  --out <dir>  --sheet（一覧の sheet.png も作る）  --jobs 4
 //   Chrome の場所が違うときは CHROME=… を指定する（Edge も可）
 import { readFileSync, writeFileSync, mkdirSync, readdirSync, rmSync, existsSync, mkdtempSync } from "node:fs";

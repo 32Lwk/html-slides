@@ -352,5 +352,6 @@ body.presenter .np .next { font-size: 22px; margin-top: 26px; }
 
 /* ?check のときだけ：はみ出し・小さすぎる文字・数字の抜けに赤枠 */
 .ovf { outline: 3px solid #e11d48 !important; outline-offset: -2px; }
+.ovf-gap { position: absolute; z-index: 39; pointer-events: none; outline: 3px dashed #e11d48; outline-offset: -3px; background: repeating-linear-gradient(45deg, rgba(225, 29, 72, 0.13) 0 16px, transparent 16px 32px); }
 .ovf-badge { position: absolute; left: 0; top: 0; z-index: 40; padding: 6px 14px; background: #e11d48; color: #fff; font-size: 22px; font-weight: 800; }
 .f-missing { background: #ffe4e6; color: #be123c; }

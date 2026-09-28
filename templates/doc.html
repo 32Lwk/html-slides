@@ -41,9 +41,14 @@
   <h1>見出しは題名でなく、このページの結論を1文で言い切る</h1>
   <div class="rule"></div>
   <div class="grid">
-    <div class="card"><div class="when">誰に</div><h2>短い見出し</h2><p>説明は2〜3行。長くなるならページを分ける</p></div>
-    <div class="card key"><div class="when">何を</div><h2>いちばん大事な点</h2><p>強調のカードは1ページに1〜2枚まで</p></div>
-    <div class="card open"><div class="when">未定</div><h2>決まっていない点<span class="tag">未定</span></h2><p>選択肢を並べて比べる</p><div class="note">補足は灰色で下に寄せる</div></div>
+    <div class="card"><div class="when">誰に</div><h2>短い見出し</h2><p>説明は2〜3行。長くなるならページを分ける</p><ul class="pts"><li>根拠を1つ目に</li><li>数字は計算から</li><li>言い切れない点は未定へ</li></ul></div>
+    <div class="card key"><div class="when">何を</div><h2>いちばん大事な点</h2><p>強調のカードは1ページに1〜2枚まで</p><ul class="pts"><li>見出しと同じことを言う</li><li>理由を短く</li><li>次の一手</li></ul></div>
+    <div class="card open"><div class="when">未定</div><h2>決まっていない点<span class="tag">未定</span></h2><p>選択肢を並べて比べる</p><ul class="pts"><li>案 A と案 B</li><li>決める時期</li></ul><div class="note">補足は灰色で下に寄せる</div></div>
+  </div>
+  <div class="kpis k3" style="margin-top:28px">
+    <div class="kpi"><div class="v">3<small>つ</small></div><div class="k">カードは2〜4枚</div><div class="d">数字でカードを裏付ける</div></div>
+    <div class="kpi key"><div class="v">1<small>文</small></div><div class="k">見出しは結論</div><div class="d">見出しだけで話が通る</div></div>
+    <div class="kpi"><div class="v">22<small>px</small></div><div class="k">本文の最小</div><div class="d">小さくするより分ける</div></div>
   </div>
   <div class="strip">ページの結論を帯で言い直す。<b>強調は強調色</b>、<span class="w">お金・注意は注意色</span>。</div>
   <div class="foot"><span>出典・前提を書く</span></div>
@@ -68,6 +73,7 @@
     <div class="gap">＝</div>
     <div class="step"><span class="who">支払い</span><span class="big">9,500<small>円</small></span><small>約63ドル</small></div>
   </div>
+  <div class="strip" style="margin-top:40px">支払いの約<b>2割</b>が送料。数字は計算の結果を埋め込み、手で打たない。</div>
   <div class="foot"><span>数字の出どころ（計算のスクリプト・調べた資料）</span><span>1ドル=150円</span></div>
 </section>
 
@@ -85,6 +91,7 @@
         <li>前提の強さ・弱さ</li>
         <li>次に確かめること</li>
       </ul>
+      <div class="strip">グラフから読み取れる<b>いちばん大事なこと</b>を1文で書く。</div>
     </div>
   </div>
   <div class="foot"><span>出典・前提</span></div>
@@ -130,7 +137,7 @@
   <div class="grid g2">
     <div>
       <h3>市場の大きさ<small>億円</small></h3>
-      <div class="chart" style="height:380px" data-chart='{"type":"bar","horizontal":true,"labels":["全体（TAM）","遊びの形式（SAM）","狙う分"],"series":[{"values":[12000,5400,1440]}],"highlight":2}'></div>
+      <div class="chart" style="height:520px" data-chart='{"type":"bar","horizontal":true,"labels":["全体（TAM）","遊びの形式（SAM）","狙う分"],"series":[{"values":[12000,5400,1440]}],"highlight":2}'></div>
     </div>
     <div>
       <h3>案の比べ方<small>未定のものは並べて比べる</small></h3>
@@ -141,6 +148,7 @@
         <tr><td>C</td><td class="s">自由に作れる</td><td class="r">300</td></tr>
         <tr class="sum"><td>合計</td><td></td><td class="r">480</td></tr>
       </table>
+      <div class="strip" style="margin-top:32px">費用が最も安いのは<b>案 B</b>。狙う分の<b>1,440億円</b>に届くかで選ぶ。</div>
     </div>
   </div>
   <div class="foot"><span>出典</span></div>

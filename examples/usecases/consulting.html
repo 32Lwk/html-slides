@@ -423,6 +423,7 @@ body.presenter .np .next { font-size: 22px; margin-top: 26px; }
 
 /* ?check のときだけ：はみ出し・小さすぎる文字・数字の抜けに赤枠 */
 .ovf { outline: 3px solid #e11d48 !important; outline-offset: -2px; }
+.ovf-gap { position: absolute; z-index: 39; pointer-events: none; outline: 3px dashed #e11d48; outline-offset: -3px; background: repeating-linear-gradient(45deg, rgba(225, 29, 72, 0.13) 0 16px, transparent 16px 32px); }
 .ovf-badge { position: absolute; left: 0; top: 0; z-index: 40; padding: 6px 14px; background: #e11d48; color: #fff; font-size: 22px; font-weight: 800; }
 .f-missing { background: #ffe4e6; color: #be123c; }
 
@@ -521,7 +522,7 @@ body.presenter .np .next { font-size: 22px; margin-top: 26px; }
   const CHECK = Q.has("check"), PRESENTER = Q.has("presenter");
   const T = EN
     ? { prev: "Previous", next: "Next", fs: "Fullscreen", ovf: "Issues", elapsed: "Elapsed", until: "End this page by", reset: "T: reset timer", nx: "Next: " }
-    : { prev: "前へ", next: "次へ", fs: "全画面", ovf: "はみ出し", elapsed: "経過", until: "このページは", reset: "T で時計を0に", nx: "次：" };
+    : { prev: "前へ", next: "次へ", fs: "全画面", ovf: "問題", elapsed: "経過", until: "このページは", reset: "T で時計を0に", nx: "次：" };
   const hooks = [];
 
   const get = path => path.split(".").reduce((o, k) => (o == null ? undefined : o[k]), window.DATA);
@@ -553,9 +554,51 @@ body.presenter .np .next { font-size: 22px; margin-top: 26px; }
     const txt = (el.textContent || "").trim().replace(/\s+/g, " ").slice(0, 28);
     return `${el.tagName.toLowerCase()}${el.id ? "#" + el.id : ""}${cls}${txt ? ` "${txt}"` : ""}`;
   }
+  /* 本文（見出しの線から下の注記まで）で実際に塗られている範囲：文字・画像・SVG・背景や枠のある箱 */
+  function painted(sec) {
+    const boxes = [], skip = ".kicker, h1, .rule, .foot, .pno, .ovf-badge, .ovf-gap, aside.notes, [data-nocheck], .nav";
+    const visible = c => c && c !== "transparent" && !/rgba\([^)]*,\s*0\)$/.test(c);
+    sec.querySelectorAll("*").forEach(el => {
+      if (el.closest(skip) || el.parentElement.closest("svg")) return;
+      const cs = getComputedStyle(el);
+      if (cs.visibility === "hidden" || +cs.opacity === 0) return;
+      const r = el.getBoundingClientRect();
+      if (!r.width || !r.height) return;
+      const boxy = ["IMG", "svg", "CANVAS", "VIDEO"].includes(el.tagName) || visible(cs.backgroundColor) || cs.backgroundImage !== "none"
+        || (parseFloat(cs.borderTopWidth) + parseFloat(cs.borderLeftWidth) > 0 && visible(cs.borderTopColor)) || cs.boxShadow !== "none";
+      if (boxy) boxes.push(r);
+      if (el.tagName === "svg") return;
+      for (const n of el.childNodes) if (n.nodeType === 3 && n.textContent.trim()) {
+        const rg = document.createRange(); rg.selectNodeContents(n);
+        const t = rg.getBoundingClientRect(); if (t.width && t.height) boxes.push(t);
+      }
+    });
+    return boxes;
+  }
+  /* 空き・偏り：左右の空きの差が 15% 以上、または下の空きが上より 35% 以上多い（中央に寄せたページは差が出ないので通る） */
+  const SPARSE_X = 15, SPARSE_Y = 35;
+  function sparse(sec, S, k, foot) {
+    if (sec.matches(".cover, .chap, .dark, .full-img, [data-sparse-ok]")) return null;
+    const cs = getComputedStyle(sec), px = v => parseFloat(v) * k;
+    const head = sec.querySelector(":scope > .rule") || sec.querySelector(":scope > h1");
+    const A = { l: S.left + px(cs.paddingLeft), r: S.right - px(cs.paddingRight),
+      t: head ? head.getBoundingClientRect().bottom : S.top + px(cs.paddingTop), b: foot ? foot.top : S.bottom - px(cs.paddingBottom) };
+    const bx = painted(sec);
+    if (!bx.length || A.r <= A.l || A.b <= A.t) return null;
+    const U = { l: Math.min(...bx.map(r => r.left)), r: Math.max(...bx.map(r => r.right)), t: Math.min(...bx.map(r => r.top)), b: Math.max(...bx.map(r => r.bottom)) };
+    const W = A.r - A.l, H = A.b - A.t, pct = v => Math.round(Math.max(0, v) * 100);
+    const e = { l: pct((U.l - A.l) / W), r: pct((A.r - U.r) / W), t: pct((U.t - A.t) / H), b: pct((A.b - U.b) / H) };
+    const said = [], gaps = [];
+    if (e.r - e.l >= SPARSE_X) { said.push(`右が${e.r}%`); gaps.push({ l: U.r, r: A.r, t: A.t, b: A.b }); }
+    if (e.l - e.r >= SPARSE_X) { said.push(`左が${e.l}%`); gaps.push({ l: A.l, r: U.l, t: A.t, b: A.b }); }
+    if (e.b - e.t >= SPARSE_Y) { said.push(`下が${e.b}%`); gaps.push({ l: A.l, r: A.r, t: U.b, b: A.b }); }
+    if (!said.length) return null;
+    return { why: `sparse ${said.join("・")}空いている（中身を広げる・大きくする・ページをまとめる。わざと空けるなら data-sparse-ok）`,
+      gaps: gaps.map(g => ({ left: (g.l - S.left) / k, top: (g.t - S.top) / k, width: (g.r - g.l) / k, height: (g.b - g.t) / k })) };
+  }
   function check(sec) {
     sec.querySelectorAll(".ovf").forEach(e => e.classList.remove("ovf"));
-    sec.querySelector(".ovf-badge")?.remove();
+    sec.querySelectorAll(".ovf-badge, .ovf-gap").forEach(e => e.remove());
     const S = sec.getBoundingClientRect(), k = S.width / 1920;
     const foot = sec.querySelector(":scope > .foot")?.getBoundingClientRect();
     const hits = [];
@@ -580,6 +623,16 @@ body.presenter .np .next { font-size: 22px; margin-top: 26px; }
       if (el.classList.contains("f-missing")) add(el, `data-missing ${el.dataset.f || el.dataset.chart?.slice(0, 40) || ""}`);
     });
     hits.forEach(h => h.el.classList.add("ovf"));
+    const sp = sparse(sec, S, k, foot);
+    if (sp) {
+      hits.push({ el: sec, why: sp.why });
+      sp.gaps.forEach(g => {
+        const d = document.createElement("div");
+        d.className = "ovf-gap";
+        Object.assign(d.style, Object.fromEntries(Object.entries(g).map(([p, v]) => [p, v + "px"])));
+        sec.appendChild(d);
+      });
+    }
     let out = document.getElementById("check-out");
     if (!out) { out = document.createElement("script"); out.type = "application/json"; out.id = "check-out"; document.body.appendChild(out); }
     out.textContent = JSON.stringify({ id: sec.id, issues: hits.map(h => ({ why: h.why, el: describe(h.el) })) });

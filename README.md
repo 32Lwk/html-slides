@@ -245,11 +245,12 @@ node scripts/inject-data.mjs slides.html pitch.html data/data.json
 
 ![検査：直す前と直した後](docs/img/check.png)
 
-`export.mjs --check` が Chrome headless で全ページを描き、崩れを赤枠で示して一覧にします。
+`export.mjs --check` が Chrome headless で全ページを描き、崩れを赤枠（空きは赤い斜線）で示して一覧にします。
 
 | 理由 | 見つけるもの |
 |---|---|
 | `clipped` | 箱から文字があふれている |
+| `sparse` | 中身が片側に寄って空きが大きい（左右の空きの差が 15% 以上、または下の空きが上より 35% 以上多い）。中央に寄せたページや表紙・中扉は対象外で、わざと空けるページは `data-sparse-ok` |
 | `outside` | 1920×1080 の外へ出ている |
 | `on-foot` | 下の注記に重なっている |
 | `font` | 小さすぎる文字（doc は 16px、pitch は 54px 未満） |
@@ -374,7 +375,7 @@ Beyond business plans and pitches, the same takeaway-headline style fits **marke
 | **Numbers from code** | A Python model writes JSON; headlines, cards and charts reference it via `data-f` / `"@path"`, so numbers never drift | [kpi](examples/demo/png/11-kpi.png) |
 | **Illustrations** | Fixed per-theme style prompts for your agent's image-generation tool + background removal to webp (skipped if the agent has no image tool) | [cards](examples/demo/png/03-value.png) |
 | **Pitch mode** | All text ≥ 54px (checked), speaker notes, synced presenter window with timer | [pitch sheet](examples/demo/png-pitch/sheet.png) |
-| **Automatic checks** | Headless Chrome flags overflow, off-canvas, tiny text, missing data, empty maps, missing images, duplicate ids | see below |
+| **Automatic checks** | Headless Chrome flags overflow, lopsided or sparse layouts (large empty areas), off-canvas, tiny text, missing data, empty maps, missing images, duplicate ids | see below |
 | **Themes** | `green` `navy` `mono` `blue` `wa` `dark`, switchable in one command; brand colors via CSS variables (`html[data-theme] { --accent: … }`) | see below |
 
 ![Pitch demo](examples/demo/png-pitch/sheet.png)
