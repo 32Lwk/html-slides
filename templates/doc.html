@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="ja" data-theme="green" data-mode="doc">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>タイトル</title>
+<style id="html-slides-lib">/*LIB:CSS*/
+/*END LIB:CSS*/</style>
+<style>
+  /* このデッキだけの CSS。部品で足りないときだけ足し、色は var(--accent) などテーマの変数を使う */
+</style>
+</head>
+<body>
+
+<!-- 表紙：kicker → 大きな題名 → 1〜2文の要約 → 目次 -->
+<section id="cover" class="cover" data-nopno>
+  <div class="kicker">COMPANY · PROJECT 2026</div>
+  <h1>サービス名や提案の題名</h1>
+  <div class="lead">誰に、何を、どう届けて、何が良くなるのかを1〜2文で言い切る。</div>
+  <div class="ph hero-img">表紙の絵（illust/xxx.webp）</div>
+  <div class="toc">
+    <div><span class="sec">01</span>章の名前<small>この章で言うこと</small></div>
+    <div><span class="sec">02</span>章の名前<small>この章で言うこと</small></div>
+    <div><span class="sec">03</span>章の名前<small>この章で言うこと</small></div>
+  </div>
+  <div class="foot"><span>2026-01-01 時点</span></div>
+</section>
+
+<!-- 中扉：下の章の並びは自動（section.chap の data-n・data-t） -->
+<section id="ch01" class="chap" data-n="01" data-t="章の名前">
+  <div class="ck">Chapter 01</div>
+  <div class="cn">01</div>
+  <h1>章の名前</h1>
+  <div class="lead">この章で言うことを1文で。</div>
+</section>
+
+<!-- カード3枚＋結論の帯 -->
+<section id="cards">
+  <div class="kicker"><span class="sec">01</span>VALUE</div>
+  <h1>見出しは題名でなく、このページの結論を1文で言い切る</h1>
+  <div class="rule"></div>
+  <div class="grid">
+    <div class="card"><div class="when">誰に</div><h2>短い見出し</h2><p>説明は2〜3行。長くなるならページを分ける</p></div>
+    <div class="card key"><div class="when">何を</div><h2>いちばん大事な点</h2><p>強調のカードは1ページに1〜2枚まで</p></div>
+    <div class="card open"><div class="when">未定</div><h2>決まっていない点<span class="tag">未定</span></h2><p>選択肢を並べて比べる</p><div class="note">補足は灰色で下に寄せる</div></div>
+  </div>
+  <div class="strip">ページの結論を帯で言い直す。<b>強調は強調色</b>、<span class="w">お金・注意は注意色</span>。</div>
+  <div class="foot"><span>出典・前提を書く</span></div>
+</section>
+
+<!-- 大きな数字（data-f で DATA から）と足し算の流れ -->
+<section id="numbers">
+  <div class="kicker">NUMBERS</div>
+  <h1>3年目に売上<span data-f="rev.2" data-u="億円"></span>。数字は計算の結果を埋め込む</h1>
+  <div class="rule"></div>
+  <div class="kpis">
+    <div class="kpi"><div class="v"><span data-f="rev.0"></span><small>億円</small></div><div class="k">1年目</div><div class="d">何が伸びるかを1行で</div></div>
+    <div class="kpi"><div class="v"><span data-f="rev.1"></span><small>億円</small></div><div class="k">2年目</div><div class="d">何が伸びるかを1行で</div></div>
+    <div class="kpi key"><div class="v"><span data-f="rev.2"></span><small>億円</small></div><div class="k">3年目</div><div class="d">目標に届く年を強調する</div></div>
+    <div class="kpi"><div class="v"><span data-f="margin" data-x="100" data-d="0"></span><small>%</small></div><div class="k">利益率</div><div class="d">補足</div></div>
+  </div>
+  <h3 style="margin-top:40px">1件の支払いの内訳<small>単位：円</small></h3>
+  <div class="flow">
+    <div class="step key"><span class="who">商品</span><span class="big">7,500<small>円</small></span><small>何を含むか</small></div>
+    <div class="gap">＋</div>
+    <div class="step money"><span class="who">送料</span><span class="big">2,000<small>円</small></span><small>何を含むか</small></div>
+    <div class="gap">＝</div>
+    <div class="step"><span class="who">支払い</span><span class="big">9,500<small>円</small></span><small>約63ドル</small></div>
+  </div>
+  <div class="foot"><span>数字の出どころ（計算のスクリプト・調べた資料）</span><span>1ドル=150円</span></div>
+</section>
+
+<!-- 左にグラフ、右に読み取り -->
+<section id="chart">
+  <div class="kicker">GROWTH</div>
+  <h1>グラフのページは、左に図、右に「だから何か」を置く</h1>
+  <div class="rule"></div>
+  <div class="cols c64">
+    <div class="chart" style="height:640px" data-chart='{"type":"bar","labels":["1年目","2年目","3年目"],"series":[{"name":"売上","values":"@rev"}],"highlight":2,"unit":"億円"}'></div>
+    <div class="stack">
+      <h3>読み取り</h3>
+      <ul class="pts">
+        <li>伸びる理由を1つ目に</li>
+        <li>前提の強さ・弱さ</li>
+        <li>次に確かめること</li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot"><span>出典・前提</span></div>
+</section>
+
+<!-- 地図（make-map.mjs で <!--MAP:…--> に書き込む） -->
+<section id="map">
+  <div class="kicker">MARKETS</div>
+  <h1>地図は塗る国・点・線を絞り、右に表で中身を補う</h1>
+  <div class="rule"></div>
+  <div class="cols c64">
+    <div class="map"><!--MAP:world--><!--END MAP:world--></div>
+    <table class="tbl">
+      <tr><th>市場</th><th class="r">規模</th></tr>
+      <tr class="em"><td>最初に売る国</td><td class="r">—</td></tr>
+      <tr><td>次の国</td><td class="r">—</td></tr>
+    </table>
+  </div>
+  <div class="foot"><span>地図：Natural Earth</span></div>
+</section>
+
+<!-- 図：箱を並べ、data-links で矢印 -->
+<section id="diagram">
+  <div class="kicker">HOW IT WORKS</div>
+  <h1>仕組みの図は、箱を並べてから矢印でつなぐ</h1>
+  <div class="rule"></div>
+  <div class="dgm" style="height:560px; display:grid; grid-template-columns:repeat(3, 360px); justify-content:space-between; align-content:center; row-gap:120px"
+       data-links='[["d-a","d-b","注文"],["d-b","d-d","手数料",{"dash":true}],["d-b","d-c","発送の依頼"],["d-c","d-e","渡す"],["d-e","d-a","届く",{"tone":"key"}]]'>
+    <div class="node" id="d-a">お客さま<small>海外のファン</small></div>
+    <div class="node solid" id="d-b">自社<small>サイト・決済</small></div>
+    <div class="node money" id="d-d">決済会社<small>手数料 3.5%</small></div>
+    <div class="node key" id="d-e">配送会社<small>関税込み</small></div>
+    <div class="node" id="d-c">倉庫<small>梱包・発送</small></div>
+  </div>
+  <div class="foot"><span>前提</span></div>
+</section>
+
+<!-- 比べる：横棒と表 -->
+<section id="compare">
+  <div class="kicker">COMPARE</div>
+  <h1>比べるページは、左に横棒、右に表を置く</h1>
+  <div class="rule"></div>
+  <div class="grid g2">
+    <div>
+      <h3>市場の大きさ<small>億円</small></h3>
+      <div class="chart" style="height:380px" data-chart='{"type":"bar","horizontal":true,"labels":["全体（TAM）","遊びの形式（SAM）","狙う分"],"series":[{"values":[12000,5400,1440]}],"highlight":2}'></div>
+    </div>
+    <div>
+      <h3>案の比べ方<small>未定のものは並べて比べる</small></h3>
+      <table class="tbl">
+        <tr><th>案</th><th>良い点</th><th class="r">費用</th></tr>
+        <tr><td>A</td><td class="s">早く始められる</td><td class="r">100</td></tr>
+        <tr class="em"><td>B</td><td class="s">手数料が安い</td><td class="r">80</td></tr>
+        <tr><td>C</td><td class="s">自由に作れる</td><td class="r">300</td></tr>
+        <tr class="sum"><td>合計</td><td></td><td class="r">480</td></tr>
+      </table>
+    </div>
+  </div>
+  <div class="foot"><span>出典</span></div>
+</section>
+
+<script>/*DATA*/window.DATA = {"rev": [76, 817, 1656], "margin": 0.32};/*END DATA*/</script>
+<script id="html-slides-lib-js">/*LIB:JS*/
+/*END LIB:JS*/</script>
+<script>
+  /* このデッキだけのスクリプト。表示のたびに動かすものは Slides.onShow(sec => { … }) */
+</script>
+</body>
+</html>

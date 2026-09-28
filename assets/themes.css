@@ -1,0 +1,62 @@
+/* 配色テーマ。<html data-theme="…"> で切り替える。どのテーマも「強調（accent）」と「お金・注意・未定（warn）」の2色＋灰色で組む。
+   c1〜c6 はグラフの系列、seq1〜seq5 は塗り分け地図・濃淡の段階（薄い → 濃い）。 */
+:root, html[data-theme="green"] {
+  --bg: #ffffff; --page: #e6e9ef;
+  --ink: #1a1d24; --sub: #5b6270; --line: #d9dde5; --lane: #f6f7f9;
+  --accent: #1f9d55; --accent-bg: #e9f7ef; --accent-mid: #8fd1ab;
+  --warn: #c2410c; --warn-bg: #fff4ec;
+  --on-accent: #ffffff;
+  --c1: #1f9d55; --c2: #5fbb87; --c3: #a7dbbd; --c4: #c2410c; --c5: #e0a458; --c6: #9aa3b2;
+  --seq1: #eef8f2; --seq2: #c6e8d4; --seq3: #8fd1ab; --seq4: #3fae6e; --seq5: #16723d;
+  --map-land: #e3e7ec; --map-edge: #ffffff; --map-sea: transparent;
+}
+html[data-theme="navy"] {
+  --bg: #ffffff; --page: #e4e8ef;
+  --ink: #16213a; --sub: #58637a; --line: #d6dce7; --lane: #f4f6fa;
+  --accent: #1f3a68; --accent-bg: #e9eef7; --accent-mid: #8ea3c7;
+  --warn: #e4572e; --warn-bg: #fdefe9;
+  --on-accent: #ffffff;
+  --c1: #1f3a68; --c2: #4a6fa5; --c3: #9fb5d6; --c4: #e4572e; --c5: #f2a07b; --c6: #a3abb8;
+  --seq1: #eef2f8; --seq2: #c9d5e8; --seq3: #93abd0; --seq4: #4a6fa5; --seq5: #1f3a68;
+  --map-land: #e2e6ee; --map-edge: #ffffff; --map-sea: transparent;
+}
+html[data-theme="mono"] {
+  --bg: #ffffff; --page: #e7e7e7;
+  --ink: #111111; --sub: #5f5f5f; --line: #d8d8d8; --lane: #f4f4f4;
+  --accent: #111111; --accent-bg: #f0f0f0; --accent-mid: #9a9a9a;
+  --warn: #d62828; --warn-bg: #fdecec;
+  --on-accent: #ffffff;
+  --c1: #111111; --c2: #555555; --c3: #a8a8a8; --c4: #d62828; --c5: #ef8a8a; --c6: #cfcfcf;
+  --seq1: #f3f3f3; --seq2: #d4d4d4; --seq3: #a3a3a3; --seq4: #5c5c5c; --seq5: #111111;
+  --map-land: #e6e6e6; --map-edge: #ffffff; --map-sea: transparent;
+}
+html[data-theme="blue"] {
+  --bg: #ffffff; --page: #e3e9f3;
+  --ink: #0f172a; --sub: #526079; --line: #d5deeb; --lane: #f3f6fb;
+  --accent: #2563eb; --accent-bg: #eaf1ff; --accent-mid: #93b4f5;
+  --warn: #b7791f; --warn-bg: #fff6d9;
+  --on-accent: #ffffff;
+  --c1: #2563eb; --c2: #60a5fa; --c3: #bfdbfe; --c4: #eab308; --c5: #fcd34d; --c6: #a1a9b8;
+  --seq1: #eef4ff; --seq2: #c7dbfe; --seq3: #8db5fb; --seq4: #3b7bf0; --seq5: #1d4ed8;
+  --map-land: #e1e7f0; --map-edge: #ffffff; --map-sea: transparent;
+}
+html[data-theme="wa"] {
+  --bg: #fffdf8; --page: #e9e5dc;
+  --ink: #1f2430; --sub: #5f6370; --line: #e0dbcf; --lane: #f6f2e9;
+  --accent: #264e86; --accent-bg: #eaeff6; --accent-mid: #93a9c9;
+  --warn: #d9480f; --warn-bg: #fcefe6;
+  --on-accent: #ffffff;
+  --c1: #264e86; --c2: #5b7fb0; --c3: #a9bcd7; --c4: #d9480f; --c5: #eea07a; --c6: #b3ad9f;
+  --seq1: #f1f3f7; --seq2: #cdd8e7; --seq3: #93a9c9; --seq4: #4d71a3; --seq5: #1c3d6b;
+  --map-land: #e9e4d8; --map-edge: #fffdf8; --map-sea: transparent;
+}
+html[data-theme="dark"] {
+  --bg: #0f172a; --page: #050914;
+  --ink: #e8edf5; --sub: #9aa6b8; --line: #2c3a52; --lane: #17223a;
+  --accent: #34d399; --accent-bg: #10332b; --accent-mid: #1f8f69;
+  --warn: #fb923c; --warn-bg: #3a2414;
+  --on-accent: #0f172a;
+  --c1: #34d399; --c2: #22a37a; --c3: #1a5f4c; --c4: #fb923c; --c5: #fcd34d; --c6: #64748b;
+  --seq1: #17223a; --seq2: #173d3a; --seq3: #1c6b55; --seq4: #27a57b; --seq5: #5eeab4;
+  --map-land: #1e2a42; --map-edge: #0f172a; --map-sea: transparent;
+}

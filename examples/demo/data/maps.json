@@ -1,0 +1,217 @@
+{
+ "maps": [
+  {
+   "name": "markets",
+   "width": 1036,
+   "height": 640,
+   "pacific": true,
+   "zoom": 1.3,
+   "shift": [
+    0,
+    70
+   ],
+   "fill": {
+    "TW": "accent",
+    "HK": "accent",
+    "SG": "mid",
+    "US": "sub",
+    "CA": "sub",
+    "JP": "warn"
+   },
+   "arcs": [
+    {
+     "from": [
+      138.38,
+      34.98
+     ],
+     "to": "Taipei",
+     "cls": "accent"
+    },
+    {
+     "from": [
+      138.38,
+      34.98
+     ],
+     "to": "Hong Kong",
+     "cls": "accent"
+    },
+    {
+     "from": [
+      138.38,
+      34.98
+     ],
+     "to": "Singapore",
+     "cls": "accent dash"
+    },
+    {
+     "from": [
+      138.38,
+      34.98
+     ],
+     "to": "Los Angeles",
+     "cls": "dash"
+    },
+    {
+     "from": [
+      138.38,
+      34.98
+     ],
+     "to": "Toronto",
+     "cls": "dash"
+    }
+   ],
+   "points": [
+    {
+     "lon": 138.38,
+     "lat": 34.98,
+     "text": "静岡",
+     "cls": "warn",
+     "label": "top"
+    },
+    {
+     "city": "Taipei",
+     "text": "台北",
+     "label": "right"
+    },
+    {
+     "city": "Hong Kong",
+     "text": "香港",
+     "label": "left"
+    },
+    {
+     "city": "Singapore",
+     "text": "シンガポール",
+     "label": "right"
+    },
+    {
+     "city": "Los Angeles",
+     "text": "ロサンゼルス",
+     "label": "bottom"
+    },
+    {
+     "city": "Toronto",
+     "text": "トロント",
+     "label": "top"
+    }
+   ]
+  },
+  {
+   "name": "tea",
+   "scope": "japan",
+   "width": 1036,
+   "height": 740,
+   "okinawaInset": true,
+   "values": {
+    "鹿児島": 27000,
+    "静岡": 25800,
+    "三重": 5200,
+    "宮崎": 2900,
+    "京都": 2300,
+    "福岡": 1700,
+    "奈良": 1400,
+    "熊本": 1200,
+    "佐賀": 1100,
+    "長崎": 700,
+    "埼玉": 600,
+    "愛知": 500,
+    "岐阜": 400,
+    "滋賀": 400,
+    "高知": 300,
+    "大分": 300,
+    "茨城": 200,
+    "愛媛": 200
+   },
+   "steps": 5,
+   "breaks": [
+    500,
+    1000,
+    2000,
+    5000
+   ],
+   "legendTitle": "荒茶の生産量（t、見本用の概数）",
+   "legendLow": "少",
+   "legendHigh": "多",
+   "labels": [
+    {
+     "code": "静岡",
+     "text": "静岡"
+    },
+    {
+     "code": "鹿児島",
+     "text": "鹿児島"
+    },
+    {
+     "code": "三重",
+     "text": "三重",
+     "dx": 10
+    }
+   ]
+  },
+  {
+   "name": "markets_en",
+   "pitch": true,
+   "width": 1720,
+   "height": 700,
+   "pacific": true,
+   "lang": "en",
+   "zoom": 1.25,
+   "shift": [
+    0,
+    60
+   ],
+   "fill": {
+    "TW": "accent",
+    "HK": "accent",
+    "SG": "accent",
+    "US": "mid",
+    "CA": "mid",
+    "JP": "warn"
+   },
+   "arcs": [
+    {
+     "from": [
+      138.38,
+      34.98
+     ],
+     "to": "Taipei",
+     "cls": "accent"
+    },
+    {
+     "from": [
+      138.38,
+      34.98
+     ],
+     "to": "Singapore",
+     "cls": "accent"
+    },
+    {
+     "from": [
+      138.38,
+      34.98
+     ],
+     "to": "Los Angeles",
+     "cls": "dash"
+    }
+   ],
+   "points": [
+    {
+     "lon": 138.38,
+     "lat": 34.98,
+     "text": "Japan",
+     "cls": "warn",
+     "label": "top"
+    },
+    {
+     "city": "Singapore",
+     "text": "Asia first",
+     "label": "right"
+    },
+    {
+     "city": "Los Angeles",
+     "text": "then N. America",
+     "label": "bottom"
+    }
+   ]
+  }
+ ]
+}

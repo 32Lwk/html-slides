@@ -1,0 +1,10 @@
+{
+  "name": "html-slides-scripts",
+  "private": true,
+  "type": "module",
+  "description": "html-slides のスクリプト（デッキ作成・PNG 書き出し・地図・数値の埋め込み）",
+  "dependencies": {
+    "d3-geo": "^3.1.1",
+    "topojson-client": "^3.1.0"
+  }
+}

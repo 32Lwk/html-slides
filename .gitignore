@@ -1,0 +1,6 @@
+node_modules/
+**/png/check/
+**/png-*/check/
+**/sheet.html
+.DS_Store
+Thumbs.db
