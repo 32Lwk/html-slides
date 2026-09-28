@@ -1,11 +1,11 @@
 # html-slides
 
+![html-slides — きれいな HTML スライドを、毎回同じ品質で](docs/img/hero.png)
+
 **Cursor の Agent Skill：きれいな 1920×1080 の HTML スライドを、毎回同じ品質で作る。**
 グラフ・図・地図・計算の埋め込み・イラスト・PNG の書き出しと自動の検査まで 1 つに入っています。
 
-[English](#english) ・ [日本語](#日本語)
-
-![資料の見本（18 枚）](examples/demo/png/sheet.png)
+[日本語](#日本語) ・ [English](#english)
 
 ---
 
@@ -13,29 +13,56 @@
 
 ### できること
 
-- **1 ファイルの HTML デッキ**：1 ページ＝1 つの `<section>`（1920×1080 固定、画面に合わせて拡大縮小）。CSS・JS・データ・地図を埋め込み、フォントを同梱するので **オフラインで開ける**
-- **2 つの型**：資料（`doc`、読んで分かる）と発表（`pitch`、文字 54px 以上・発表者メモ・連動する発表者の窓・目標時刻）
-- **6 つのテーマ**：`green` `navy` `mono` `blue` `wa`（和風）`dark`。強調色とお金・注意の色の 2 色で組む
-- **自前の SVG グラフ**：縦棒・横棒・積み上げ（100% も）・棒と線の複合（右の軸）・線・面・ドーナツ・散布・バブル・滝・サンキー・ガント
-- **図**：関係図・担当者ごとのフロー図（スイムレーン）・循環図・ツリー。箱は HTML、矢印は自動で引く
-- **地図**：世界・国ごと・日本の都道府県（沖縄の差し込み付き）。塗り分け・点・弧。Natural Earth から SVG を作って埋め込む
-- **数字は計算から**：Python で計算した JSON を埋め込み、`data-f="rev.y3"` やグラフの `"@path"` で参照。前提を変えても食い違わない
-- **イラスト**：テーマごとに固定したスタイルの指示で生成し、背景を透明にして webp に（Cursor の GenerateImage 用）
-- **自動の検査**：Chrome headless で全ページを撮り、はみ出し・画面外・小さすぎる文字・データの抜け・空の地図・画像の抜け・id の重複を赤枠で一覧に
-- **日本語と英語**、Windows・Mac（Node 18 以上＋Chrome か Edge）
+![グラフ・図・地図・数字・イラスト・発表用の型](docs/img/features.png)
+
+| | |
+|---|---|
+| **グラフ** | 縦棒・横棒・積み上げ（100% も）・棒と線の複合・線・面・ドーナツ・散布・バブル・滝・サンキー・ガント（自前の SVG） |
+| **図** | 関係図・担当者ごとのフロー図・循環図・ツリー。箱を並べると矢印は自動で引く |
+| **地図** | 世界・国ごと・日本の都道府県（沖縄の差し込み付き）の塗り分け・点・弧 |
+| **数字** | Python で計算した結果を埋め込み、スライドの数字とグラフが同じ元を指す。前提を変えても食い違わない |
+| **イラスト** | テーマごとに固定したスタイルで生成し、背景を透明にしてなじませる |
+| **オフライン** | 1 ファイルの HTML に全部を埋め込み、フォントも同梱。ネットなしで開ける |
+
+### 使い方：頼むだけ
+
+![6 つの手順](docs/img/workflow.png)
+
+Cursor のチャットで「◯◯のスライドを作って」「グラフを入れて」「PNG に書き出して」と頼むと、Agent が [SKILL.md](SKILL.md) を読んで上の手順で仕上げます。
+
+### 崩れは自動で見つかる
+
+![検査：直す前と直した後](docs/img/check.png)
+
+Chrome で全ページを撮り、はみ出し・画面の外・小さすぎる文字・数字の抜けなどを赤枠で示します。「問題: なし」になるまで直してから書き出します。
+
+### テーマと型
+
+![6 つのテーマ](docs/img/themes.png)
+
+![doc と pitch](docs/img/modes.png)
+
+<details>
+<summary>見本の全ページ（資料 18 枚・発表 7 枚）</summary>
+
+架空の日本茶の定期便の事業計画を題材にした見本です（`examples/demo/`。数字は `data/calc.py` の計算、イラストは生成 AI）。
+
+![資料の見本（18 枚）](examples/demo/png/sheet.png)
+
+![発表の見本（7 枚）](examples/demo/png-pitch/sheet.png)
+
+</details>
 
 ### 入れ方
 
 ```bash
-# Cursor の個人スキルの場所に置く
 git clone https://github.com/32Lwk/html-slides.git ~/.cursor/skills/html-slides
 cd ~/.cursor/skills/html-slides/scripts && npm install     # 地図に使う d3-geo・topojson-client
 ```
 
-Windows（PowerShell）は `git clone https://github.com/32Lwk/html-slides.git "$env:USERPROFILE\.cursor\skills\html-slides"`。
-計算に Python 3（numpy）、イラストの後処理に Pillow を使います。Windows で Python の日本語が化けるときは環境変数 `PYTHONUTF8=1` を設定してください。
-
-Cursor のチャットで「◯◯のスライドを作って」「グラフを入れて」「PNG に書き出して」と頼むと、Agent が [SKILL.md](SKILL.md) を読んで手順どおりに進めます。
+- Windows（PowerShell）は `git clone https://github.com/32Lwk/html-slides.git "$env:USERPROFILE\.cursor\skills\html-slides"`
+- 必要なもの：Node 18 以上、Chrome か Edge、Python 3（numpy。イラストの後処理に Pillow）
+- Windows で Python の日本語が化けるときは環境変数 `PYTHONUTF8=1` を設定する
 
 ### 手で使う
 
@@ -48,23 +75,6 @@ node $S/export.mjs ./my-deck/slides.html --check                                
 node $S/export.mjs ./my-deck/slides.html --sheet                                 # PNG と一覧の sheet.png
 ```
 
-### テーマ
-
-| green | navy | mono |
-|---|---|---|
-| ![green](docs/themes/green.png) | ![navy](docs/themes/navy.png) | ![mono](docs/themes/mono.png) |
-| **blue** | **wa** | **dark** |
-| ![blue](docs/themes/blue.png) | ![wa](docs/themes/wa.png) | ![dark](docs/themes/dark.png) |
-
-### 見本
-
-`examples/demo/` に、架空の日本茶の定期便の事業計画を題材にした 2 つのデッキがあります（数字は `data/calc.py` の計算、イラストは生成 AI）。
-
-| 資料（doc・和風・日本語 18 枚） | 発表（pitch・紺・英語 7 枚） |
-|---|---|
-| ![地図](examples/demo/png/05-farms.png) | ![pitch](examples/demo/png-pitch/sheet.png) |
-| ![フロー図](examples/demo/png/08-lanes.png) | ![KPI](examples/demo/png/11-kpi.png) |
-
 ### 中身
 
 | パス | 中身 |
@@ -76,6 +86,7 @@ node $S/export.mjs ./my-deck/slides.html --sheet                                
 | `templates/` | `deck new` の元（doc・pitch） |
 | `examples/demo/` | 見本のデッキと PNG |
 | [examples/project-skill/SKILL.template.md](examples/project-skill/SKILL.template.md) | 案件ごとの約束（表記・出典・公開手順）を書くプロジェクトスキルのひな形 |
+| `docs/figures/` | この README の図（図もこのスキルで作っている。`node docs/figures/build.mjs` で作り直す） |
 
 **2 段の使い方**：汎用のデザインと道具はこの個人スキルに、案件ごとの約束（用語・為替・出典・公開の手順）はリポジトリの `.cursor/skills/<名前>/SKILL.md` に分けると、どの案件でも同じ見た目で作れます。ひな形は実際の案件で使ったプロジェクトスキルから事業の中身を抜いたものです。
 
@@ -87,20 +98,20 @@ node $S/export.mjs ./my-deck/slides.html --sheet                                
 
 ## English
 
-**A Cursor Agent Skill for building polished 1920×1080 HTML slide decks with consistent quality** — charts, diagrams, maps, computed numbers, illustrations, PNG export and automatic layout checks in one package.
+**A Cursor Agent Skill for building polished 1920×1080 HTML slide decks with consistent quality** — charts, diagrams, maps, computed numbers, illustrations, PNG export and automatic layout checks in one package. (Figures above have English captions; the skill documentation is written in Japanese, and decks can be English with `--lang en`.)
 
-### Features
+![Features](docs/img/features.png)
 
-- **Single-file HTML decks**: one `<section>` per slide (fixed 1920×1080, scaled to the window). CSS, JS, data and maps are embedded and fonts are bundled, so decks **work offline**
-- **Two modes**: `doc` (self-explanatory handouts) and `pitch` (all text ≥ 54px, speaker notes, synced presenter window, target times)
-- **Six themes**: `green` `navy` `mono` `blue` `wa` (Japanese style) `dark`, each built from one accent color plus one money/warning color
-- **Built-in SVG charts**: column, bar, stacked (incl. 100%), bar + line combo (secondary axis), line, area, donut, scatter, bubble, waterfall, Sankey, Gantt
-- **Diagrams**: relationship diagrams, swimlane flows, cycles and trees — boxes in HTML, arrows routed automatically
-- **Maps**: world, single countries, Japanese prefectures (with Okinawa inset); choropleths, points and arcs, generated from Natural Earth
-- **Numbers come from code**: embed JSON produced by a Python model and reference it with `data-f="rev.y3"` or `"@path"` in chart specs
-- **Illustrations**: fixed per-theme style prompts for image generation, plus background removal to webp
-- **Automatic checks**: headless Chrome renders every slide and reports overflow, off-canvas elements, text below the minimum size, missing data, empty maps, missing images and duplicate ids, with red outlines
-- **Japanese and English**; Windows and macOS (Node 18+ and Chrome or Edge)
+- **Single-file HTML decks** — one `<section>` per slide (fixed 1920×1080, scaled to the window); CSS, JS, data and maps embedded, fonts bundled, **works offline**
+- **Two modes** — `doc` (self-explanatory handouts) and `pitch` (all text ≥ 54px, speaker notes, synced presenter window, target times)
+- **Six themes** — `green` `navy` `mono` `blue` `wa` (Japanese style) `dark`
+- **Built-in SVG charts** — column, bar, stacked (incl. 100%), bar + line combo, line, area, donut, scatter, bubble, waterfall, Sankey, Gantt
+- **Diagrams** — relationship diagrams, swimlane flows, cycles and trees; arrows are routed automatically
+- **Maps** — world, single countries, Japanese prefectures (with Okinawa inset), generated from Natural Earth
+- **Numbers come from code** — embed JSON from a Python model and reference it with `data-f="rev.y3"` or `"@path"`
+- **Automatic checks** — headless Chrome renders every slide and flags overflow, off-canvas elements, tiny text, missing data, empty maps, missing images and duplicate ids
+
+![Automatic checks](docs/img/check.png)
 
 ### Install
 
@@ -109,7 +120,7 @@ git clone https://github.com/32Lwk/html-slides.git ~/.cursor/skills/html-slides
 cd ~/.cursor/skills/html-slides/scripts && npm install
 ```
 
-Then ask Cursor's Agent to "make slides about …", "add a chart", or "export to PNG" — it reads [SKILL.md](SKILL.md) and follows the workflow. The skill documentation is written in Japanese; decks can be English (`--lang en`, see `examples/demo/pitch.html`).
+Requires Node 18+, Chrome or Edge, and Python 3 (numpy; Pillow for illustrations). Then ask Cursor's Agent to "make slides about …", "add a chart", or "export to PNG" — it reads [SKILL.md](SKILL.md) and follows the workflow.
 
 ### Manual use
 

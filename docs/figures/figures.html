@@ -1,0 +1,1360 @@
+<!doctype html>
+<html lang="ja" data-theme="navy" data-mode="doc">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>html-slides README figures</title>
+<style id="html-slides-lib">/*LIB:CSS*/
+/* 配色テーマ。<html data-theme="…"> で切り替える。どのテーマも「強調（accent）」と「お金・注意・未定（warn）」の2色＋灰色で組む。
+   c1〜c6 はグラフの系列、seq1〜seq5 は塗り分け地図・濃淡の段階（薄い → 濃い）。 */
+:root, html[data-theme="green"] {
+  --bg: #ffffff; --page: #e6e9ef;
+  --ink: #1a1d24; --sub: #5b6270; --line: #d9dde5; --lane: #f6f7f9;
+  --accent: #1f9d55; --accent-bg: #e9f7ef; --accent-mid: #8fd1ab;
+  --warn: #c2410c; --warn-bg: #fff4ec;
+  --on-accent: #ffffff;
+  --c1: #1f9d55; --c2: #5fbb87; --c3: #a7dbbd; --c4: #c2410c; --c5: #e0a458; --c6: #9aa3b2;
+  --seq1: #eef8f2; --seq2: #c6e8d4; --seq3: #8fd1ab; --seq4: #3fae6e; --seq5: #16723d;
+  --map-land: #e3e7ec; --map-edge: #ffffff; --map-sea: transparent;
+}
+html[data-theme="navy"] {
+  --bg: #ffffff; --page: #e4e8ef;
+  --ink: #16213a; --sub: #58637a; --line: #d6dce7; --lane: #f4f6fa;
+  --accent: #1f3a68; --accent-bg: #e9eef7; --accent-mid: #8ea3c7;
+  --warn: #e4572e; --warn-bg: #fdefe9;
+  --on-accent: #ffffff;
+  --c1: #1f3a68; --c2: #4a6fa5; --c3: #9fb5d6; --c4: #e4572e; --c5: #f2a07b; --c6: #a3abb8;
+  --seq1: #eef2f8; --seq2: #c9d5e8; --seq3: #93abd0; --seq4: #4a6fa5; --seq5: #1f3a68;
+  --map-land: #e2e6ee; --map-edge: #ffffff; --map-sea: transparent;
+}
+html[data-theme="mono"] {
+  --bg: #ffffff; --page: #e7e7e7;
+  --ink: #111111; --sub: #5f5f5f; --line: #d8d8d8; --lane: #f4f4f4;
+  --accent: #111111; --accent-bg: #f0f0f0; --accent-mid: #9a9a9a;
+  --warn: #d62828; --warn-bg: #fdecec;
+  --on-accent: #ffffff;
+  --c1: #111111; --c2: #555555; --c3: #a8a8a8; --c4: #d62828; --c5: #ef8a8a; --c6: #cfcfcf;
+  --seq1: #f3f3f3; --seq2: #d4d4d4; --seq3: #a3a3a3; --seq4: #5c5c5c; --seq5: #111111;
+  --map-land: #e6e6e6; --map-edge: #ffffff; --map-sea: transparent;
+}
+html[data-theme="blue"] {
+  --bg: #ffffff; --page: #e3e9f3;
+  --ink: #0f172a; --sub: #526079; --line: #d5deeb; --lane: #f3f6fb;
+  --accent: #2563eb; --accent-bg: #eaf1ff; --accent-mid: #93b4f5;
+  --warn: #b7791f; --warn-bg: #fff6d9;
+  --on-accent: #ffffff;
+  --c1: #2563eb; --c2: #60a5fa; --c3: #bfdbfe; --c4: #eab308; --c5: #fcd34d; --c6: #a1a9b8;
+  --seq1: #eef4ff; --seq2: #c7dbfe; --seq3: #8db5fb; --seq4: #3b7bf0; --seq5: #1d4ed8;
+  --map-land: #e1e7f0; --map-edge: #ffffff; --map-sea: transparent;
+}
+html[data-theme="wa"] {
+  --bg: #fffdf8; --page: #e9e5dc;
+  --ink: #1f2430; --sub: #5f6370; --line: #e0dbcf; --lane: #f6f2e9;
+  --accent: #264e86; --accent-bg: #eaeff6; --accent-mid: #93a9c9;
+  --warn: #d9480f; --warn-bg: #fcefe6;
+  --on-accent: #ffffff;
+  --c1: #264e86; --c2: #5b7fb0; --c3: #a9bcd7; --c4: #d9480f; --c5: #eea07a; --c6: #b3ad9f;
+  --seq1: #f1f3f7; --seq2: #cdd8e7; --seq3: #93a9c9; --seq4: #4d71a3; --seq5: #1c3d6b;
+  --map-land: #e9e4d8; --map-edge: #fffdf8; --map-sea: transparent;
+}
+html[data-theme="dark"] {
+  --bg: #0f172a; --page: #050914;
+  --ink: #e8edf5; --sub: #9aa6b8; --line: #2c3a52; --lane: #17223a;
+  --accent: #34d399; --accent-bg: #10332b; --accent-mid: #1f8f69;
+  --warn: #fb923c; --warn-bg: #3a2414;
+  --on-accent: #0f172a;
+  --c1: #34d399; --c2: #22a37a; --c3: #1a5f4c; --c4: #fb923c; --c5: #fcd34d; --c6: #64748b;
+  --seq1: #17223a; --seq2: #173d3a; --seq3: #1c6b55; --seq4: #27a57b; --seq5: #5eeab4;
+  --map-land: #1e2a42; --map-edge: #0f172a; --map-sea: transparent;
+}
+
+/* html-slides 共通 CSS。1920×1080 固定、1 ページ＝1 <section id>。
+   <html lang="ja|en" data-theme="green|navy|mono|blue|wa|dark" data-mode="doc|pitch"> */
+@font-face { font-family: "Noto Sans JP"; src: url("fonts/NotoSansJP.woff2") format("woff2"); font-weight: 100 900; font-display: block; }
+@font-face { font-family: "Inter"; src: url("fonts/Inter.woff2") format("woff2"); font-weight: 100 900; font-display: block; }
+
+:root {
+  --font: "Noto Sans JP", "Hiragino Sans", "Yu Gothic UI", "Meiryo", sans-serif;
+  --chart-fs: 19px; --chart-fs-v: 24px;
+  --r: 16px;
+}
+html[lang^="en"] { --font: "Inter", "Noto Sans JP", "Helvetica Neue", Arial, sans-serif; }
+html[data-mode="pitch"] { --chart-fs: 54px; --chart-fs-v: 60px; }
+
+* { box-sizing: border-box; margin: 0; }
+html, body { width: 100%; height: 100%; overflow: hidden; background: var(--page); }
+body { font-family: var(--font); color: var(--ink); -webkit-font-smoothing: antialiased; }
+html[lang^="ja"] :is(h1, h2, h3, .kicker, .big, .kpi .v, .lead) { font-feature-settings: "palt" 1; }
+section { display: none; position: absolute; left: var(--x, 0px); top: var(--y, 0px); width: 1920px; height: 1080px; padding: 56px 72px 40px; background: var(--bg); transform: scale(var(--k, 1)); transform-origin: 0 0; overflow: hidden; }
+section.on { display: block; }
+aside.notes { display: none; }
+a { color: inherit; }
+img { display: block; max-width: 100%; }
+b, strong { font-weight: 800; }
+.accent { color: var(--accent); }
+.warn { color: var(--warn); }
+.sub { color: var(--sub); }
+.num { font-variant-numeric: tabular-nums; }
+
+/* ページ送り（マウスを動かしたときだけ出す。PNG には写らない） */
+.nav { position: fixed; right: 16px; bottom: 16px; z-index: 30; display: flex; align-items: center; gap: 6px; padding: 6px; border-radius: 999px; background: rgba(20, 24, 32, 0.82); color: #fff; font: 600 14px var(--font); opacity: 0; transition: opacity 0.3s; }
+.nav.show { opacity: 1; }
+.nav button { width: 36px; height: 36px; border: 0; border-radius: 50%; background: transparent; color: #fff; font-size: 18px; cursor: pointer; }
+.nav button:hover { background: rgba(255, 255, 255, 0.16); }
+.nav span { min-width: 64px; text-align: center; font-variant-numeric: tabular-nums; }
+
+/* ページの型：kicker → h1（結論の1文）→ rule → 本文 → strip → foot */
+.kicker { font-size: 22px; font-weight: 700; color: var(--accent); letter-spacing: 0.08em; text-transform: uppercase; }
+h1 { font-size: 46px; font-weight: 800; line-height: 1.3; margin-top: 8px; letter-spacing: -0.005em; }
+.rule { height: 3px; background: var(--accent); margin: 18px 0 26px; }
+.foot { position: absolute; left: 72px; right: 140px; bottom: 26px; display: flex; justify-content: space-between; gap: 40px; font-size: 17px; color: var(--sub); line-height: 1.45; }
+.foot > span:last-child:not(:first-child) { white-space: nowrap; }
+.sec { display: inline-block; margin-right: 12px; padding: 2px 12px; border-radius: 8px; background: var(--ink); color: var(--bg); font-size: 18px; vertical-align: 3px; letter-spacing: 0.04em; }
+.pno { position: absolute; right: 0; bottom: 0; width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; background: var(--accent); color: var(--on-accent); font-size: 24px; font-weight: 800; font-variant-numeric: tabular-nums; }
+a.ref { text-decoration: none; border-bottom: 2px solid var(--accent-mid); }
+a.ref .pg { margin-left: 4px; font-size: max(0.7em, 16px); color: var(--sub); font-weight: 600; }
+html[data-mode="pitch"] a.ref .pg { font-size: max(0.7em, 54px); }
+
+/* レイアウト */
+.cols { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; }
+.cols.mid { align-items: center; }
+.cols.c37 { grid-template-columns: 3fr 7fr; } .cols.c73 { grid-template-columns: 7fr 3fr; }
+.cols.c46 { grid-template-columns: 4fr 6fr; } .cols.c64 { grid-template-columns: 6fr 4fr; }
+.cols.c3 { grid-template-columns: repeat(3, 1fr); }
+.stack > * + * { margin-top: 24px; }
+.center { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+.fill { height: 100%; }
+
+/* カード */
+.grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; }
+.grid.g4 { grid-template-columns: repeat(4, 1fr); gap: 22px; }
+.grid.g2 { grid-template-columns: 1fr 1fr; gap: 40px; }
+.grid.g5 { grid-template-columns: repeat(5, 1fr); gap: 18px; }
+.card { border: 2px solid var(--line); border-radius: var(--r); padding: 28px 30px; display: flex; flex-direction: column; background: var(--bg); }
+.card .when { font-size: 18px; font-weight: 700; color: var(--sub); letter-spacing: 0.06em; }
+.card h2 { font-size: 32px; font-weight: 800; line-height: 1.3; margin: 10px 0 14px; }
+.card p { font-size: 23px; line-height: 1.6; font-weight: 600; }
+.card .note { margin-top: auto; padding-top: 16px; font-size: 18px; color: var(--sub); line-height: 1.5; font-weight: 500; }
+.card .ill { width: 100%; height: 250px; object-fit: contain; margin: -6px 0 12px; }
+.card.key { border-color: var(--accent); background: var(--accent-bg); }
+.card.open { border-color: var(--warn); }
+.card.solid { border-color: var(--accent); background: var(--accent); color: var(--on-accent); }
+.card.solid .when, .card.solid .note { color: inherit; opacity: 0.8; }
+.tag { display: inline-block; margin-left: 8px; padding: 3px 12px; border-radius: 999px; background: var(--warn-bg); color: var(--warn); font-size: 17px; font-weight: 700; vertical-align: 5px; letter-spacing: 0; }
+.tag.ok { background: var(--accent-bg); color: var(--accent); }
+.tag.gray { background: var(--lane); color: var(--sub); }
+
+/* 結論の帯・見出し・箇条書き */
+.strip { margin-top: 28px; padding: 22px 30px; border-radius: 14px; background: var(--lane); font-size: 24px; font-weight: 700; line-height: 1.6; }
+.strip b { color: var(--accent); }
+.strip .w { color: var(--warn); }
+.strip.bottom { position: absolute; left: 72px; right: 72px; bottom: 78px; margin: 0; }
+h3 { font-size: 27px; font-weight: 800; line-height: 1.35; margin-bottom: 14px; }
+h3 small { font-size: 18px; font-weight: 600; color: var(--sub); margin-left: 10px; }
+ul.pts { padding-left: 1.1em; font-size: 23px; line-height: 1.6; font-weight: 600; }
+ul.pts li + li { margin-top: 10px; }
+ul.pts li::marker { color: var(--accent); }
+ul.check { list-style: none; padding: 0; font-size: 23px; line-height: 1.55; font-weight: 600; }
+ul.check li { position: relative; padding-left: 44px; }
+ul.check li + li { margin-top: 14px; }
+ul.check li::before { content: ""; position: absolute; left: 0; top: 0.18em; width: 28px; height: 28px; border-radius: 50%; background: var(--accent) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 12.5l4 4 8-9' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/20px no-repeat; }
+ol.steps { list-style: none; padding: 0; counter-reset: s; font-size: 23px; line-height: 1.55; font-weight: 600; }
+ol.steps li { position: relative; padding-left: 54px; counter-increment: s; }
+ol.steps li + li { margin-top: 16px; }
+ol.steps li::before { content: counter(s); position: absolute; left: 0; top: 0; width: 36px; height: 36px; border-radius: 50%; background: var(--ink); color: var(--bg); font-size: 19px; font-weight: 800; display: flex; align-items: center; justify-content: center; }
+.lead { font-size: 30px; font-weight: 700; line-height: 1.55; }
+.quote { position: relative; padding: 30px 36px 30px 104px; border-radius: var(--r); background: var(--lane); font-size: 28px; font-weight: 700; line-height: 1.6; }
+.quote::before { content: "“"; position: absolute; left: 22px; top: -8px; font-size: 120px; font-weight: 900; color: var(--accent); line-height: 1; }
+.quote cite { display: block; margin-top: 12px; font-size: 19px; font-style: normal; font-weight: 600; color: var(--sub); }
+
+/* 大きな数字 */
+.kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; }
+.kpis.k3 { grid-template-columns: repeat(3, 1fr); } .kpis.k2 { grid-template-columns: 1fr 1fr; }
+.kpi { border: 2px solid var(--line); border-radius: var(--r); padding: 26px 28px; background: var(--bg); }
+.kpi.key { border-color: var(--accent); background: var(--accent-bg); }
+.kpi .v { font-size: 62px; font-weight: 800; line-height: 1.1; font-variant-numeric: tabular-nums; letter-spacing: -0.01em; }
+.kpi .v small { font-size: 26px; margin-left: 4px; }
+.kpi.key .v { color: var(--accent); }
+.kpi .k { font-size: 23px; font-weight: 800; margin-top: 6px; }
+.kpi .d { font-size: 18px; color: var(--sub); margin-top: 8px; line-height: 1.45; font-weight: 500; }
+.big { font-size: 60px; font-weight: 800; letter-spacing: -0.01em; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.big small { display: inline; font-size: 26px; font-weight: 700; margin-left: 4px; color: inherit; }
+
+/* 横の流れ（手順・足し算の内訳） */
+.flow { display: flex; align-items: stretch; }
+.step { flex: 1; position: relative; border: 2px solid var(--ink); border-radius: 12px; background: var(--bg); padding: 20px 18px; font-size: 24px; font-weight: 800; line-height: 1.35; }
+.step small { display: block; margin-top: 8px; font-size: 18px; font-weight: 500; color: var(--sub); line-height: 1.45; }
+.step .n { display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 30px; margin-right: 6px; border-radius: 50%; background: var(--ink); color: var(--bg); font-size: 17px; vertical-align: 2px; }
+.step .who { display: block; font-size: 17px; font-weight: 700; color: var(--sub); letter-spacing: 0.04em; margin-bottom: 6px; }
+.step .big small { display: inline; margin-top: 0; font-size: 26px; font-weight: 700; color: inherit; }
+.step img { width: 100%; height: 150px; object-fit: contain; margin-bottom: 10px; }
+.step.key { border-color: var(--accent); background: var(--accent-bg); }
+.step.key .n { background: var(--accent); color: var(--on-accent); }
+.step.money { border-color: var(--warn); background: var(--warn-bg); }
+.step.money .n { background: var(--warn); color: var(--bg); }
+.flow .gap { width: 44px; flex: none; display: flex; align-items: center; justify-content: center; font-size: 30px; color: var(--sub); font-weight: 800; }
+
+/* 時間の帯（幅は style="flex:数"） */
+.timeline { display: flex; height: 150px; border-radius: 12px; overflow: hidden; border: 2px solid var(--ink); }
+.seg { display: flex; flex-direction: column; justify-content: center; padding: 0 16px; border-right: 2px solid var(--bg); font-size: 22px; font-weight: 800; background: var(--lane); min-width: 0; }
+.seg:last-child { border-right: 0; }
+.seg small { font-size: 18px; font-weight: 600; color: var(--sub); margin-top: 4px; }
+.seg.play, .seg.key { background: var(--accent-bg); }
+.seg.bid, .seg.money { background: var(--warn-bg); }
+
+/* 横棒（棒の長さは style="width:%"） */
+.bars { display: grid; grid-template-columns: fit-content(380px) 1fr fit-content(200px); column-gap: 24px; row-gap: 28px; align-items: center; }
+.bars .l { font-size: 24px; font-weight: 800; line-height: 1.3; }
+.bars .l small { display: block; font-size: 17px; font-weight: 500; color: var(--sub); }
+.bars .b { height: 58px; border-radius: 8px; background: var(--line); }
+.bars .b.key { background: var(--accent); } .bars .b.mid { background: var(--accent-mid); } .bars .b.money { background: var(--warn); }
+.bars .v { font-size: 30px; font-weight: 800; font-variant-numeric: tabular-nums; }
+
+/* 表 */
+table.tbl { border-collapse: collapse; width: 100%; font-size: 22px; }
+table.tbl th { text-align: left; font-size: 18px; color: var(--sub); font-weight: 700; padding: 8px 10px; border-bottom: 2px solid var(--ink); white-space: nowrap; }
+table.tbl td { padding: 14px 12px; border-bottom: 1px solid var(--line); font-weight: 600; line-height: 1.45; vertical-align: top; }
+table.tbl td.r, table.tbl th.r { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+table.tbl td.c, table.tbl th.c { text-align: center; }
+table.tbl td.s { font-weight: 500; color: var(--sub); font-size: 19px; }
+table.tbl tr.em td { font-weight: 800; background: var(--accent-bg); }
+table.tbl tr.sum td { font-weight: 800; border-top: 2px solid var(--ink); }
+table.tbl.tight td { padding: 9px 10px; font-size: 20px; }
+table.tbl .mk { display: inline-flex; width: 34px; height: 34px; border-radius: 50%; align-items: center; justify-content: center; font-weight: 900; }
+table.tbl .mk.o { background: var(--accent-bg); color: var(--accent); } table.tbl .mk.t { background: var(--warn-bg); color: var(--warn); } table.tbl .mk.x { background: var(--lane); color: var(--sub); }
+
+.legend { display: flex; flex-wrap: wrap; gap: 8px 26px; font-size: 19px; color: var(--sub); font-weight: 600; }
+.legend span { display: inline-flex; align-items: center; gap: 8px; }
+.legend i { display: inline-block; width: 20px; height: 14px; border-radius: 3px; }
+
+/* 画像 */
+.ph { display: flex; align-items: center; justify-content: center; border: 3px dashed var(--line); border-radius: var(--r); background: var(--lane); color: var(--sub); font-size: 22px; font-weight: 700; min-height: 200px; }
+html[data-mode="pitch"] .ph { font-size: 54px; }
+.fig { margin: 0; }
+.fig img { width: 100%; height: 100%; object-fit: contain; }
+.fig.cover img { object-fit: cover; border-radius: var(--r); }
+.fig figcaption { margin-top: 12px; font-size: 20px; font-weight: 700; color: var(--sub); line-height: 1.45; }
+.hero-img { position: absolute; right: 90px; top: 100px; width: 700px; height: 700px; object-fit: contain; }
+.phones { display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px; }
+.phones figure { margin: 0; display: flex; flex-direction: column; align-items: center; }
+.phones img { width: 300px; height: 649px; object-fit: cover; border: 7px solid var(--ink); border-radius: 36px; box-shadow: 0 10px 28px rgba(0, 0, 0, 0.22); }
+.phones figcaption { margin-top: 16px; align-self: stretch; font-size: 22px; font-weight: 800; line-height: 1.35; }
+
+/* 比べる：左右（前と後）・2×2・ピラミッド・ベン図 */
+.vs { display: grid; grid-template-columns: 1fr 90px 1fr; align-items: stretch; }
+.vs .mid { display: flex; align-items: center; justify-content: center; font-size: 40px; font-weight: 900; color: var(--accent); }
+.matrix { position: relative; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 14px; padding: 0 0 46px 56px; }
+.matrix .q { border-radius: 14px; background: var(--lane); padding: 22px 26px; font-size: 22px; font-weight: 600; line-height: 1.5; }
+.matrix .q h4 { font-size: 26px; font-weight: 800; margin-bottom: 6px; }
+.matrix .q.key { background: var(--accent-bg); outline: 3px solid var(--accent); outline-offset: -3px; }
+.matrix .ax-x, .matrix .ax-y { position: absolute; font-size: 19px; font-weight: 700; color: var(--sub); }
+.matrix .ax-x { left: 56px; right: 0; bottom: 6px; display: flex; justify-content: space-between; }
+.matrix .ax-y { left: 0; top: 0; bottom: 46px; width: 40px; display: flex; flex-direction: column-reverse; justify-content: space-between; align-items: center; }
+.matrix .ax-y span { writing-mode: vertical-rl; }
+.pyramid { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.pyramid > div { display: flex; align-items: center; justify-content: center; height: 96px; clip-path: polygon(var(--i) 0, calc(100% - var(--i)) 0, 100% 100%, 0 100%); background: var(--accent-mid); color: var(--ink); font-size: 24px; font-weight: 800; text-align: center; padding: 0 60px; }
+.pyramid > div:first-child { clip-path: polygon(50% 0, 50% 0, 100% 100%, 0 100%); background: var(--accent); color: var(--on-accent); padding-top: 30px; }
+.pyramid > div.base { background: var(--lane); }
+.venn { position: relative; }
+.venn .c { position: absolute; border-radius: 50%; display: flex; padding: 40px; font-size: 24px; font-weight: 800; mix-blend-mode: multiply; }
+html[data-theme="dark"] .venn .c { mix-blend-mode: screen; }
+.venn .c.a { background: color-mix(in srgb, var(--accent) 28%, transparent); }
+.venn .c.b { background: color-mix(in srgb, var(--warn) 24%, transparent); }
+.venn .c.c3 { background: color-mix(in srgb, var(--c6) 30%, transparent); }
+.venn .mid { position: absolute; font-size: 24px; font-weight: 900; text-align: center; }
+
+/* 表紙・中扉 */
+section.cover { padding: 110px 120px; }
+.cover .kicker { font-size: 26px; }
+.cover h1 { font-size: 96px; line-height: 1.15; letter-spacing: -0.015em; margin-top: 18px; max-width: 1000px; }
+.cover .lead { max-width: 1000px; font-size: 36px; margin-top: 28px; }
+.cover .toc { position: absolute; left: 120px; right: 120px; bottom: 110px; display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: 22px; }
+.cover .toc div { border-top: 4px solid var(--accent); padding-top: 16px; font-size: 28px; font-weight: 800; }
+.cover .toc small { display: block; font-size: 19px; color: var(--sub); font-weight: 600; margin-top: 6px; line-height: 1.5; }
+section.chap { padding: 150px 120px; background: var(--accent); color: var(--on-accent); }
+.chap .ck { font-size: 26px; font-weight: 800; letter-spacing: 0.16em; opacity: 0.75; text-transform: uppercase; }
+.chap .cn { margin-top: 10px; font-size: 260px; font-weight: 900; line-height: 0.9; letter-spacing: -0.03em; }
+.chap h1 { margin-top: 26px; font-size: 100px; font-weight: 800; }
+.chap .lead { margin-top: 22px; max-width: 1500px; font-size: 34px; opacity: 0.88; }
+.chap .chaps { position: absolute; left: 120px; right: 120px; bottom: 110px; display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: 14px; }
+.chap .chaps div { padding-top: 12px; border-top: 6px solid currentColor; font-size: 19px; font-weight: 700; line-height: 1.35; white-space: nowrap; opacity: 0.4; overflow: hidden; text-overflow: ellipsis; }
+.chap .chaps div b { display: block; font-size: 28px; font-weight: 900; }
+.chap .chaps div.done { opacity: 0.65; }
+.chap .chaps div.on { opacity: 1; }
+.chap .pno { background: var(--bg); color: var(--accent); }
+
+/* グラフ（charts.js が描く） */
+.chart { position: relative; width: 100%; }
+.chart svg { display: block; overflow: visible; font-family: var(--font); }
+.chart .ax { stroke: var(--ink); stroke-width: 2; }
+.chart .grid-l { stroke: var(--line); stroke-width: 1; }
+.chart .tk { fill: var(--sub); font-size: var(--chart-fs); font-weight: 600; }
+.chart .lb { fill: var(--ink); font-size: var(--chart-fs); font-weight: 700; }
+.chart .vl { fill: var(--ink); font-size: var(--chart-fs-v); font-weight: 800; font-variant-numeric: tabular-nums; }
+.chart .vl.in { fill: var(--on-accent); }
+.chart .un { fill: var(--sub); font-size: var(--chart-fs); font-weight: 600; }
+.chart .halo { paint-order: stroke; stroke: var(--bg); stroke-width: 6px; stroke-linejoin: round; }
+.chart .refl { stroke-width: 3; stroke-dasharray: 10 7; }
+
+/* 図（diagrams.js が線を描く） */
+.dgm { position: relative; }
+.dgm > svg.dgm-links, .cycle > svg.dgm-links { position: absolute; left: 0; top: 0; z-index: 1; overflow: visible; pointer-events: none; }
+.dgm-links path { fill: none; stroke: var(--sub); stroke-width: 3; }
+.dgm-links path.dash { stroke-dasharray: 9 7; }
+.dgm-links path.key { stroke: var(--accent); } .dgm-links path.money { stroke: var(--warn); }
+.dgm-links text { font-size: 18px; font-weight: 700; fill: var(--ink); paint-order: stroke; stroke: var(--bg); stroke-width: 6px; stroke-linejoin: round; }
+.dgm-links text.key { fill: var(--accent); } .dgm-links text.money { fill: var(--warn); }
+.node { position: relative; z-index: 2; border: 2px solid var(--ink); border-radius: 14px; background: var(--bg); padding: 16px 20px; font-size: 23px; font-weight: 800; line-height: 1.35; text-align: center; }
+.node small { display: block; margin-top: 6px; font-size: 17px; font-weight: 500; color: var(--sub); line-height: 1.4; }
+.node img { width: 120px; height: 120px; object-fit: contain; margin: 0 auto 8px; }
+.node.key { border-color: var(--accent); background: var(--accent-bg); }
+.node.money { border-color: var(--warn); background: var(--warn-bg); }
+.node.solid { border-color: var(--accent); background: var(--accent); color: var(--on-accent); }
+.node.solid small { color: inherit; opacity: 0.8; }
+.node.ghost { border-style: dashed; border-color: var(--sub); }
+.node.round { border-radius: 999px; }
+.cycle { position: relative; }
+.cycle > .node { position: absolute; transform: translate(-50%, -50%); }
+.cycle > .hub { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); text-align: center; font-size: 30px; font-weight: 900; color: var(--accent); }
+.tree { display: grid; justify-items: center; row-gap: 70px; }
+.tree .row { display: flex; gap: 28px; justify-content: center; }
+/* 担当者ごとのフロー図：行＝担当者、列＝段階 */
+.lanes { --cols: 5; --rows: 4; --rowh: 150px; --who: 210px; position: relative; display: grid; grid-template-columns: var(--who) repeat(var(--cols), 1fr); grid-template-rows: 44px repeat(var(--rows), var(--rowh)); border-bottom: 1px solid var(--line); }
+.lanes .phase { font-size: 19px; font-weight: 700; color: var(--sub); text-align: center; align-self: center; }
+.lanes .phase b { color: var(--accent); }
+.lanes .who { display: flex; flex-direction: column; justify-content: center; padding-left: 18px; font-size: 21px; font-weight: 800; background: var(--lane); border-top: 1px solid var(--line); }
+.lanes .who small { font-size: 16px; font-weight: 500; color: var(--sub); margin-top: 4px; }
+.lanes .who.me { background: var(--ink); color: var(--bg); }
+.lanes .who.me small { color: inherit; opacity: 0.7; }
+.lanes .cell { position: relative; display: flex; align-items: center; justify-content: center; padding: 12px 22px; background: var(--lane); border-top: 1px solid var(--line); }
+.lanes .box { position: relative; z-index: 2; width: 100%; background: var(--bg); border: 2px solid var(--ink); border-radius: 12px; padding: 10px 14px; font-size: 19px; font-weight: 700; line-height: 1.35; }
+.lanes .box small { display: block; margin-top: 5px; font-size: 16px; font-weight: 500; color: var(--sub); line-height: 1.4; }
+.lanes .box.key { border-color: var(--accent); background: var(--accent-bg); }
+.lanes .box.money { border-color: var(--warn); background: var(--warn-bg); }
+.lanes .box.cond { border-style: dashed; }
+
+/* 地図（make-map.mjs が SVG を書き込む） */
+.map svg { display: block; max-width: 100%; height: auto; overflow: hidden; font-family: var(--font); }
+.map .sea { fill: var(--map-sea); }
+.map .land { fill: var(--map-land); stroke: var(--map-edge); stroke-width: 0.8; }
+.map .land.hl, .map .land.accent { fill: var(--accent); }
+.map .land.mid { fill: var(--accent-mid); }
+.map .land.warn { fill: var(--warn); }
+.map .land.sub { fill: var(--c6); }
+.map .land.q1 { fill: var(--seq1); } .map .land.q2 { fill: var(--seq2); } .map .land.q3 { fill: var(--seq3); } .map .land.q4 { fill: var(--seq4); } .map .land.q5 { fill: var(--seq5); }
+.map .border { fill: none; stroke: var(--map-edge); stroke-width: 1; }
+.map .grat { fill: none; stroke: var(--line); stroke-width: 0.6; }
+.map .pt { fill: var(--ink); stroke: var(--bg); stroke-width: 3; }
+.map .pt.accent { fill: var(--accent); } .map .pt.warn { fill: var(--warn); }
+.map .pt.ring { fill: var(--bg); stroke: var(--accent); stroke-width: 5; }
+.map .arc { fill: none; stroke: var(--ink); stroke-width: 3.5; }
+.map .arc.accent { stroke: var(--accent); } .map .arc.warn { stroke: var(--warn); }
+.map .arc.dash { stroke-dasharray: 10 7; }
+.map .ml { fill: var(--ink); font-size: 20px; font-weight: 800; paint-order: stroke; stroke: var(--bg); stroke-width: 6px; stroke-linejoin: round; }
+.map .ml.sub { fill: var(--sub); font-weight: 600; font-size: 17px; }
+.map .ml.accent { fill: var(--accent); } .map .ml.warn { fill: var(--warn); }
+.map .ml.on { fill: var(--on-accent); stroke: none; }
+.map-scale { display: flex; align-items: center; gap: 10px; font-size: 17px; color: var(--sub); font-weight: 600; }
+.map-scale i { display: inline-block; width: 44px; height: 14px; }
+
+/* ---------- 映す発表（data-mode="pitch"）：文字はすべて 54px 以上、1 ページ 1 メッセージ・絵が主役 ---------- */
+html[data-mode="pitch"] section { padding: 70px 100px 60px; }
+html[data-mode="pitch"] .kicker { font-size: 54px; letter-spacing: 0.06em; }
+html[data-mode="pitch"] h1 { font-size: 80px; line-height: 1.25; letter-spacing: -0.01em; }
+html[data-mode="pitch"] .rule { height: 6px; margin: 26px 0 40px; width: 160px; }
+html[data-mode="pitch"] .pno { width: 104px; height: 104px; font-size: 54px; }
+html[data-mode="pitch"] .foot { left: 100px; right: 150px; bottom: 30px; font-size: 54px; }
+html[data-mode="pitch"] .sec { font-size: 54px; padding: 0 22px; border-radius: 14px; }
+html[data-mode="pitch"] .tag { font-size: 54px; padding: 4px 26px; }
+html[data-mode="pitch"] .strip { font-size: 60px; padding: 30px 44px; border-radius: 28px; }
+html[data-mode="pitch"] .legend { font-size: 54px; gap: 12px 44px; }
+html[data-mode="pitch"] .legend i { width: 44px; height: 30px; border-radius: 6px; }
+html[data-mode="pitch"] .dgm-links text { font-size: 54px; stroke-width: 10px; }
+html[data-mode="pitch"] .dgm-links path { stroke-width: 6; }
+html[data-mode="pitch"] .node { font-size: 60px; border-width: 5px; border-radius: 28px; padding: 26px 34px; }
+html[data-mode="pitch"] .map .ml { font-size: 54px; stroke-width: 12px; }
+html[data-mode="pitch"] .map .ml.sub { font-size: 54px; }
+html[data-mode="pitch"] .map .pt { stroke-width: 6; }
+html[data-mode="pitch"] .map .arc { stroke-width: 8; }
+html[data-mode="pitch"] section.cover h1 { font-size: 150px; }
+html[data-mode="pitch"] section.cover .lead { font-size: 60px; max-width: 1400px; }
+html[data-mode="pitch"] section.chap .ck, html[data-mode="pitch"] section.chap .lead { font-size: 60px; }
+html[data-mode="pitch"] section.chap .chaps { display: none; }
+/* 発表の部品 */
+.say { font-size: 110px; font-weight: 900; line-height: 1.2; letter-spacing: -0.02em; }
+.say em { font-style: normal; color: var(--accent); }
+.say .w { color: var(--warn); }
+.bignum { font-size: 260px; font-weight: 900; line-height: 1; letter-spacing: -0.04em; color: var(--accent); font-variant-numeric: tabular-nums; }
+.bignum small { font-size: 100px; letter-spacing: 0; margin-left: 10px; }
+.bignum-k { margin-top: 24px; font-size: 64px; font-weight: 800; }
+.trio { display: grid; grid-template-columns: repeat(3, 1fr); gap: 60px; }
+.trio.t2 { grid-template-columns: 1fr 1fr; } .trio.t4 { grid-template-columns: repeat(4, 1fr); gap: 40px; }
+.trio figure { margin: 0; text-align: center; }
+.trio img { width: 100%; height: 480px; object-fit: contain; }
+.trio figcaption { margin-top: 18px; font-size: 60px; font-weight: 900; line-height: 1.25; }
+.trio figcaption small { display: block; font-size: 54px; font-weight: 700; color: var(--sub); }
+.band { display: flex; justify-content: center; align-items: center; gap: 24px; padding: 30px 50px; border-radius: 32px; background: var(--lane); font-size: 64px; font-weight: 900; }
+.band b { color: var(--accent); }
+.arrow { flex: none; font-size: 110px; font-weight: 900; color: var(--accent); line-height: 1; }
+.chain { display: flex; align-items: center; justify-content: center; gap: 36px; }
+.chain figure { margin: 0; text-align: center; }
+.chain img { width: 360px; height: 360px; object-fit: contain; margin: 0 auto; }
+.chain figcaption { margin-top: 12px; font-size: 60px; font-weight: 900; }
+.split { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; height: 100%; }
+.split img { width: 100%; height: 820px; object-fit: contain; }
+section.dark, html[data-mode="pitch"] section.dark { background: var(--ink); color: var(--bg); }
+html[data-theme="dark"] section.dark { background: #020617; color: var(--ink); }
+section.full-img { padding: 0; }
+section.full-img > img { width: 100%; height: 100%; object-fit: cover; }
+section.full-img .over { position: absolute; left: 100px; bottom: 110px; right: 100px; font-size: 96px; font-weight: 900; color: #fff; text-shadow: 0 4px 30px rgba(0, 0, 0, 0.55); line-height: 1.2; }
+
+/* 発表者メモ（N で重ねる。?presenter で発表者用の窓） */
+.np { display: none; position: fixed; left: 0; right: 0; bottom: 0; z-index: 25; max-height: 40vh; overflow: auto; padding: 16px 24px; background: rgba(12, 16, 24, 0.92); color: #fff; font: 600 22px/1.6 var(--font); }
+.np.show { display: block; }
+.np .meta { display: flex; flex-wrap: wrap; gap: 24px; margin-bottom: 8px; font-size: 16px; color: #c3c8d2; font-variant-numeric: tabular-nums; }
+.np .meta b { color: #fff; } .np .meta b.late { color: #fb923c; }
+.np .next { margin-top: 10px; font-size: 16px; color: #c3c8d2; }
+body.presenter { overflow: auto; background: #0c1018; }
+body.presenter section, body.presenter .nav { display: none !important; }
+body.presenter .np { display: block; position: static; max-height: none; min-height: 100vh; font-size: 30px; padding: 30px 40px; }
+body.presenter .np .meta { font-size: 24px; }
+body.presenter .np .next { font-size: 22px; margin-top: 26px; }
+
+/* ?check のときだけ：はみ出し・小さすぎる文字・数字の抜けに赤枠 */
+.ovf { outline: 3px solid #e11d48 !important; outline-offset: -2px; }
+.ovf-badge { position: absolute; left: 0; top: 0; z-index: 40; padding: 6px 14px; background: #e11d48; color: #fff; font-size: 22px; font-weight: 800; }
+.f-missing { background: #ffe4e6; color: #be123c; }
+
+/*END LIB:CSS*/</style>
+<style>
+  /* README の図（GitHub では約 880px 幅に縮むので、文字は 36px 以上） */
+  section { padding: 64px 72px; }
+  .fig-h { font-size: 64px; font-weight: 900; line-height: 1.2; letter-spacing: -0.01em; }
+  .fig-h em { font-style: normal; color: var(--accent); }
+  .fig-s { font-size: 34px; font-weight: 600; color: var(--sub); margin-top: 10px; }
+  .crop { position: relative; overflow: hidden; border-radius: 14px; background: #fff; box-shadow: 0 6px 24px rgba(15, 23, 42, .18); }
+  .crop img { position: absolute; max-width: none; }
+  .lbl { font-size: 44px; font-weight: 900; line-height: 1.15; margin-top: 18px; }
+  .lbl small { display: block; font-size: 28px; font-weight: 600; color: var(--sub); margin-top: 4px; }
+  .mono { font-family: ui-monospace, Consolas, "SF Mono", Menlo, monospace; }
+
+  /* hero */
+  #hero { background: var(--accent); color: #fff; }
+  #hero.on { display: grid; grid-template-columns: 820px 1fr; gap: 40px; align-items: center; }
+  #hero .name { font-size: 132px; font-weight: 900; letter-spacing: -0.03em; line-height: 1; }
+  #hero .slogan { font-size: 50px; font-weight: 800; line-height: 1.35; margin-top: 36px; }
+  #hero .en { font-size: 34px; font-weight: 600; opacity: .8; margin-top: 16px; }
+  #hero .chips { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 48px; }
+  #hero .chips span { font-size: 34px; font-weight: 800; padding: 10px 26px; border-radius: 999px; background: rgba(255, 255, 255, .16); }
+  #hero .stack { position: relative; height: 900px; }
+  #hero .stack img { position: absolute; width: 860px; border-radius: 12px; box-shadow: 0 20px 50px rgba(0, 0, 0, .35); }
+
+  /* features */
+  .tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px 40px; margin-top: 32px; }
+  .tiles .crop { height: 280px; }
+
+  /* workflow */
+  .wf { display: grid; grid-template-columns: repeat(3, 1fr); gap: 48px 64px; margin-top: 44px; }
+  .wf .st { position: relative; border: 4px solid var(--line); border-radius: 22px; padding: 36px 38px; background: var(--bg); min-height: 300px; }
+  .wf .st.key { border-color: var(--accent); background: var(--accent-bg); }
+  .wf .n { display: inline-grid; place-items: center; width: 64px; height: 64px; border-radius: 50%; background: var(--ink); color: var(--bg); font-size: 36px; font-weight: 900; }
+  .wf .st.key .n { background: var(--accent); }
+  .wf h3 { display: inline; font-size: 52px; font-weight: 900; margin-left: 16px; vertical-align: middle; }
+  .wf p { font-size: 38px; font-weight: 600; line-height: 1.4; margin-top: 16px; }
+  .wf code { display: inline-block; font-size: 34px; font-weight: 700; margin-top: 16px; padding: 6px 16px; border-radius: 10px; background: var(--lane); color: var(--ink); }
+  .wf .st:not(:nth-child(3n))::after { content: "→"; position: absolute; right: -56px; top: 50%; transform: translateY(-50%); font-size: 52px; font-weight: 900; color: var(--sub); }
+  .wf .loop { grid-column: 1 / -1; text-align: center; font-size: 42px; font-weight: 800; color: var(--accent); margin-top: -8px; }
+
+  /* check */
+  .ba { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; margin-top: 40px; }
+  .ba .crop { height: 520px; }
+  .ba .lbl.bad { color: var(--warn); }
+  .why { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 34px; }
+  .why span { font-size: 36px; font-weight: 800; padding: 8px 22px; border-radius: 12px; border: 3px solid var(--warn); color: var(--warn); background: var(--warn-bg); }
+
+  /* themes */
+  .th { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px 40px; margin-top: 36px; }
+  .th .crop { height: 300px; }
+  .th .lbl { display: flex; align-items: center; gap: 14px; margin-top: 14px; }
+  .th .lbl i { width: 40px; height: 40px; border-radius: 10px; display: inline-block; }
+
+  /* modes */
+  .md { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; margin-top: 44px; }
+  .md .crop { aspect-ratio: 16 / 9; }
+  .md ul { margin-top: 18px; padding-left: 1.1em; font-size: 34px; font-weight: 600; line-height: 1.5; }
+
+  /* 検査の見本（README には出さない。check の図の元） */
+  .sample h1 { font-size: 40px; max-width: 1180px; } .sample .rule { width: 1180px; } .sample .grid { width: 1180px; }
+</style>
+</head>
+<body>
+
+<section id="hero" data-nopno>
+  <div>
+    <div class="name">html-slides</div>
+    <div class="slogan">きれいな HTML スライドを、<br>毎回同じ品質で。</div>
+    <div class="en">Polished HTML slides, same quality every time.</div>
+    <div class="chips"><span>グラフ</span><span>図</span><span>地図</span><span>計算</span><span>イラスト</span><span>PNG と検査</span></div>
+  </div>
+  <div class="stack">
+    <img src="../../examples/demo/png/14-mix.png" alt="" style="left:120px; top:20px; transform:rotate(3deg)">
+    <img src="../../examples/demo/png/12-growth.png" alt="" style="left:40px; top:230px; transform:rotate(-2deg)">
+    <img src="../../examples/demo/png/01-cover.png" alt="" style="left:0; top:440px">
+  </div>
+</section>
+
+<section id="features" data-nopno>
+  <div class="fig-h">1 つのスキルで、<em>6 種類の表現</em>がそろう</div>
+  <div class="fig-s">Charts, diagrams, maps, computed numbers, illustrations and a pitch mode</div>
+  <div class="tiles">
+    <div><div class="crop" data-src="../../examples/demo/png/12-growth.png" data-x="60" data-y="190" data-w="1100"></div><div class="lbl">グラフ<small>棒・線・円・滝・サンキーほか</small></div></div>
+    <div><div class="crop" data-src="../../examples/demo/png/08-lanes.png" data-x="50" data-y="200" data-w="1250"></div><div class="lbl">図<small>関係図・担当者ごとのフロー</small></div></div>
+    <div><div class="crop" data-src="../../examples/demo/png/04-markets.png" data-x="50" data-y="170" data-w="1150"></div><div class="lbl">地図<small>世界・国・日本の都道府県</small></div></div>
+    <div><div class="crop" data-src="../../examples/demo/png/11-kpi.png" data-x="50" data-y="170" data-w="1150"></div><div class="lbl">数字は計算から<small>Python の結果を埋め込む</small></div></div>
+    <div><div class="crop" data-src="../../examples/demo/png/03-value.png" data-x="50" data-y="170" data-w="1250"></div><div class="lbl">イラスト<small>テーマに合わせて生成</small></div></div>
+    <div><div class="crop" data-src="../../examples/demo/png-pitch/01-cover.png" data-x="0" data-y="0" data-w="1920"></div><div class="lbl">発表用の型<small>文字 54px 以上・発表者メモ</small></div></div>
+  </div>
+</section>
+
+<section id="workflow" data-nopno>
+  <div class="fig-h">頼むと、Agent が<em>6 つの手順</em>で仕上げる</div>
+  <div class="fig-s">Ask the Agent — it builds, checks and exports in six steps</div>
+  <div class="wf">
+    <div class="st"><span class="n">1</span><h3>作る</h3><p>型・テーマ・言語を選ぶ</p><code class="mono">deck.mjs new</code></div>
+    <div class="st"><span class="n">2</span><h3>書く</h3><p>1 ページ 1 メッセージ、<br>決まった部品で組む</p></div>
+    <div class="st"><span class="n">3</span><h3>数字</h3><p>計算して埋め込む</p><code class="mono">inject-data.mjs</code></div>
+    <div class="st"><span class="n">4</span><h3>地図・絵</h3><p>地図と挿絵を入れる</p><code class="mono">make-map.mjs</code></div>
+    <div class="st key"><span class="n">5</span><h3>検査</h3><p>崩れを赤枠で見つけて直す</p><code class="mono">export.mjs --check</code></div>
+    <div class="st"><span class="n">6</span><h3>書き出す</h3><p>全ページの PNG と一覧</p><code class="mono">export.mjs --sheet</code></div>
+    <div class="loop">5 は「問題: なし」になるまでくり返す</div>
+  </div>
+</section>
+
+<section id="check" data-nopno>
+  <div class="fig-h">崩れは<em>自動で見つかる</em>。直すまで仕上がりにしない</div>
+  <div class="fig-s">Layout problems are detected automatically and fixed before export</div>
+  <div class="ba">
+    <div><div class="crop" data-src="png/check/07-bad.png" data-x="0" data-y="0" data-w="1290"></div><div class="lbl bad">直す前<small>赤枠と、左上に理由の一覧</small></div></div>
+    <div><div class="crop" data-src="png/08-good.png" data-x="0" data-y="0" data-w="1290"></div><div class="lbl">直した後<small>「問題: なし」</small></div></div>
+  </div>
+  <div class="why"><span>文字のはみ出し</span><span>画面の外</span><span>小さすぎる文字</span><span>数字の抜け</span><span>空の地図</span><span>画像の抜け</span><span>id の重複</span></div>
+</section>
+
+<section id="themes" data-nopno>
+  <div class="fig-h">同じ中身を、<em>6 つのテーマ</em>で</div>
+  <div class="fig-s">The same deck in six themes</div>
+  <div class="th">
+    <div><div class="crop" data-src="../themes/green.png" data-x="0" data-y="0" data-w="1250"></div><div class="lbl"><i style="background:#1f9d55"></i><i style="background:#c2410c"></i>green</div></div>
+    <div><div class="crop" data-src="../themes/navy.png" data-x="0" data-y="0" data-w="1250"></div><div class="lbl" data-sw="navy">navy</div></div>
+    <div><div class="crop" data-src="../themes/mono.png" data-x="0" data-y="0" data-w="1250"></div><div class="lbl" data-sw="mono">mono</div></div>
+    <div><div class="crop" data-src="../themes/blue.png" data-x="0" data-y="0" data-w="1250"></div><div class="lbl" data-sw="blue">blue</div></div>
+    <div><div class="crop" data-src="../themes/wa.png" data-x="0" data-y="0" data-w="1250"></div><div class="lbl" data-sw="wa">wa（和風）</div></div>
+    <div><div class="crop" data-src="../themes/dark.png" data-x="0" data-y="0" data-w="1250"></div><div class="lbl" data-sw="dark">dark</div></div>
+  </div>
+</section>
+
+<section id="modes" data-nopno>
+  <div class="fig-h">読む資料と、映す発表。<em>2 つの型</em>を選べる</div>
+  <div class="fig-s">doc for reading, pitch for presenting</div>
+  <div class="md">
+    <div><div class="crop" data-src="../../examples/demo/png/12-growth.png" data-x="0" data-y="0" data-w="1920"></div><div class="lbl">doc：配って読む資料<small>本文 22px 以上</small></div><ul><li>根拠と注記まで 1 ページで完結</li><li>カード・表・グラフ・図・地図</li></ul></div>
+    <div><div class="crop" data-src="../../examples/demo/png-pitch/06-bars.png" data-x="0" data-y="0" data-w="1920"></div><div class="lbl">pitch：話しながら映す<small>文字 54px 以上</small></div><ul><li>1 ページに 1 つのこと</li><li>台本メモ・発表者の窓・経過時間</li></ul></div>
+  </div>
+</section>
+
+<!-- ここから下は check の図の元（build.mjs が --check で撮る） -->
+<section id="bad" class="sample" data-nopno>
+  <div class="kicker">MARKET</div>
+  <h1>市場は3年で2倍に伸び、アジアから先に開く</h1>
+  <div class="rule"></div>
+  <div class="grid g3">
+    <div class="card" style="height:260px"><h2>アジア</h2><p>台湾・香港・シンガポールの3つの国・地域で、日本の食品の越境ECは毎年2割ずつ伸びている。定期便の利用者も多く、配送の日数も短いので、最初に売る市場にする。現地の決済と言葉にも対応する。</p></div>
+    <div class="card"><h2>北米</h2><p>市場は最も大きいが、送料と関税が重い。</p><p style="font-size:12px">※ 送料は2025年の見積もり。関税の率は品目で変わる。</p></div>
+    <div class="card"><h2>3年目の売上</h2><div class="kpi"><div class="v"><span data-f="rev.y9"></span><small>億円</small></div></div></div>
+  </div>
+  <div class="foot"><span>見本</span></div>
+</section>
+
+<section id="good" class="sample" data-nopno>
+  <div class="kicker">MARKET</div>
+  <h1>市場は3年で2倍に伸び、アジアから先に開く</h1>
+  <div class="rule"></div>
+  <div class="grid g3">
+    <div class="card key" style="height:260px"><h2>アジア</h2><p>越境ECが毎年2割伸びる。配送も短く、最初に売る。</p></div>
+    <div class="card"><h2>北米</h2><p>市場は最も大きいが、送料と関税が重い。</p><div class="note">送料は2025年の見積もり</div></div>
+    <div class="card"><h2>3年目の売上</h2><div class="kpi"><div class="v"><span data-f="rev.2" data-d="1"></span><small>億円</small></div></div></div>
+  </div>
+  <div class="foot"><span>見本</span></div>
+</section>
+
+<script>
+  /* .crop：元の PNG（1920 幅）の (x, y) から幅 w の範囲を、枠いっぱいに拡大して見せる */
+  document.querySelectorAll(".crop").forEach(c => {
+    const img = document.createElement("img");
+    img.src = c.dataset.src; img.alt = "";
+    c.appendChild(img);
+  });
+  const fitCrops = sec => sec.querySelectorAll(".crop").forEach(c => {
+    const k = c.offsetWidth / +c.dataset.w;
+    Object.assign(c.firstElementChild.style, { width: 1920 * k + "px", left: -c.dataset.x * k + "px", top: -c.dataset.y * k + "px" });
+  });
+  document.addEventListener("DOMContentLoaded", () => Slides.onShow(fitCrops));
+  /* テーマの色見本（強調色・お金の色。assets/themes.css の --accent・--warn） */
+  const SW = { navy: ["#1f3a68", "#e4572e"], mono: ["#111111", "#d62828"], blue: ["#2563eb", "#b7791f"], wa: ["#264e86", "#d9480f"], dark: ["#34d399", "#fb923c"] };
+  document.querySelectorAll("[data-sw]").forEach(l => l.insertAdjacentHTML("afterbegin", SW[l.dataset.sw].map(c => `<i style="background:${c}"></i>`).join("")));
+</script>
+<script>/*DATA*/window.DATA = {"rev": [0.6, 7.4, 20.9]};/*END DATA*/</script>
+<script id="html-slides-lib-js">/*LIB:JS*/
+/* html-slides runtime：画面合わせ・ページ送り・番号・章の並び・data-f の数字・?check・発表者メモ。
+   デッキ側の <script> は window.DATA と Slides.onShow(fn) を使える（DOMContentLoaded で初期化するので、デッキ側の定義が先に済む）。 */
+(() => {
+  const H = document.documentElement;
+  const Q0 = new URLSearchParams(location.search);
+  if (Q0.get("theme")) H.dataset.theme = Q0.get("theme");
+  const MODE = H.dataset.mode || "doc";
+  const EN = (H.lang || "ja").toLowerCase().startsWith("en");
+  const MIN_FS = MODE === "pitch" ? 54 : 16;
+  const Q = new URLSearchParams(location.search);
+  const CHECK = Q.has("check"), PRESENTER = Q.has("presenter");
+  const T = EN
+    ? { prev: "Previous", next: "Next", fs: "Fullscreen", ovf: "Issues", elapsed: "Elapsed", until: "End this page by", reset: "T: reset timer", nx: "Next: " }
+    : { prev: "前へ", next: "次へ", fs: "全画面", ovf: "はみ出し", elapsed: "経過", until: "このページは", reset: "T で時計を0に", nx: "次：" };
+  const hooks = [];
+
+  const get = path => path.split(".").reduce((o, k) => (o == null ? undefined : o[k]), window.DATA);
+  /** 数字の書式。d 小数の桁、x 掛ける数、r この単位で丸める、u 単位、sign 正の数に＋ */
+  function fmt(v, o = {}) {
+    if (v == null || Number.isNaN(+v)) return "—";
+    v = +v * (o.x ?? 1);
+    if (o.r) v = Math.round(v / o.r) * o.r;
+    const d = o.d ?? 0;
+    let s = Math.abs(v).toLocaleString(EN ? "en-US" : "ja-JP", { minimumFractionDigits: d, maximumFractionDigits: d });
+    if (v < 0 && s.replace(/[0.,]/g, "")) s = "−" + s;
+    else if (o.sign && v > 0) s = "+" + s;
+    return s + (o.u ?? "");
+  }
+  function fillData(root) {
+    root.querySelectorAll("[data-f]").forEach(el => {
+      const v = get(el.dataset.f);
+      const ds = el.dataset;
+      el.textContent = fmt(v, { d: +(ds.d || 0), x: ds.x ? +ds.x : 1, r: ds.r ? +ds.r : 0, u: ds.u || "", sign: "sign" in ds });
+      el.classList.toggle("f-missing", v === undefined);
+    });
+  }
+
+  const Slides = (window.Slides = { mode: MODE, lang: EN ? "en" : "ja", get, fmt, fillData, onShow: fn => hooks.push(fn), ids: [] });
+
+  /* ---------- ?check：表示中のページの問題を赤枠にし、#check-out に JSON で書く（export.mjs が読む） ---------- */
+  function describe(el) {
+    const cls = [...el.classList].filter(c => c !== "ovf").slice(0, 2).map(c => "." + c).join("");
+    const txt = (el.textContent || "").trim().replace(/\s+/g, " ").slice(0, 28);
+    return `${el.tagName.toLowerCase()}${el.id ? "#" + el.id : ""}${cls}${txt ? ` "${txt}"` : ""}`;
+  }
+  function check(sec) {
+    sec.querySelectorAll(".ovf").forEach(e => e.classList.remove("ovf"));
+    sec.querySelector(".ovf-badge")?.remove();
+    const S = sec.getBoundingClientRect(), k = S.width / 1920;
+    const foot = sec.querySelector(":scope > .foot")?.getBoundingClientRect();
+    const hits = [];
+    const add = (el, why) => { if (!hits.some(h => h.el === el)) hits.push({ el, why }); };
+    sec.querySelectorAll("*").forEach(el => {
+      if (el.closest(".pno, .ovf-badge, aside.notes, [data-nocheck]")) return;
+      if (el.classList.contains("map") && !el.querySelector("svg")) add(el, "map-empty（make-map.mjs --into で書き込む）");
+      if (el.id && !el.closest("svg") && document.querySelectorAll(`[id="${CSS.escape(el.id)}"]`).length > 1) add(el, `dup-id #${el.id}（デッキ全体で一意にする）`);
+      const r = el.getBoundingClientRect();
+      if (!r.width || !r.height) return;
+      const cs = getComputedStyle(el);
+      if (r.left < S.left - k || r.right > S.right + k || r.top < S.top - k || r.bottom > S.bottom + k) add(el, "outside");
+      const inSvg = el.closest("svg");
+      if (!inSvg && el.clientHeight > 0 && cs.display !== "inline" && !["svg", "IMG", "SECTION"].includes(el.tagName)
+        && cs.textOverflow !== "ellipsis"
+        && (el.scrollHeight > el.clientHeight + (cs.overflowY === "visible" ? Math.max(12, parseFloat(cs.fontSize) * 0.35) : 2)
+          || el.scrollWidth > el.clientWidth + (cs.overflowX === "visible" ? 6 : 2))) add(el, "clipped");
+      if (foot && !inSvg && !el.closest(".foot, .pno") && cs.position !== "absolute" && r.bottom > foot.top - 4 * k && r.top < foot.bottom) add(el, "on-foot");
+      const hasText = [...el.childNodes].some(n => n.nodeType === 3 && n.textContent.trim());
+      if (hasText && parseFloat(cs.fontSize) < MIN_FS) add(el, `font ${parseFloat(cs.fontSize)}px < ${MIN_FS}px`);
+      if (el.tagName === "IMG" && el.complete && !el.naturalWidth) add(el, "image-missing");
+      if (el.classList.contains("f-missing")) add(el, `data-missing ${el.dataset.f || el.dataset.chart?.slice(0, 40) || ""}`);
+    });
+    hits.forEach(h => h.el.classList.add("ovf"));
+    let out = document.getElementById("check-out");
+    if (!out) { out = document.createElement("script"); out.type = "application/json"; out.id = "check-out"; document.body.appendChild(out); }
+    out.textContent = JSON.stringify({ id: sec.id, issues: hits.map(h => ({ why: h.why, el: describe(h.el) })) });
+    if (hits.length) {
+      const b = document.createElement("div");
+      b.className = "ovf-badge";
+      b.textContent = `${T.ovf} ${hits.length}：${[...new Set(hits.map(h => h.why.split(" ")[0]))].slice(0, 4).join(" / ")}`;
+      sec.appendChild(b);
+      console.warn(sec.id, hits);
+    }
+  }
+
+  function init() {
+    const secs = [...document.querySelectorAll("section")];
+    const ids = (Slides.ids = secs.map(s => s.id));
+    fillData(document);
+
+    /* ページ番号（data-nopno で消す） */
+    secs.forEach((s, i) => {
+      if (s.hasAttribute("data-nopno") || H.hasAttribute("data-nopno")) return;
+      const n = document.createElement("div");
+      n.className = "pno";
+      n.textContent = i + 1;
+      s.appendChild(n);
+    });
+    /* 中扉の下に章の並び（section.chap の data-n・data-t） */
+    const chaps = secs.filter(s => s.classList.contains("chap"));
+    if (chaps.length > 1) chaps.forEach((s, i) => {
+      const row = document.createElement("div");
+      row.className = "chaps";
+      row.innerHTML = chaps.map((c, j) => `<div class="${j === i ? "on" : j < i ? "done" : ""}"><b>${c.dataset.n || j + 1}</b>${c.dataset.t || ""}</div>`).join("");
+      s.appendChild(row);
+    });
+    /* ページへのリンクに番号（PNG・PDF でもたどれる） */
+    document.querySelectorAll("a.ref").forEach(a => {
+      const n = ids.indexOf(a.hash.slice(1)) + 1;
+      if (n) a.insertAdjacentHTML("beforeend", `<span class="pg">p.${n}</span>`);
+    });
+
+    const nav = document.createElement("div");
+    nav.className = "nav";
+    nav.innerHTML = `<button data-go="-1" aria-label="${T.prev}">‹</button><span></span><button data-go="1" aria-label="${T.next}">›</button><button data-fs aria-label="${T.fs}">⛶</button>`;
+    document.body.appendChild(nav);
+
+    /* 発表者メモ：N で重ねる、P で発表者用の窓（ページ送りが連動）、T で時計を0に */
+    const np = document.createElement("div");
+    np.className = "np";
+    np.innerHTML = `<div class="meta"></div><div class="txt"></div><div class="next"></div>`;
+    document.body.appendChild(np);
+    const bc = "BroadcastChannel" in window ? new BroadcastChannel("html-slides:" + location.pathname) : null;
+    let t0 = null;
+    const toSec = s => { const [m, x] = s.split(":").map(Number); return m * 60 + x; };
+    const mmss = t => `${Math.floor(t / 60)}:${String(Math.floor(t % 60)).padStart(2, "0")}`;
+    const current = () => (ids.includes(location.hash.slice(1)) ? location.hash.slice(1) : ids[0]);
+    function paintNotes() {
+      const id = current(), i = ids.indexOf(id), sec = secs[i];
+      const el = t0 === null ? 0 : (performance.now() - t0) / 1000;
+      const end = sec.dataset.end ? toSec(sec.dataset.end) : null;
+      np.querySelector(".meta").innerHTML = `<span>${i + 1} / ${ids.length}</span><span>${T.elapsed} <b class="${end !== null && el > end ? "late" : ""}">${mmss(el)}</b></span>`
+        + (sec.dataset.end ? `<span>${T.until} <b>${sec.dataset.end}</b>${EN ? "" : " まで"}</span>` : "") + `<span>${T.reset}</span>`;
+      np.querySelector(".txt").textContent = sec.querySelector("aside.notes")?.textContent.trim() || "";
+      const nx = secs[i + 1];
+      np.querySelector(".next").textContent = nx ? T.nx + (nx.querySelector("h1")?.textContent.trim() || nx.id) : "";
+    }
+    setInterval(() => { if (np.classList.contains("show") || PRESENTER) paintNotes(); }, 500);
+
+    function fit() {
+      const k = Math.min(innerWidth / 1920, innerHeight / 1080);
+      const st = document.body.style;
+      st.setProperty("--k", k);
+      st.setProperty("--x", (innerWidth - 1920 * k) / 2 + "px");
+      st.setProperty("--y", (innerHeight - 1080 * k) / 2 + "px");
+    }
+    function show() {
+      const id = current();
+      document.querySelectorAll("section.on").forEach(s => s.classList.remove("on"));
+      const sec = secs[ids.indexOf(id)];
+      sec.classList.add("on");
+      if (t0 === null && id !== ids[0]) t0 = performance.now();
+      nav.querySelector("span").textContent = `${ids.indexOf(id) + 1} / ${ids.length}`;
+      hooks.forEach(fn => { try { fn(sec); } catch (e) { console.error(e); } });
+      paintNotes();
+      if (CHECK) setTimeout(() => check(sec), 80);
+    }
+    function go(d) {
+      const cur = Math.max(0, ids.indexOf(location.hash.slice(1)));
+      const next = Math.min(ids.length - 1, Math.max(0, cur + d));
+      if (next !== cur || !location.hash) location.hash = ids[next];
+    }
+    Slides.go = go;
+    Slides.show = show;
+    if (bc) bc.onmessage = e => {
+      if (e.data.id && e.data.id !== current()) location.hash = e.data.id;
+      if (e.data.reset) t0 = performance.now();
+    };
+
+    let hideTimer;
+    const reveal = () => { nav.classList.add("show"); clearTimeout(hideTimer); hideTimer = setTimeout(() => nav.classList.remove("show"), 2500); };
+    nav.addEventListener("click", e => {
+      const b = e.target.closest("button");
+      if (!b) return;
+      if (b.dataset.fs !== undefined) document.fullscreenElement ? document.exitFullscreen() : H.requestFullscreen?.();
+      else go(Number(b.dataset.go));
+    });
+    addEventListener("keydown", e => {
+      if (e.target.closest?.("input, textarea")) return;
+      if (["ArrowRight", "ArrowDown", "PageDown", " ", "Enter"].includes(e.key)) { e.preventDefault(); go(1); }
+      else if (["ArrowLeft", "ArrowUp", "PageUp", "Backspace"].includes(e.key)) { e.preventDefault(); go(-1); }
+      else if (e.key === "Home") location.hash = ids[0];
+      else if (e.key === "End") location.hash = ids[ids.length - 1];
+      else if (e.key === "f") H.requestFullscreen?.();
+      else if (e.key === "n") { np.classList.toggle("show"); paintNotes(); }
+      else if (e.key === "p") window.open(location.pathname + "?presenter" + location.hash, "html-slides-presenter", "width=1100,height=700");
+      else if (e.key === "t") { t0 = performance.now(); bc?.postMessage({ reset: true }); paintNotes(); }
+    });
+    let touchX = null;
+    addEventListener("touchstart", e => { touchX = e.touches[0].clientX; reveal(); }, { passive: true });
+    addEventListener("touchend", e => {
+      if (touchX === null) return;
+      const dx = e.changedTouches[0].clientX - touchX;
+      if (Math.abs(dx) > 50) go(dx < 0 ? 1 : -1);
+      touchX = null;
+    });
+    addEventListener("mousemove", reveal);
+    addEventListener("resize", fit);
+    addEventListener("hashchange", () => { show(); bc?.postMessage({ id: current() }); });
+    if (PRESENTER) document.body.classList.add("presenter");
+    fit();
+    /* 文字の幅を測ってから図を描くので、フォントの読み込みを待つ */
+    const fontsReady = document.fonts
+      ? Promise.all(['"Noto Sans JP"', "Inter"].flatMap(f => [400, 800].map(w => document.fonts.load(`${w} 20px ${f}`, "あ漢Aa1").catch(() => {})))).then(() => document.fonts.ready)
+      : Promise.resolve();
+    fontsReady.then(show);
+  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
+  else setTimeout(init);
+})();
+
+/* html-slides charts：<div class="chart" style="height:…px" data-chart='{"type":"bar",…}'> を SVG で描く。
+   種類：bar（縦・横・積み上げ・100%・折れ線の重ね）／line／donut（pie）／scatter（bubble）／waterfall／sankey／gantt。
+   色は "accent" "warn" "mid" "sub" "ink" "c1"〜"c6" か色コード。数字は fmt {d,x,r,u,sign}（Slides.fmt）。"@a.b" は window.DATA の値。 */
+(() => {
+  const PITCH = () => Slides.mode === "pitch";
+  const NAMED = { accent: "var(--accent)", warn: "var(--warn)", mid: "var(--accent-mid)", sub: "var(--c6)", ink: "var(--ink)", line: "var(--line)", lane: "var(--lane)" };
+  const col = (c, i = 0) => (c ? NAMED[c] || (/^c[1-6]$/.test(c) ? `var(--${c})` : c) : `var(--c${(i % 6) + 1})`);
+  const esc = s => String(s ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
+  let ctx;
+  function tw(text, size, weight = 700) {
+    ctx ??= document.createElement("canvas").getContext("2d");
+    ctx.font = `${weight} ${size}px ${getComputedStyle(document.body).fontFamily}`;
+    return Math.max(...String(text).split("\n").map(l => ctx.measureText(l).width));
+  }
+  function niceStep(range, n) {
+    const raw = range / n, p = 10 ** Math.floor(Math.log10(raw)), m = raw / p;
+    return (m <= 1 ? 1 : m <= 2 ? 2 : m <= 2.5 ? 2.5 : m <= 5 ? 5 : 10) * p;
+  }
+  function scale(min, max, n, o = {}) {
+    if (o.min !== undefined) min = o.min;
+    if (o.max !== undefined) max = o.max;
+    if (max === min) max = min + 1;
+    const st = o.step || niceStep(max - min, n);
+    return { lo: o.min ?? Math.floor(min / st + 1e-9) * st, hi: o.max ?? Math.ceil(max / st - 1e-9) * st, st };
+  }
+  const ticks = sc => { const a = []; for (let v = sc.lo; v <= sc.hi + sc.st * 1e-6; v += sc.st) a.push(+v.toFixed(10)); return a; };
+  function resolve(x) {
+    if (typeof x === "string" && x.startsWith("@")) return Slides.get(x.slice(1));
+    if (Array.isArray(x)) return x.map(resolve);
+    if (x && typeof x === "object") return Object.fromEntries(Object.entries(x).map(([k, v]) => [k, resolve(v)]));
+    return x;
+  }
+  /** 複数行の文字（\n で改行） */
+  function text(x, y, s, cls, o = {}) {
+    const lines = String(s ?? "").split("\n"), lh = o.lh || 1.2, fs = o.fs || 20;
+    const dy0 = o.vcenter ? -((lines.length - 1) * fs * lh) / 2 : o.bottom ? -(lines.length - 1) * fs * lh : 0;
+    const attrs = `class="${cls}${o.halo ? " halo" : ""}"${o.anchor ? ` text-anchor="${o.anchor}"` : ""}${o.fill ? ` style="fill:${o.fill}"` : ""}${o.base ? ` dominant-baseline="${o.base}"` : ""}`;
+    if (lines.length === 1) return `<text x="${x}" y="${y + dy0}" ${attrs}>${esc(s)}</text>`;
+    return `<text x="${x}" y="${y + dy0}" ${attrs}>${lines.map((l, i) => `<tspan x="${x}" dy="${i ? fs * lh : 0}">${esc(l)}</tspan>`).join("")}</text>`;
+  }
+  function legendRow(items, x, y, fs, maxW) {
+    let s = "", cx = x, cy = y;
+    items.forEach(it => {
+      const w = fs * 1.2 + 10 + tw(it.name, fs, 600) + fs * 1.4;
+      if (cx + w > x + maxW && cx > x) { cx = x; cy += fs * 1.6; }
+      s += it.line
+        ? `<line x1="${cx}" x2="${cx + fs * 1.2}" y1="${cy - fs * 0.35}" y2="${cy - fs * 0.35}" style="stroke:${it.color}; stroke-width:${Math.max(3, fs / 6)}"/>`
+        : `<rect x="${cx}" y="${cy - fs * 0.8}" width="${fs * 1.2}" height="${fs * 0.8}" rx="3" style="fill:${it.color}"/>`;
+      s += text(cx + fs * 1.2 + 10, cy, it.name, "tk", { fs });
+      cx += w;
+    });
+    return { svg: s, h: cy - y + fs * 1.6 };
+  }
+  const isHl = (s, i, label) => {
+    const h = s.highlight;
+    if (h === undefined) return false;
+    return (Array.isArray(h) ? h : [h]).some(v => v === i || v === label);
+  };
+  const sizes = el => {
+    const cs = getComputedStyle(el);
+    return { fs: parseFloat(cs.getPropertyValue("--chart-fs")) || 19, fv: parseFloat(cs.getPropertyValue("--chart-fs-v")) || 24 };
+  };
+
+  /* ---------- 棒（縦・横、グループ・積み上げ・100%、折れ線の重ね） ---------- */
+  function bar(s, W, H, { fs, fv }) {
+    const L = s.labels || [], all = s.series || [{ values: s.values, name: s.name || "" }];
+    const S = all.filter(x => x.type !== "line"), LN = all.filter(x => x.type === "line");
+    const pct = s.stacked === "100%", stacked = !!s.stacked;
+    const vals = S.map(se => se.values.map((v, i) => (pct ? (v / S.reduce((t, x) => t + (x.values[i] || 0), 0)) * 100 : v)));
+    const f = v => Slides.fmt(v, pct ? { d: 0, u: "%" } : s.fmt || {});
+    const tot = L.map((_, i) => vals.reduce((t, a) => t + Math.max(0, a[i] || 0), 0));
+    const neg = L.map((_, i) => vals.reduce((t, a) => t + Math.min(0, a[i] || 0), 0));
+    const maxV = stacked ? Math.max(...tot) : Math.max(0, ...vals.flat());
+    const minV = stacked ? Math.min(0, ...neg) : Math.min(0, ...vals.flat());
+    const sc = scale(minV, maxV, PITCH() ? 3 : 5, { min: s.min, max: pct ? 100 : s.max, step: s.step });
+    const axis = s.axis ?? !PITCH();
+    const vlab = s.valueLabels ?? true;
+    const legendItems = (S.length > 1 || LN.length) && s.legend !== false
+      ? [...S.map((se, i) => ({ name: se.name, color: col(se.color, i) })), ...LN.map((se, i) => ({ name: se.name, color: col(se.color || "warn", i + 3), line: true }))] : [];
+    let out = "", top = 0;
+    if (legendItems.length) { const lg = legendRow(legendItems, 0, fs, fs, W); out += lg.svg; top += lg.h + 6; }
+    if (s.unit) { out += text(0, top + fs, s.unit, "un", { fs }); top += fs * 1.5; }
+    const fmtTick = v => Slides.fmt(v, pct ? { d: 0, u: "%" } : { ...(s.fmt || {}), ...(Number.isInteger(sc.st) ? { d: 0 } : {}), u: s.tickUnit ?? "" });
+
+    if (s.horizontal) {
+      const labW = s.labelWidth || Math.min(W * 0.4, Math.max(...L.map(l => tw(l, fs * 1.1, 800))) + 20);
+      const valW = vlab ? Math.max(...(stacked ? tot : vals.flat()).map(v => tw(f(v), fv, 800))) + 18 : 10;
+      const x0 = labW, x1 = W - valW, y0 = top + (axis ? fs * 1.6 : 4), y1 = H - 4;
+      const X = v => x0 + ((v - sc.lo) / (sc.hi - sc.lo)) * (x1 - x0);
+      const row = (y1 - y0) / L.length, bh = Math.min(row * (1 - (s.gap ?? 0.3)), s.barMax || 999);
+      if (axis) ticks(sc).forEach(v => { out += `<line class="grid-l" x1="${X(v)}" x2="${X(v)}" y1="${y0 - 6}" y2="${y1}"/>` + text(X(v), y0 - 12, fmtTick(v), "tk", { fs, anchor: "middle" }); });
+      L.forEach((l, i) => {
+        const cy = y0 + row * i + row / 2;
+        out += text(labW - 16, cy, l, "lb", { fs: fs * 1.1, anchor: "end", vcenter: true, base: "central" });
+        if (stacked) {
+          let acc = 0;
+          S.forEach((se, j) => {
+            const v = vals[j][i] || 0, c = col(se.colors?.[i] || se.color, j);
+            out += `<rect x="${X(acc)}" y="${cy - bh / 2}" width="${Math.max(0, X(acc + v) - X(acc))}" height="${bh}" style="fill:${c}"/>`;
+            if (s.segLabels && X(acc + v) - X(acc) > tw(f(v), fs, 800) + 12) out += text((X(acc) + X(acc + v)) / 2, cy, f(v), "vl in", { fs, anchor: "middle", base: "central" });
+            acc += v;
+          });
+          if (vlab) out += text(X(tot[i]) + 12, cy, f(tot[i]), "vl", { fs: fv, base: "central" });
+        } else {
+          const bw = bh / S.length;
+          S.forEach((se, j) => {
+            const v = vals[j][i], hl = isHl(s, i, l);
+            const c = se.colors?.[i] ? col(se.colors[i]) : s.highlight !== undefined && S.length === 1 ? (hl ? col("accent") : col(s.muted || "mid")) : col(se.color, j);
+            const y = cy - bh / 2 + bw * j;
+            out += `<rect x="${Math.min(X(0), X(v))}" y="${y}" width="${Math.abs(X(v) - X(0))}" height="${bw - (S.length > 1 ? 3 : 0)}" rx="${Math.min(8, bw / 4)}" style="fill:${c}"/>`;
+            if (vlab) out += text(Math.max(X(0), X(v)) + 12, y + bw / 2, f(v), "vl", { fs: fv, base: "central", fill: hl ? "var(--accent)" : "" });
+          });
+        }
+      });
+      if (sc.lo < 0 || axis) out += `<line class="ax" x1="${X(0)}" x2="${X(0)}" y1="${y0}" y2="${y1}"/>`;
+      (s.ref || []).forEach(r => { out += `<line class="refl" x1="${X(r.v)}" x2="${X(r.v)}" y1="${y0}" y2="${y1}" style="stroke:${col(r.color || "warn")}"/>` + text(X(r.v) + 8, y0 + fs, r.label || "", "lb", { fs, fill: col(r.color || "warn"), halo: true }); });
+      return out;
+    }
+
+    const lnSc = LN.some(x => x.axis === "right") ? scale(Math.min(0, ...LN.flatMap(x => x.values)), Math.max(...LN.flatMap(x => x.values)), PITCH() ? 3 : 5, s.right || {}) : sc;
+    const fR = v => Slides.fmt(v, s.fmtRight || s.fmt || {});
+    const lines = Math.max(...L.map(l => String(l).split("\n").length));
+    const leftW = axis ? Math.max(...ticks(sc).map(v => tw(fmtTick(v), fs, 600))) + 14 : 0;
+    const rightW = lnSc !== sc && axis ? Math.max(...ticks(lnSc).map(v => tw(fR(v), fs, 600))) + 14 : 0;
+    const x0 = leftW, x1 = W - rightW, y0 = top + (vlab ? fv * 1.5 : 10), y1 = H - lines * fs * 1.2 - 14;
+    const Y = v => y1 - ((v - sc.lo) / (sc.hi - sc.lo)) * (y1 - y0);
+    const YR = v => y1 - ((v - lnSc.lo) / (lnSc.hi - lnSc.lo)) * (y1 - y0);
+    const band = (x1 - x0) / L.length, bw = Math.min(band * (1 - (s.gap ?? 0.35)), s.barMax || 999);
+    if (axis) {
+      ticks(sc).forEach(v => { out += `<line class="grid-l" x1="${x0}" x2="${x1}" y1="${Y(v)}" y2="${Y(v)}"/>` + text(x0 - 12, Y(v), fmtTick(v), "tk", { fs, anchor: "end", base: "central" }); });
+      if (lnSc !== sc) ticks(lnSc).forEach(v => { out += text(x1 + 12, YR(v), fR(v), "tk", { fs, base: "central" }); });
+    }
+    L.forEach((l, i) => {
+      const cx = x0 + band * i + band / 2, hl = isHl(s, i, l);
+      if (!s.xEvery || i % s.xEvery === 0) out += text(cx, y1 + fs + 10, l, hl ? "lb" : "tk", { fs, anchor: "middle", fill: hl ? "var(--accent)" : "" });
+      if (stacked) {
+        let pos = 0, ng = 0;
+        S.forEach((se, j) => {
+          const v = vals[j][i] || 0, c = col(se.colors?.[i] || se.color, j);
+          const a = v >= 0 ? pos : ng, b = a + v;
+          out += `<rect x="${cx - bw / 2}" y="${Math.min(Y(a), Y(b))}" width="${bw}" height="${Math.abs(Y(a) - Y(b))}" style="fill:${c}"/>`;
+          if (s.segLabels && Math.abs(Y(a) - Y(b)) > fs * 1.3 && tw(f(v), fs, 800) < bw - 8) out += text(cx, (Y(a) + Y(b)) / 2, f(v), "vl in", { fs, anchor: "middle", base: "central" });
+          if (v >= 0) pos = b; else ng = b;
+        });
+        if (vlab && !pct) out += text(cx, Y(tot[i]) - 12, f(tot[i]), "vl", { fs: fv, anchor: "middle", fill: hl ? "var(--accent)" : "" });
+      } else {
+        const w = bw / S.length;
+        S.forEach((se, j) => {
+          const v = vals[j][i];
+          if (v == null) return;
+          const c = se.colors?.[i] ? col(se.colors[i]) : s.highlight !== undefined && S.length === 1 ? (hl ? col("accent") : col(s.muted || "mid")) : col(se.color, j);
+          const x = cx - bw / 2 + w * j;
+          out += `<rect x="${x + (S.length > 1 ? 2 : 0)}" y="${Math.min(Y(0), Y(v))}" width="${w - (S.length > 1 ? 4 : 0)}" height="${Math.abs(Y(v) - Y(0))}" rx="${Math.min(8, w / 5)}" style="fill:${c}"/>`;
+          if (vlab && (S.length === 1 || tw(f(v), fs, 800) <= w + 6)) out += text(x + w / 2, v >= 0 ? Y(v) - 12 : Y(v) + fv + 6, f(v), "vl", { fs: S.length > 1 ? fs : fv, anchor: "middle", fill: hl ? "var(--accent)" : "" });
+        });
+      }
+    });
+    out += `<line class="ax" x1="${x0}" x2="${x1}" y1="${Y(Math.max(0, sc.lo))}" y2="${Y(Math.max(0, sc.lo))}"/>`;
+    LN.forEach((se, j) => {
+      const YY = se.axis === "right" ? YR : Y, c = col(se.color || "warn", j + 3);
+      const pts = se.values.map((v, i) => [x0 + band * i + band / 2, YY(v)]);
+      out += `<path d="${pts.map((p, i) => (i ? "L" : "M") + p.join(",")).join("")}" style="fill:none; stroke:${c}; stroke-width:${Math.max(3, fs / 6)}"/>`;
+      pts.forEach(([x, y], i) => {
+        out += `<circle cx="${x}" cy="${y}" r="${Math.max(5, fs / 4)}" style="fill:var(--bg); stroke:${c}; stroke-width:3"/>`;
+        if (se.valueLabels) out += text(x, se.values[i] < 0 ? y + fs * 1.5 : y - fs * 0.8, se.axis === "right" ? fR(se.values[i]) : f(se.values[i]), "lb", { fs, anchor: "middle", fill: c, halo: true });
+      });
+    });
+    (s.ref || []).forEach(r => {
+      const c = col(r.color || "warn");
+      out += `<line class="refl" x1="${x0}" x2="${x1}" y1="${Y(r.v)}" y2="${Y(r.v)}" style="stroke:${c}"/>` + text(x1, Y(r.v) - 10, r.label || "", "lb", { fs, anchor: "end", fill: c, halo: true });
+    });
+    return out;
+  }
+
+  /* ---------- 折れ線 ---------- */
+  function line(s, W, H, { fs, fv }) {
+    const L = s.labels || [], S = s.series || [];
+    const f = v => Slides.fmt(v, s.fmt || {});
+    const all = S.flatMap(x => x.values).filter(v => v != null);
+    const sc = scale(Math.min(s.zero === false ? Math.min(...all) : 0, ...all), Math.max(...all), PITCH() ? 3 : 5, { min: s.min, max: s.max, step: s.step });
+    const fmtTick = v => Slides.fmt(v, { ...(s.fmt || {}), ...(Number.isInteger(sc.st) ? { d: 0 } : {}), u: s.tickUnit ?? "" });
+    const axis = s.axis ?? !PITCH();
+    let out = "", top = 0;
+    const endLabels = s.endLabels ?? true;
+    if (!endLabels && S.length > 1) { const lg = legendRow(S.map((x, i) => ({ name: x.name, color: col(x.color, i), line: true })), 0, fs, fs, W); out += lg.svg; top += lg.h; }
+    if (s.unit) { out += text(0, top + fs, s.unit, "un", { fs }); top += fs * 1.5; }
+    const last = se => { for (let i = se.values.length - 1; i >= 0; i--) if (se.values[i] != null) return i; return -1; };
+    const endTxt = se => (S.length > 1 ? `${se.name} ` : "") + f(se.values[last(se)]);
+    const leftW = axis ? Math.max(...ticks(sc).map(v => tw(fmtTick(v), fs, 600))) + 14 : 0;
+    const rightW = endLabels ? Math.max(...S.map(se => tw(endTxt(se), fv * 0.9, 800))) + 22 : 16;
+    const x0 = leftW, x1 = W - rightW, y0 = top + fv, y1 = H - fs * 1.2 - 14;
+    const X = i => x0 + (L.length > 1 ? (i / (L.length - 1)) * (x1 - x0) : (x1 - x0) / 2);
+    const Y = v => y1 - ((v - sc.lo) / (sc.hi - sc.lo)) * (y1 - y0);
+    if (axis) ticks(sc).forEach(v => { out += `<line class="grid-l" x1="${x0}" x2="${x1}" y1="${Y(v)}" y2="${Y(v)}"/>` + text(x0 - 12, Y(v), fmtTick(v), "tk", { fs, anchor: "end", base: "central" }); });
+    out += `<line class="ax" x1="${x0}" x2="${x1}" y1="${y1}" y2="${y1}"/>`;
+    const maxLab = Math.max(...L.map(l => tw(l, fs, 600)));
+    const every = s.xEvery || Math.max(1, Math.ceil((maxLab + fs) / ((x1 - x0) / Math.max(1, L.length - 1))));
+    L.forEach((l, i) => { if (i % every === 0 || i === L.length - 1 && s.xLast !== false) out += text(X(i), y1 + fs + 10, l, "tk", { fs, anchor: i === 0 && every > 1 ? "start" : i === L.length - 1 && every > 1 ? "end" : "middle" }); });
+    let markEnd = -Infinity, markRow = 0;
+    (s.marks || []).forEach(m => {
+      const c = col(m.color || "sub"), x = X(m.i);
+      markRow = x + 8 < markEnd ? markRow + 1 : 0;
+      markEnd = Math.max(markRow ? markEnd : -Infinity, x + 8 + tw(m.label || "", fs, 600));
+      out += `<line class="refl" x1="${x}" x2="${x}" y1="${y0 - 6}" y2="${y1}" style="stroke:${c}; stroke-width:2"/>` + text(x + 8, y0 + fs * 0.4 + markRow * fs * 1.3, m.label || "", "tk", { fs, fill: c, halo: true });
+    });
+    const ends = [];
+    S.forEach((se, j) => {
+      const c = col(se.color, j), sw = se.width || (j === 0 || se.key ? Math.max(4, fs / 4.5) : Math.max(3, fs / 7));
+      const pts = se.values.map((v, i) => (v == null ? null : [X(i), Y(v)]));
+      const segs = []; let cur = [];
+      pts.forEach(p => { if (p) cur.push(p); else if (cur.length) { segs.push(cur); cur = []; } });
+      if (cur.length) segs.push(cur);
+      segs.forEach(sg => {
+        const d = sg.map((p, i) => (i ? "L" : "M") + p[0].toFixed(1) + "," + p[1].toFixed(1)).join("");
+        if (s.area || se.area) out += `<path d="${d}L${sg[sg.length - 1][0]},${Y(Math.max(0, sc.lo))}L${sg[0][0]},${Y(Math.max(0, sc.lo))}Z" style="fill:${c}; opacity:0.14"/>`;
+        out += `<path d="${d}" style="fill:none; stroke:${c}; stroke-width:${sw}; stroke-linejoin:round; stroke-linecap:round${se.dash ? "; stroke-dasharray:10 8" : ""}"/>`;
+      });
+      if (s.dots || se.dots) pts.forEach(p => { if (p) out += `<circle cx="${p[0]}" cy="${p[1]}" r="${sw * 1.2}" style="fill:${c}"/>`; });
+      const li = last(se);
+      if (li >= 0) {
+        out += `<circle cx="${X(li)}" cy="${Y(se.values[li])}" r="${sw * 1.6}" style="fill:var(--bg); stroke:${c}; stroke-width:${sw}"/>`;
+        if (endLabels) ends.push({ y: Y(se.values[li]), x: X(li), t: endTxt(se), c });
+      }
+    });
+    ends.sort((a, b) => a.y - b.y);
+    for (let i = 1; i < ends.length; i++) if (ends[i].y - ends[i - 1].y < fv) ends[i].y = ends[i - 1].y + fv;
+    ends.forEach(e => { out += text(e.x + 16, e.y, e.t, "vl", { fs: fv * 0.9, base: "central", fill: e.c, halo: true }); });
+    (s.ref || []).forEach(r => {
+      const c = col(r.color || "warn");
+      out += `<line class="refl" x1="${x0}" x2="${x1}" y1="${Y(r.v)}" y2="${Y(r.v)}" style="stroke:${c}"/>` + text(x0 + 8, Y(r.v) - 10, r.label || "", "lb", { fs, fill: c, halo: true });
+    });
+    return out;
+  }
+
+  /* ---------- 円・ドーナツ（凡例は右に値と割合） ---------- */
+  function donut(s, W, H, { fs, fv }) {
+    const items = s.items || [], total = items.reduce((t, x) => t + x.v, 0);
+    const f = v => Slides.fmt(v, s.fmt || {});
+    const legend = s.legend !== false;
+    const D = Math.min(H, legend ? W * 0.5 : W), R = D / 2, r = R * (s.inner ?? (s.type === "pie" ? 0 : 0.58));
+    const cx = R, cy = H / 2;
+    let out = "", a = -Math.PI / 2;
+    items.forEach((it, i) => {
+      const da = (it.v / total) * Math.PI * 2, b = a + da, lg = da > Math.PI ? 1 : 0, c = col(it.color, i);
+      const p = (ang, rad) => [cx + rad * Math.cos(ang), cy + rad * Math.sin(ang)];
+      const [ax, ay] = p(a, R), [bx, by] = p(b, R), [cx2, cy2] = p(b, r), [dx, dy] = p(a, r);
+      out += items.length === 1
+        ? `<circle cx="${cx}" cy="${cy}" r="${(R + r) / 2}" style="fill:none; stroke:${c}; stroke-width:${R - r}"/>`
+        : `<path d="M${ax},${ay}A${R},${R} 0 ${lg} 1 ${bx},${by}L${cx2},${cy2}${r ? `A${r},${r} 0 ${lg} 0 ${dx},${dy}` : ""}Z" style="fill:${c}; stroke:var(--bg); stroke-width:3"/>`;
+      if (s.sliceLabels !== false && da > 0.35) {
+        const [lx, ly] = p(a + da / 2, r ? (R + r) / 2 : R * 0.62);
+        out += text(lx, ly, `${Math.round((it.v / total) * 100)}%`, "vl in", { fs, anchor: "middle", base: "central" });
+      }
+      a = b;
+    });
+    if (r && s.center) {
+      out += text(cx, cy - fs * 0.2, s.center.v ?? f(total), "vl", { fs: fv * 1.5, anchor: "middle" });
+      if (s.center.k) out += text(cx, cy + fv * 0.9, s.center.k, "tk", { fs, anchor: "middle" });
+    }
+    if (legend) {
+      const x = D + 50, rowH = Math.min((H - 10) / items.length, fs * 3.2);
+      const y0 = cy - (rowH * items.length) / 2 + rowH / 2;
+      items.forEach((it, i) => {
+        const y = y0 + rowH * i;
+        out += `<rect x="${x}" y="${y - fs * 0.5}" width="${fs}" height="${fs}" rx="3" style="fill:${col(it.color, i)}"/>`;
+        out += text(x + fs + 14, y, it.label, "lb", { fs: fs * 1.1, base: "central" });
+        const pc = `${Math.round((it.v / total) * 100)}%`, lv = s.legendValue || "both";
+        out += text(W, y, lv === "pct" ? pc : lv === "value" ? f(it.v) : `${f(it.v)}  ${pc}`, "vl", { fs: fs * 1.1, anchor: "end", base: "central" });
+      });
+    }
+    return out;
+  }
+
+  /* ---------- 散布図・バブル ---------- */
+  function scatter(s, W, H, { fs }) {
+    const P = s.points || [], ax = s.x || {}, ay = s.y || {};
+    const scx = scale(Math.min(...P.map(p => p.x)), Math.max(...P.map(p => p.x)), PITCH() ? 3 : 5, ax);
+    const scy = scale(Math.min(...P.map(p => p.y)), Math.max(...P.map(p => p.y)), PITCH() ? 3 : 5, ay);
+    const fx = v => Slides.fmt(v, ax.fmt || {}), fy = v => Slides.fmt(v, ay.fmt || {});
+    const rMax = s.rMax || (PITCH() ? 70 : 44), vMax = Math.max(...P.map(p => p.r || 0), 1);
+    const leftW = Math.max(...ticks(scy).map(v => tw(fy(v), fs, 600))) + 14 + (ay.label ? fs * 1.6 : 0);
+    const x0 = leftW, x1 = W - 20, y0 = 20, y1 = H - fs * 1.3 - 14 - (ax.label ? fs * 1.5 : 0);
+    const X = v => x0 + ((v - scx.lo) / (scx.hi - scx.lo)) * (x1 - x0), Y = v => y1 - ((v - scy.lo) / (scy.hi - scy.lo)) * (y1 - y0);
+    let out = "";
+    ticks(scy).forEach(v => { out += `<line class="grid-l" x1="${x0}" x2="${x1}" y1="${Y(v)}" y2="${Y(v)}"/>` + text(x0 - 12, Y(v), fy(v), "tk", { fs, anchor: "end", base: "central" }); });
+    ticks(scx).forEach(v => { out += text(X(v), y1 + fs + 10, fx(v), "tk", { fs, anchor: "middle" }); });
+    out += `<line class="ax" x1="${x0}" x2="${x1}" y1="${y1}" y2="${y1}"/><line class="ax" x1="${x0}" x2="${x0}" y1="${y0}" y2="${y1}"/>`;
+    if (ax.label) out += text((x0 + x1) / 2, H - 4, ax.label, "lb", { fs, anchor: "middle" });
+    if (ay.label) out += `<text class="lb" transform="translate(${fs},${(y0 + y1) / 2}) rotate(-90)" text-anchor="middle">${esc(ay.label)}</text>`;
+    if (s.quad) {
+      const qx = X(s.quad.x ?? (scx.lo + scx.hi) / 2), qy = Y(s.quad.y ?? (scy.lo + scy.hi) / 2);
+      out += `<line class="refl" x1="${qx}" x2="${qx}" y1="${y0}" y2="${y1}" style="stroke:var(--sub); stroke-width:2"/><line class="refl" x1="${x0}" x2="${x1}" y1="${qy}" y2="${qy}" style="stroke:var(--sub); stroke-width:2"/>`;
+      const ql = s.quad.labels || [];
+      [[x0 + 12, y0 + fs, "start"], [x1 - 12, y0 + fs, "end"], [x0 + 12, y1 - 12, "start"], [x1 - 12, y1 - 12, "end"]].forEach(([x, y, an], i) => { if (ql[i]) out += text(x, y, ql[i], "tk", { fs, anchor: an }); });
+    }
+    P.forEach((p, i) => {
+      const r = p.r ? Math.sqrt(p.r / vMax) * rMax : PITCH() ? 16 : 10, c = col(p.color || (p.key ? "accent" : "mid"), i);
+      out += `<circle cx="${X(p.x)}" cy="${Y(p.y)}" r="${r}" style="fill:${c}; opacity:${p.r ? 0.85 : 1}; stroke:var(--bg); stroke-width:2"/>`;
+      if (p.label) out += text(X(p.x) + r + 8, Y(p.y), p.label, p.key ? "vl" : "lb", { fs, base: "central", halo: true, fill: p.key ? "var(--accent)" : "" });
+    });
+    return out;
+  }
+
+  /* ---------- ウォーターフォール（total:true は合計の棒） ---------- */
+  function waterfall(s, W, H, { fs, fv }) {
+    const It = s.items || [];
+    const f = v => Slides.fmt(v, s.fmt || {}), fs2 = v => Slides.fmt(v, { ...(s.fmt || {}), sign: true });
+    let run = 0;
+    const bars = It.map(it => { if (it.total) { const b = { a: 0, b: it.v ?? run, it }; run = b.b; return b; } const b = { a: run, b: run + it.v, it }; run += it.v; return b; });
+    const sc = scale(Math.min(0, ...bars.flatMap(b => [b.a, b.b])), Math.max(...bars.flatMap(b => [b.a, b.b])), PITCH() ? 3 : 5, { min: s.min, max: s.max });
+    const lines = Math.max(...It.map(it => String(it.label).split("\n").length));
+    const x0 = 0, x1 = W, y0 = fv * 1.5 + (s.unit ? fs * 1.5 : 0), y1 = H - lines * fs * 1.2 - 14;
+    const Y = v => y1 - ((v - sc.lo) / (sc.hi - sc.lo)) * (y1 - y0);
+    const band = (x1 - x0) / It.length, bw = band * (1 - (s.gap ?? 0.3));
+    let out = s.unit ? text(0, fs, s.unit, "un", { fs }) : "";
+    bars.forEach((b, i) => {
+      const cx = x0 + band * i + band / 2, up = b.b >= b.a;
+      const c = col(b.it.color || (b.it.total ? "accent" : up ? "mid" : "warn"));
+      out += `<rect x="${cx - bw / 2}" y="${Math.min(Y(b.a), Y(b.b))}" width="${bw}" height="${Math.max(2, Math.abs(Y(b.a) - Y(b.b)))}" rx="6" style="fill:${c}"/>`;
+      out += text(cx, Math.min(Y(b.a), Y(b.b)) - 12, b.it.total ? f(b.b) : fs2(b.b - b.a), "vl", { fs: b.it.total ? fv : fv * 0.85, anchor: "middle", fill: b.it.total ? "" : up ? "" : "var(--warn)" });
+      out += text(cx, y1 + fs + 10, b.it.label, b.it.total ? "lb" : "tk", { fs, anchor: "middle" });
+      if (i < bars.length - 1) out += `<line x1="${cx + bw / 2}" x2="${cx + band - bw / 2}" y1="${Y(b.b)}" y2="${Y(b.b)}" style="stroke:var(--sub); stroke-width:2; stroke-dasharray:5 5"/>`;
+    });
+    out += `<line class="ax" x1="${x0}" x2="${x1}" y1="${Y(Math.max(0, sc.lo))}" y2="${Y(Math.max(0, sc.lo))}"/>`;
+    return out;
+  }
+
+  /* ---------- サンキー（links: [{from,to,v}]、nodes で名前・色） ---------- */
+  function sankey(s, W, H, { fs }) {
+    const links = s.links || [], meta = Object.fromEntries((s.nodes || []).map(n => [n.id, n]));
+    const f = v => Slides.fmt(v, s.fmt || {});
+    const ids = [...new Set(links.flatMap(l => [l.from, l.to]))];
+    const N = Object.fromEntries(ids.map(id => [id, { id, label: meta[id]?.label ?? id, color: meta[id]?.color, in: [], out: [], col: 0 }]));
+    links.forEach(l => { N[l.from].out.push(l); N[l.to].in.push(l); });
+    for (let k = 0; k < ids.length; k++) links.forEach(l => { N[l.to].col = Math.max(N[l.to].col, N[l.from].col + 1); });
+    ids.forEach(id => { if (meta[id]?.col !== undefined) N[id].col = meta[id].col; });
+    const ncol = Math.max(...ids.map(id => N[id].col)) + 1;
+    ids.forEach(id => { const n = N[id]; n.v = Math.max(n.in.reduce((t, l) => t + l.v, 0), n.out.reduce((t, l) => t + l.v, 0)); });
+    const cols = [...Array(ncol)].map((_, c) => ids.filter(id => N[id].col === c).map(id => N[id]));
+    const nw = s.nodeWidth || (PITCH() ? 40 : 26), pad = s.pad ?? fs * 1.6;
+    const lab = n => `${n.label}\n${f(n.v)}`;
+    const leftW = Math.max(...cols[0].map(n => tw(n.label, fs, 800))) + 16;
+    const rightW = Math.max(...cols[ncol - 1].map(n => tw(n.label, fs, 800))) + 16;
+    const x0 = leftW, x1 = W - rightW - nw;
+    const k = Math.min(...cols.map(c => (H - pad * (c.length - 1)) / c.reduce((t, n) => t + n.v, 0)));
+    cols.forEach((c, ci) => {
+      const tot = c.reduce((t, n) => t + n.v * k, 0) + pad * (c.length - 1);
+      let y = (H - tot) / 2;
+      c.forEach(n => { n.x = x0 + (ncol > 1 ? (ci / (ncol - 1)) * (x1 - x0) : 0); n.y = y; n.h = n.v * k; n.oy = y; n.iy = y; y += n.h + pad; });
+    });
+    let out = "";
+    const ci0 = {};
+    ids.forEach((id, i) => { ci0[id] = col(N[id].color, i); });
+    [...links].sort((a, b) => N[a.to].y - N[b.to].y).forEach(l => {
+      const a = N[l.from], b = N[l.to], h = l.v * k;
+      const sx = a.x + nw, tx = b.x, sy = a.oy, ty = b.iy, xm = (sx + tx) / 2;
+      a.oy += h; b.iy += h;
+      out += `<path d="M${sx},${sy}C${xm},${sy} ${xm},${ty} ${tx},${ty}L${tx},${ty + h}C${xm},${ty + h} ${xm},${sy + h} ${sx},${sy + h}Z" style="fill:${l.color ? col(l.color) : ci0[l.from]}; opacity:0.28"/>`;
+    });
+    ids.forEach(id => {
+      const n = N[id], c = ci0[id];
+      out += `<rect x="${n.x}" y="${n.y}" width="${nw}" height="${Math.max(2, n.h)}" rx="3" style="fill:${c}"/>`;
+      const cy = n.y + n.h / 2;
+      if (n.col === 0) out += text(n.x - 12, cy, lab(n), "lb", { fs, anchor: "end", vcenter: true, base: "central" });
+      else if (n.col === ncol - 1) out += text(n.x + nw + 12, cy, lab(n), "lb", { fs, vcenter: true, base: "central" });
+      else out += text(n.x + nw + 10, cy, lab(n), "lb", { fs, vcenter: true, base: "central", halo: true });
+    });
+    return out;
+  }
+
+  /* ---------- ガント（rows: [{group,label,a,b,color,text}]、ticks・marks） ---------- */
+  function gantt(s, W, H, { fs }) {
+    const R = s.rows || [], min = s.min ?? Math.min(...R.map(r => r.a)), max = s.max ?? Math.max(...R.map(r => r.b));
+    const grpW = R.some(r => r.group) ? Math.max(...R.map(r => tw(r.group || "", fs, 800))) + 24 : 0;
+    const labW = s.labelWidth || Math.max(...R.map(r => tw(r.label || "", fs * 0.95, 600))) + 20;
+    const marks = s.marks || [];
+    const x0 = grpW + labW, x1 = W - 8, y0 = fs * 1.6, y1 = H - (marks.length ? fs * 1.8 : 4);
+    const X = v => x0 + ((v - min) / (max - min)) * (x1 - x0);
+    const rh = (y1 - y0) / R.length, bh = Math.min(rh * 0.68, PITCH() ? 70 : 34);
+    let out = "";
+    (s.ticks || []).forEach(t => { out += `<line class="grid-l" x1="${X(t.v)}" x2="${X(t.v)}" y1="${y0 - 4}" y2="${y1}"/>` + text(X(t.v) + (t.mid ? 0 : 6), y0 - 10, t.label, "tk", { fs, anchor: t.mid ? "middle" : "start" }); });
+    R.forEach((r, i) => {
+      const y = y0 + rh * i, cy = y + rh / 2;
+      if (r.group) { out += text(0, cy, r.group, "lb", { fs, base: "central" }); if (i) out += `<line class="grid-l" x1="0" x2="${x1}" y1="${y}" y2="${y}"/>`; }
+      out += text(x0 - 14, cy, r.label || "", "tk", { fs: fs * 0.95, anchor: "end", base: "central", fill: "var(--ink)" });
+      const c = col(r.color || "accent"), w = Math.max(4, X(r.b) - X(r.a));
+      out += `<rect x="${X(r.a)}" y="${cy - bh / 2}" width="${w}" height="${bh}" rx="${Math.min(8, bh / 3)}" style="fill:${c}${r.dash ? "; opacity:0.45" : ""}"/>`;
+      if (r.text && tw(r.text, fs * 0.9, 700) < w - 16) out += text(X(r.a) + 10, cy, r.text, r.dash ? "tk" : "vl in", { fs: fs * 0.9, base: "central", fill: r.dash ? "var(--ink)" : "" });
+      else if (r.text) out += text(X(r.b) + 10, cy, r.text, "tk", { fs: fs * 0.9, base: "central" });
+    });
+    marks.forEach((m, i) => {
+      const c = col(m.color || "warn"), x = X(m.v);
+      out += `<line class="refl" x1="${x}" x2="${x}" y1="${y0 - 6}" y2="${y1 + 6}" style="stroke:${c}"/>`;
+      out += text(m.anchor === "end" ? x - 8 : x + 8, H - 6, m.label, "lb", { fs, fill: c, anchor: m.anchor || "start" });
+    });
+    return out;
+  }
+
+  const TYPES = { bar, line, donut, pie: donut, scatter, bubble: scatter, waterfall, sankey, gantt };
+  function render(el, force) {
+    if (el.dataset.drawn && !force) return;
+    const src = el.dataset.chart || el.querySelector('script[type="application/json"]')?.textContent;
+    if (!src) return;
+    el.dataset.chart = src;
+    let s;
+    try { s = resolve(JSON.parse(src)); } catch (e) { el.textContent = "chart JSON error: " + e.message; el.classList.add("f-missing"); return; }
+    const W = el.clientWidth, H = el.clientHeight || s.height || 520;
+    const fn = TYPES[s.type || "bar"];
+    if (!fn) { el.textContent = "unknown chart type: " + s.type; return; }
+    el.innerHTML = `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(s.title || s.type)}">${fn(s, W, H, sizes(el))}</svg>`;
+    el.dataset.drawn = "1";
+  }
+  Slides.chart = render;
+  Slides.chartTypes = TYPES;
+  Slides.onShow(sec => sec.querySelectorAll(".chart[data-chart], .chart > script[type='application/json']").forEach(x => render(x.classList.contains("chart") ? x : x.parentElement)));
+})();
+
+/* html-slides diagrams：
+   .dgm[data-links] … 中の id 付きの箱どうしを矢印でつなぐ（関係図・流れ図・担当者ごとのフロー図・ツリー）。
+     data-links='[["a","b","ラベル",{"mode":"elbow","tone":"key"}], {"from":"b","to":"c","dash":true}]'
+     from/to は "id" か "id:right" "id:bottom:0.3"（辺と辺の上の位置 0〜1）。mode: auto（揃えば直線、ずれればカギ形）/ s / hv / vh / curve
+     tone: key（強調色）/ money（注意色）、dash: 破線、both: 両向き、label の位置は dx・dy・anchor・at:[x,y] で調整
+   .cycle … 中の .node を円周に並べ、次の .node へ弧の矢印を描く（data-r で半径、data-start で最初の角度） */
+(() => {
+  const NS = "http://www.w3.org/2000/svg";
+  function frame(root) {
+    const R = root.getBoundingClientRect();
+    return { R, k: R.width / root.offsetWidth || 1 };
+  }
+  function rect(root, F, id) {
+    const el = root.querySelector("#" + CSS.escape(id)) || document.getElementById(id);
+    if (!el) throw new Error("diagram: no element #" + id);
+    const b = el.getBoundingClientRect();
+    return { x: (b.left - F.R.left) / F.k, y: (b.top - F.R.top) / F.k, w: b.width / F.k, h: b.height / F.k };
+  }
+  function at(b, side, t = 0.5) {
+    if (side === "top") return [b.x + b.w * t, b.y];
+    if (side === "bottom") return [b.x + b.w * t, b.y + b.h];
+    if (side === "left") return [b.x, b.y + b.h * t];
+    return [b.x + b.w, b.y + b.h * t];
+  }
+  function sides(a, b) {
+    const dx = b.x + b.w / 2 - (a.x + a.w / 2), dy = b.y + b.h / 2 - (a.y + a.h / 2);
+    const gx = Math.abs(dx) - (a.w + b.w) / 2, gy = Math.abs(dy) - (a.h + b.h) / 2;
+    if (gx >= gy) return dx > 0 ? ["right", "left"] : ["left", "right"];
+    return dy > 0 ? ["bottom", "top"] : ["top", "bottom"];
+  }
+  function geometry(p1, p2, s1, mode, bend = 0.25) {
+    const [x1, y1] = p1, [x2, y2] = p2, hz = s1 === "left" || s1 === "right";
+    const straight = [`M${x1},${y1}L${x2},${y2}`, [(x1 + x2) / 2, (y1 + y2) / 2]];
+    if (mode === "s") return straight;
+    if (mode === "hv") return [`M${x1},${y1}H${x2}V${y2}`, [x2, (y1 + y2) / 2]];
+    if (mode === "vh") return [`M${x1},${y1}V${y2}H${x2}`, [(x1 + x2) / 2, y2]];
+    if (mode === "curve") {
+      const c = hz ? `C${(x1 + x2) / 2},${y1} ${(x1 + x2) / 2},${y2} ${x2},${y2}` : `C${x1},${(y1 + y2) / 2} ${x2},${(y1 + y2) / 2} ${x2},${y2}`;
+      return [`M${x1},${y1}${c}`, [(x1 + x2) / 2, (y1 + y2) / 2]];
+    }
+    if (mode === "arc") {
+      const mx = (x1 + x2) / 2, my = (y1 + y2) / 2, nx = -(y2 - y1) * bend, ny = (x2 - x1) * bend;
+      return [`M${x1},${y1}Q${mx + nx},${my + ny} ${x2},${y2}`, [mx + nx / 2, my + ny / 2]];
+    }
+    if (Math.abs(x1 - x2) < 3 || Math.abs(y1 - y2) < 3) return straight;
+    if (hz) { const xm = (x1 + x2) / 2; return [`M${x1},${y1}H${xm}V${y2}H${x2}`, [xm, (y1 + y2) / 2]]; }
+    const ym = (y1 + y2) / 2;
+    return [`M${x1},${y1}V${ym}H${x2}V${y2}`, [(x1 + x2) / 2, ym]];
+  }
+  function svgFor(root) {
+    let svg = root.querySelector(":scope > svg.dgm-links");
+    if (!svg) { svg = document.createElementNS(NS, "svg"); svg.setAttribute("class", "dgm-links"); root.prepend(svg); }
+    const W = root.offsetWidth, H = root.offsetHeight;
+    svg.setAttribute("width", W); svg.setAttribute("height", H); svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
+    const uid = "d" + Math.random().toString(36).slice(2, 8);
+    svg.innerHTML = `<defs>${["", "key", "money"].map(t => `<marker id="${uid}${t}" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="4" markerHeight="4" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" style="fill:var(--${t === "key" ? "accent" : t === "money" ? "warn" : "sub"})"/></marker>`).join("")}</defs>`;
+    return { svg, uid };
+  }
+  const parseEnd = s => { const [id, side, t] = String(s).split(":"); return { id, side, t: t === undefined ? 0.5 : +t }; };
+  function draw(root, links) {
+    const F = frame(root), { svg, uid } = svgFor(root);
+    let html = "";
+    links.forEach(L => {
+      const o = Array.isArray(L) ? { from: L[0], to: L[1], label: typeof L[2] === "string" ? L[2] : "", ...(typeof L[2] === "object" ? L[2] : L[3] || {}) } : L;
+      const A = parseEnd(o.from), B = parseEnd(o.to);
+      const a = rect(root, F, A.id), b = rect(root, F, B.id);
+      const [sa, sb] = sides(a, b);
+      const s1 = A.side || sa, s2 = B.side || sb;
+      const p1 = at(a, s1, A.t), p2 = at(b, s2, B.t);
+      const gap = o.gap ?? 4;
+      const shift = (p, s, d) => (s === "top" ? [p[0], p[1] - d] : s === "bottom" ? [p[0], p[1] + d] : s === "left" ? [p[0] - d, p[1]] : [p[0] + d, p[1]]);
+      const [d, mid] = geometry(o.both ? shift(p1, s1, gap) : p1, shift(p2, s2, gap), s1, o.mode || "auto", o.bend);
+      const tone = o.tone || (o.dash ? "money" : "");
+      const cls = [o.dash ? "dash" : "", tone].filter(Boolean).join(" ");
+      html += `<path d="${d}" class="${cls}" marker-end="url(#${uid}${tone})"${o.both ? ` marker-start="url(#${uid}${tone})"` : ""}/>`;
+      if (o.label) {
+        const [lx, ly] = o.at || mid;
+        const flat = !o.at && d.split(/[LHVCQ]/).length === 2 && Math.abs(p1[1] - p2[1]) < 3;
+        const [dx, dy, an] = flat ? [0, -12, "middle"] : [10, 6, "start"];
+        html += `<text x="${lx + (o.dx ?? dx)}" y="${ly + (o.dy ?? dy)}" class="${tone}" text-anchor="${o.anchor || an}">${String(o.label).replace(/&/g, "&amp;").replace(/</g, "&lt;")}</text>`;
+      }
+    });
+    svg.insertAdjacentHTML("beforeend", html);
+  }
+  function cycle(root) {
+    const nodes = [...root.querySelectorAll(":scope > .node")], n = nodes.length;
+    if (!n) return;
+    const W = root.offsetWidth, H = root.offsetHeight, cx = W / 2, cy = H / 2;
+    const maxN = Math.max(...nodes.map(e => Math.max(e.offsetWidth, e.offsetHeight)));
+    const R = +root.dataset.r || Math.min(W, H) / 2 - maxN / 2 - 6;
+    const a0 = ((+root.dataset.start || -90) * Math.PI) / 180;
+    const ang = i => a0 + (i / n) * Math.PI * 2;
+    nodes.forEach((e, i) => { e.style.left = cx + R * Math.cos(ang(i)) + "px"; e.style.top = cy + R * Math.sin(ang(i)) + "px"; });
+    const { svg, uid } = svgFor(root);
+    let html = "";
+    nodes.forEach((e, i) => {
+      if (i === n - 1 && root.dataset.open !== undefined) return;
+      const e2 = nodes[(i + 1) % n];
+      const g1 = (Math.hypot(e.offsetWidth, e.offsetHeight) / 2 + 14) / R, g2 = (Math.hypot(e2.offsetWidth, e2.offsetHeight) / 2 + 18) / R;
+      const a = ang(i) + g1, b = ang(i + 1) - g2;
+      if (b <= a) return;
+      const p = t => [cx + R * Math.cos(t), cy + R * Math.sin(t)];
+      const [x1, y1] = p(a), [x2, y2] = p(b);
+      html += `<path d="M${x1},${y1}A${R},${R} 0 ${b - a > Math.PI ? 1 : 0} 1 ${x2},${y2}" class="key" marker-end="url(#${uid}key)"/>`;
+    });
+    svg.insertAdjacentHTML("beforeend", html);
+  }
+  function render(sec) {
+    sec.querySelectorAll(".cycle").forEach(el => { if (!el.dataset.drawn) { cycle(el); el.dataset.drawn = "1"; } });
+    sec.querySelectorAll(".dgm[data-links]").forEach(el => {
+      if (el.dataset.drawn) return;
+      try { draw(el, JSON.parse(el.dataset.links)); } catch (e) { console.error(e); el.classList.add("f-missing"); }
+      el.dataset.drawn = "1";
+    });
+  }
+  Slides.drawLinks = draw;
+  Slides.onShow(render);
+})();
+
+/*END LIB:JS*/</script>
+<script>
+  /* このデッキだけのスクリプト。表示のたびに動かすものは Slides.onShow(sec => { … }) */
+</script>
+</body>
+</html>
